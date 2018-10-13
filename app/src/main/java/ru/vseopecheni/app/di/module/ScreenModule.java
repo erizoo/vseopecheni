@@ -11,6 +11,9 @@ import ru.vseopecheni.app.di.PerScreen;
 import ru.vseopecheni.app.ui.MainMvpPresenter;
 import ru.vseopecheni.app.ui.MainMvpPresenterImpl;
 import ru.vseopecheni.app.ui.MainMvpView;
+import ru.vseopecheni.app.ui.fragments.TableFiveMvpView;
+import ru.vseopecheni.app.ui.fragments.TableFivePresenter;
+import ru.vseopecheni.app.ui.fragments.TableFivePresenterImpl;
 
 @Module
 public class ScreenModule {
@@ -40,6 +43,12 @@ public class ScreenModule {
     @Provides
     @PerScreen
     MainMvpPresenter<MainMvpView> provideEquipmentDeliveryCertificateMvpPresenter(MainMvpPresenterImpl<MainMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerScreen
+    TableFivePresenter<TableFiveMvpView> provideTableFivePresenter(TableFivePresenterImpl<TableFiveMvpView> presenter) {
         return presenter;
     }
 }

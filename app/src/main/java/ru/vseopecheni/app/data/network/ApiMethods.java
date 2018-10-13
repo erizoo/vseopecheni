@@ -1,12 +1,17 @@
 package ru.vseopecheni.app.data.network;
 
+import java.util.List;
+
 import io.reactivex.Observable;
-import retrofit2.Response;
 import retrofit2.http.GET;
-import ru.vseopecheni.app.data.ResponseModel.DailyExRates;
+import retrofit2.http.Query;
+import ru.vseopecheni.app.data.models.ResponseProducts;
 
 public interface ApiMethods {
 
-    @GET("XmlExRates.aspx")
-    Observable<Response<DailyExRates>> getInfo();
+    @GET("json")
+    Observable<List<ResponseProducts>> getProducts(@Query("key") String key,
+                                                   @Query("id") String id,
+                                                   @Query("type") String article);
+
 }

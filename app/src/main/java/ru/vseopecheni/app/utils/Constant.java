@@ -2,12 +2,15 @@ package ru.vseopecheni.app.utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public interface Constant {
 
-    String BASE_URI = "http://www.nbrb.by/Services/";
+    String BASE_URI = "https://vseopecheni.ru/";
+    String TAG = "READ";
 
-    public static ProgressDialog showLoadingDialog(Context context) {
+    static ProgressDialog showLoadingDialog(Context context) {
         if (context != null) {
             ProgressDialog progressDialog = new ProgressDialog(context);
             progressDialog.setMessage("Идет загрузка...");

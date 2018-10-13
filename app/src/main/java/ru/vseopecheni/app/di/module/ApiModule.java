@@ -18,7 +18,6 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import ru.vseopecheni.app.BuildConfig;
 import ru.vseopecheni.app.data.network.ApiMethods;
 import ru.vseopecheni.app.data.network.ServiceNetwork;
@@ -52,7 +51,7 @@ public class ApiModule {
     Retrofit provideRetrofit(HttpUrl baseUrl, Converter.Factory converterFactory, CallAdapter.Factory callAdapterFactory, OkHttpClient client) {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .addConverterFactory(converterFactory)
                 .addCallAdapterFactory(callAdapterFactory)
                 .client(client)
                 .build();

@@ -7,4 +7,19 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    // menu navbar
+    <string name="begin">Главная</string>
+    <string name="table_five">Стол №5</string>
+    <string name="recipient">Рецепты стола №5</string>
+    <string name="menu_week">Меню неделька</string>
+    <string name="hepatoprotectors">Гепатопротекторы</string>
+    <string name="about_liver">О печени</string>
+    <string name="how_to_treat">Как лечить</string>
+    <string name="liver_disease">Заболевания печени</string>
+    <string name="alarm_clock">Эффективный будильник</string>
+
+    // table 5
+    <string name="yes">МОЖНО</string>
+    <string name="no">НЕЛЬЗЯ</string>
 </resources>
