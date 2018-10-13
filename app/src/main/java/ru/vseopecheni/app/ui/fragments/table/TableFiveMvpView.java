@@ -1,4 +1,4 @@
-package ru.vseopecheni.app.ui.fragments;
+package ru.vseopecheni.app.ui.fragments.table;
 
 import java.util.List;
 

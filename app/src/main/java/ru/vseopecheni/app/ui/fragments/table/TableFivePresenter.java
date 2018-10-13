@@ -1,4 +1,4 @@
-package ru.vseopecheni.app.ui.fragments;
+package ru.vseopecheni.app.ui.fragments.table;
 
 import ru.vseopecheni.app.ui.base.MvpPresenter;
 

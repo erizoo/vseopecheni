@@ -8,12 +8,12 @@ import dagger.Provides;
 import io.reactivex.disposables.CompositeDisposable;
 import ru.vseopecheni.app.di.ActivityContext;
 import ru.vseopecheni.app.di.PerScreen;
-import ru.vseopecheni.app.ui.MainMvpPresenter;
-import ru.vseopecheni.app.ui.MainMvpPresenterImpl;
-import ru.vseopecheni.app.ui.MainMvpView;
-import ru.vseopecheni.app.ui.fragments.TableFiveMvpView;
-import ru.vseopecheni.app.ui.fragments.TableFivePresenter;
-import ru.vseopecheni.app.ui.fragments.TableFivePresenterImpl;
+import ru.vseopecheni.app.ui.fragments.MainMvpView;
+import ru.vseopecheni.app.ui.fragments.MainPresenter;
+import ru.vseopecheni.app.ui.fragments.MainPresenterImpl;
+import ru.vseopecheni.app.ui.fragments.table.TableFiveMvpView;
+import ru.vseopecheni.app.ui.fragments.table.TableFivePresenter;
+import ru.vseopecheni.app.ui.fragments.table.TableFivePresenterImpl;
 
 @Module
 public class ScreenModule {
@@ -42,13 +42,13 @@ public class ScreenModule {
 
     @Provides
     @PerScreen
-    MainMvpPresenter<MainMvpView> provideEquipmentDeliveryCertificateMvpPresenter(MainMvpPresenterImpl<MainMvpView> presenter) {
+    TableFivePresenter<TableFiveMvpView> provideTableFivePresenter(TableFivePresenterImpl<TableFiveMvpView> presenter) {
         return presenter;
     }
 
     @Provides
     @PerScreen
-    TableFivePresenter<TableFiveMvpView> provideTableFivePresenter(TableFivePresenterImpl<TableFiveMvpView> presenter) {
+    MainPresenter<MainMvpView> provideMainPresenter(MainPresenterImpl<MainMvpView> presenter) {
         return presenter;
     }
 }

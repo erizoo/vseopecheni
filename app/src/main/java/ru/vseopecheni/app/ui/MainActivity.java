@@ -8,7 +8,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -18,12 +17,13 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.ui.base.BaseActivity;
+import ru.vseopecheni.app.ui.base.MvpView;
 import ru.vseopecheni.app.ui.fragments.MainFragment;
 import ru.vseopecheni.app.ui.fragments.RecipeFragment;
-import ru.vseopecheni.app.ui.fragments.TableFiveFragment;
+import ru.vseopecheni.app.ui.fragments.table.TableFiveFragment;
 
 public class MainActivity extends BaseActivity
-        implements MainMvpView, NavigationView.OnNavigationItemSelectedListener, ViewPagerMovement {
+        implements NavigationView.OnNavigationItemSelectedListener, ViewPagerMovement, MvpView {
 
     private Unbinder unbinder;
 

@@ -1,4 +1,4 @@
-package ru.vseopecheni.app.ui.fragments;
+package ru.vseopecheni.app.ui.fragments.table;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

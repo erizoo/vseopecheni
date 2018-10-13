@@ -1,4 +1,4 @@
-package ru.vseopecheni.app.ui.fragments;
+package ru.vseopecheni.app.ui.fragments.table;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -48,8 +48,10 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
     private static final String SNACKS_ID = "8956";
     private static final String SAUSE_ID = "8957";
     private static final String SWEET_ID = "8958";
+
     @Inject
     TableFivePresenter<TableFiveMvpView> presenter;
+
     private Unbinder unbinder;
 
     @Override

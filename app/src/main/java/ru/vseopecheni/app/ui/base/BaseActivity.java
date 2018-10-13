@@ -24,7 +24,7 @@ import ru.vseopecheni.app.di.component.ScreenComponent;
 import ru.vseopecheni.app.di.module.ScreenModule;
 import ru.vseopecheni.app.ui.ViewPagerAdapter;
 import ru.vseopecheni.app.ui.fragments.MainFragment;
-import ru.vseopecheni.app.ui.fragments.TableFiveFragment;
+import ru.vseopecheni.app.ui.fragments.table.TableFiveFragment;
 import ru.vseopecheni.app.utils.Constant;
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView {
