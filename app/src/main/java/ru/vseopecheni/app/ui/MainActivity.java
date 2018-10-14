@@ -19,7 +19,7 @@ import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.MvpView;
 import ru.vseopecheni.app.ui.fragments.MainFragment;
-import ru.vseopecheni.app.ui.fragments.RecipeFragment;
+import ru.vseopecheni.app.ui.fragments.recipes.RecipeFragment;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveFragment;
 
 public class MainActivity extends BaseActivity

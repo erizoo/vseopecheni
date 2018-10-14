@@ -24,6 +24,7 @@ import ru.vseopecheni.app.di.component.ScreenComponent;
 import ru.vseopecheni.app.di.module.ScreenModule;
 import ru.vseopecheni.app.ui.ViewPagerAdapter;
 import ru.vseopecheni.app.ui.fragments.MainFragment;
+import ru.vseopecheni.app.ui.fragments.recipes.RecipeFragment;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveFragment;
 import ru.vseopecheni.app.utils.Constant;
 
@@ -102,6 +103,9 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
                 break;
             case "TableFiveFragment":
                 moveToNewFragment(new MainFragment());
+                break;
+            case "FullRecipeFragment":
+                moveToNewFragment(new RecipeFragment());
                 break;
             default:
                 moveToNewFragment(new MainFragment());

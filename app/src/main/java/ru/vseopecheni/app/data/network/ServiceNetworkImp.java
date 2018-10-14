@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.data.models.ResponseProducts;
 import ru.vseopecheni.app.data.models.ResponseRecipes;
 
@@ -31,5 +32,10 @@ public class ServiceNetworkImp implements ServiceNetwork {
     @Override
     public Observable<List<ResponseRecipes>> getRecipes() {
         return apiMethods.getRecipes(KEY, TYPE_RECIPES);
+    }
+
+    @Override
+    public Observable<List<ResponseFullRecipes>> getFullRecipe(String id) {
+        return apiMethods.getFullRecipe(KEY, id, TYPE);
     }
 }

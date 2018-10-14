@@ -194,8 +194,6 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
         }
     }
 
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);

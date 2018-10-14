@@ -1,6 +1,7 @@
 package ru.vseopecheni.app.ui.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,12 +14,15 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseRecipes;
+import ru.vseopecheni.app.ui.MainActivity;
 import ru.vseopecheni.app.ui.base.BaseViewHolder;
+import ru.vseopecheni.app.ui.fragments.recipes.FullRecipeFragment;
 
 public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
@@ -66,6 +70,13 @@ public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     .load(responseRecipes.get(position).getImage())
                     .apply(new RequestOptions().fitCenter())
                     .into(imageViewRecipes);
+            imageViewRecipes.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putString("id", responseRecipes.get(position).getId());
+                FullRecipeFragment fullRecipeFragment = new FullRecipeFragment();
+                fullRecipeFragment.setArguments(bundle);
+                ((MainActivity)Objects.requireNonNull(context)).moveToNewFragment(fullRecipeFragment);
+            });
         }
     }
 
