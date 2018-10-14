@@ -11,7 +11,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +27,7 @@ import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
+import ru.vseopecheni.app.ui.model.RecipeCompositionModel;
 
 public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpView {
 
@@ -34,6 +38,10 @@ public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpVie
     ImageView imageView;
     @BindView(R.id.title_textView)
     TextView title;
+    @BindView(R.id.composition_recipe)
+    TextView compositionRecipe;
+    @BindView(R.id.cooking_method_full)
+    TextView cookingMethodFull;
 
     private Unbinder unbinder;
     private String id;
@@ -73,5 +81,16 @@ public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpVie
                 .apply(new RequestOptions().fitCenter())
                 .into(imageView);
         title.setText(responseFullRecipes.get(0).getTitle());
+        Gson gson = new Gson();
+        Type listOfObject = new TypeToken<List<RecipeCompositionModel>>() {
+        }.getType();
+        List<RecipeCompositionModel> recipeCompositionModels = gson.fromJson(
+                responseFullRecipes.get(0).getSostav(), listOfObject);
+        StringBuilder sb = new StringBuilder();
+        for (RecipeCompositionModel items : recipeCompositionModels) {
+            sb.append(".").append(" ").append(items.getName()).append(" ").append(items.getValue()).append(System.getProperty("line.separator"));
+        }
+        compositionRecipe.setText(sb.toString());
+        cookingMethodFull.setText(responseFullRecipes.get(0).getContent());
     }
 }

@@ -104,9 +104,6 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
             case "TableFiveFragment":
                 moveToNewFragment(new MainFragment());
                 break;
-            case "FullRecipeFragment":
-                moveToNewFragment(new RecipeFragment());
-                break;
             default:
                 moveToNewFragment(new MainFragment());
                 break;
