@@ -62,7 +62,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             Glide.with(context)
+                    .asBitmap()
                     .load(responseRecipes.get(position).getImage())
+                    .apply(new RequestOptions().fitCenter())
                     .into(imageViewRecipes);
         }
     }
