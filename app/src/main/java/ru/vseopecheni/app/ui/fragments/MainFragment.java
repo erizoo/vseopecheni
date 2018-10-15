@@ -57,7 +57,8 @@ public class MainFragment extends BaseFragment implements MainMvpView {
 
     @OnClick(R.id.recipes_image)
     public void getRecipes(){
-        presenter.getRecipes();
+        RecipeFragment recipeFragment = new RecipeFragment();
+        ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(recipeFragment);
     }
 
 
@@ -69,12 +70,4 @@ public class MainFragment extends BaseFragment implements MainMvpView {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Override
-    public void onRecipesUpdated(List<ResponseRecipes> responseRecipes) {
-        RecipeFragment recipeFragment = new RecipeFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("recipes", new Gson().toJson(responseRecipes));
-        recipeFragment.setArguments(bundle);
-        ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(recipeFragment);
-    }
 }

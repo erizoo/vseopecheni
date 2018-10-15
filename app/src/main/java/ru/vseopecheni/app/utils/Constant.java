@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.util.Objects;
+
 public interface Constant {
 
     String BASE_URI = "https://vseopecheni.ru/";
@@ -22,6 +24,17 @@ public interface Constant {
         }
 
         return null;
+    }
+
+    static boolean isInternet(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager)Objects.requireNonNull(context).getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 }

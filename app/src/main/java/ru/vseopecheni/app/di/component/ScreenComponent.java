@@ -6,6 +6,7 @@ import ru.vseopecheni.app.di.module.ScreenModule;
 import ru.vseopecheni.app.ui.MainActivity;
 import ru.vseopecheni.app.ui.fragments.MainFragment;
 import ru.vseopecheni.app.ui.fragments.recipes.FullRecipeFragment;
+import ru.vseopecheni.app.ui.fragments.recipes.RecipeFragment;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveFragment;
 
 @PerScreen
@@ -19,4 +20,6 @@ public interface ScreenComponent {
     void inject(MainFragment fragment);
 
     void inject(FullRecipeFragment fragment);
+
+    void inject(RecipeFragment fragment);
 }

@@ -206,7 +206,8 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
         FileOutputStream outputStream;
         try {
             outputStream = Objects.requireNonNull(getActivity()).openFileOutput(responseProducts.get(0).getId(), Context.MODE_PRIVATE);
-            outputStream.write(new Gson().toJson(responseProducts.get(0)).getBytes());
+            outputStream.
+                    write(new Gson().toJson(responseProducts.get(0)).getBytes());
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();

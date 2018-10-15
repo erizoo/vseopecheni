@@ -7,6 +7,5 @@ import ru.vseopecheni.app.ui.base.MvpView;
 
 public interface MainMvpView extends MvpView {
 
-    void onRecipesUpdated(List<ResponseRecipes> responseRecipes);
 
 }

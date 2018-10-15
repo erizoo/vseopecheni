@@ -14,6 +14,9 @@ import ru.vseopecheni.app.ui.fragments.MainPresenterImpl;
 import ru.vseopecheni.app.ui.fragments.recipes.FullRecipeMvpView;
 import ru.vseopecheni.app.ui.fragments.recipes.FullRecipePresenter;
 import ru.vseopecheni.app.ui.fragments.recipes.FullRecipePresenterImpl;
+import ru.vseopecheni.app.ui.fragments.recipes.RecipeMvpView;
+import ru.vseopecheni.app.ui.fragments.recipes.RecipePresenter;
+import ru.vseopecheni.app.ui.fragments.recipes.RecipePresenterImpl;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveMvpView;
 import ru.vseopecheni.app.ui.fragments.table.TableFivePresenter;
 import ru.vseopecheni.app.ui.fragments.table.TableFivePresenterImpl;
@@ -58,6 +61,12 @@ public class ScreenModule {
     @Provides
     @PerScreen
     FullRecipePresenter<FullRecipeMvpView> provideFullRecipePresenter(FullRecipePresenterImpl<FullRecipeMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerScreen
+    RecipePresenter<RecipeMvpView> provideRecipePresenter(RecipePresenterImpl<RecipeMvpView> presenter) {
         return presenter;
     }
 }

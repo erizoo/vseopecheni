@@ -1,5 +1,7 @@
 package ru.vseopecheni.app.ui.fragments.recipes;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +30,7 @@ import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
 import ru.vseopecheni.app.ui.model.RecipeCompositionModel;
+import ru.vseopecheni.app.utils.Constant;
 
 public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpView {
 
@@ -45,6 +48,7 @@ public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpVie
 
     private Unbinder unbinder;
     private String id;
+    private Bitmap bitmap;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,9 +64,13 @@ public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpVie
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
         Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            id = bundle.getString("id");
-            presenter.getFullRecipe(id);
+            if (bundle != null) {
+            if (Constant.isInternet(getContext())) {
+                id = bundle.getString("id");
+                presenter.getFullRecipe(id);
+            } else {
+                bitmap = bundle.getParcelable("BitmapImage");
+            }
         }
         return v;
     }
@@ -74,12 +82,21 @@ public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpVie
 
     @Override
     public void onFullRecipeUpdated(List<ResponseFullRecipes> responseFullRecipes) {
-        Glide.with(Objects.requireNonNull(getContext()))
-                .asBitmap()
-                .load("https://vseopecheni.ru" + responseFullRecipes.get(0).getImage())
-                .apply(RequestOptions.circleCropTransform())
-                .apply(new RequestOptions().fitCenter())
-                .into(imageView);
+        if (Constant.isInternet(getContext())){
+            Glide.with(Objects.requireNonNull(getContext()))
+                    .asBitmap()
+                    .load("https://vseopecheni.ru" + responseFullRecipes.get(0).getImage())
+                    .apply(RequestOptions.circleCropTransform())
+                    .apply(new RequestOptions().fitCenter())
+                    .into(imageView);
+        } else {
+            Glide.with(Objects.requireNonNull(getContext()))
+                    .asBitmap()
+                    .load(bitmap)
+                    .apply(RequestOptions.circleCropTransform())
+                    .apply(new RequestOptions().fitCenter())
+                    .into(imageView);
+        }
         title.setText(responseFullRecipes.get(0).getTitle());
         Gson gson = new Gson();
         Type listOfObject = new TypeToken<List<RecipeCompositionModel>>() {

@@ -16,16 +16,4 @@ public class MainPresenterImpl <V extends MainMvpView> extends BasePresenter<V>
         super(repositoryManager, compositeDisposable);
     }
 
-    @Override
-    public void getRecipes() {
-        getCompositeDisposable().add(
-                getRepositoryManager().getServiceNetwork().getRecipes()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                getMvpView()::onRecipesUpdated,
-                                Throwable::printStackTrace
-                        )
-        );
-    }
 }
