@@ -63,8 +63,10 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ((BaseActivity)getActivity()).showLoading();
         View v = inflater.inflate(R.layout.table_five_fragment, container, false);
         unbinder = ButterKnife.bind(this, v);
+
         return v;
     }
 
@@ -198,6 +200,7 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
+        ((BaseActivity)getActivity()).hideLoading();
         super.onViewCreated(view, savedInstanceState);
     }
 

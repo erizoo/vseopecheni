@@ -11,10 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -64,6 +67,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @BindView(R.id.image_recipes)
         ImageView imageViewRecipes;
+        @BindView(R.id.title_recipe_rv)
+        TextView title;
 
         public RecipesViewHolder(View itemView) {
             super(itemView);
@@ -95,6 +100,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         .load(responseRecipes.get(position).getImage())
                         .apply(new RequestOptions().fitCenter())
                         .into(imageViewRecipes);
+                title.setText(responseRecipes.get(position).getTitle());
                 imageViewRecipes.setOnClickListener(v -> {
                     Bundle bundle = new Bundle();
                     bundle.putString("id", responseRecipes.get(position).getId());
@@ -112,6 +118,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         .load(bitmap)
                         .apply(new RequestOptions().fitCenter())
                         .into(imageViewRecipes);
+                title.setText(responseRecipes.get(position).getTitle());
                 imageViewRecipes.setOnClickListener(v -> {
                     Bundle bundle = new Bundle();
                     bundle.putString("id", responseRecipes.get(position).getId());

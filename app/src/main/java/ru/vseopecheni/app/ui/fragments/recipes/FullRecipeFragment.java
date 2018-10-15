@@ -66,6 +66,7 @@ public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpVie
         Bundle bundle = this.getArguments();
             if (bundle != null) {
             if (Constant.isInternet(getContext())) {
+                ((BaseActivity)getActivity()).showLoading();
                 id = bundle.getString("id");
                 presenter.getFullRecipe(id);
             } else {
@@ -109,5 +110,6 @@ public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpVie
         }
         compositionRecipe.setText(sb.toString());
         cookingMethodFull.setText(responseFullRecipes.get(0).getContent());
+        ((BaseActivity)getActivity()).hideLoading();
     }
 }

@@ -57,8 +57,10 @@ public class RecipeFragment extends Fragment implements RecipeMvpView {
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
         if (isInternet()){
+            ((BaseActivity)getActivity()).showLoading();
             presenter.getRecipes();
         } else {
+            ((BaseActivity)getActivity()).showLoading();
             FileInputStream stream = null;
             StringBuilder sb = new StringBuilder();
             String line;
@@ -75,6 +77,7 @@ public class RecipeFragment extends Fragment implements RecipeMvpView {
                     List<ResponseRecipes> responseRecipes = gson.fromJson(sb.toString(), listOfObject);
                     this.responseRecipes.addAll(responseRecipes);
                     stream.close();
+                    ((BaseActivity)getActivity()).hideLoading();
                 }
             } catch (Exception e) {
                 Log.d(Constant.TAG, "Файла нет или произошла ошибка при чтении");
@@ -114,6 +117,7 @@ public class RecipeFragment extends Fragment implements RecipeMvpView {
             e.printStackTrace();
         }
         recipesAdapter.setItems(responseRecipes);
+        ((BaseActivity)getActivity()).hideLoading();
     }
 
     public boolean isInternet(){
