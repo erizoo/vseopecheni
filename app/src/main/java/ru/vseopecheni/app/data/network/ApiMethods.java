@@ -11,17 +11,10 @@ import ru.vseopecheni.app.data.models.ResponseRecipes;
 
 public interface ApiMethods {
 
-    @GET("json")
-    Observable<List<ResponseProducts>> getProducts(@Query("key") String key,
-                                                   @Query("id") String id,
-                                                   @Query("type") String article);
+    @GET("jsonmn")
+    Observable<List<ResponseProducts>> getProducts(@Query("key") String key);
 
     @GET("json2")
-    Observable<List<ResponseRecipes>> getRecipes(@Query("key") String key,
-                                                 @Query("type") String article);
-
-    @GET("json")
     Observable<List<ResponseFullRecipes>> getFullRecipe(@Query("key") String key,
-                                                        @Query("id") String id,
                                                         @Query("type") String article);
 }

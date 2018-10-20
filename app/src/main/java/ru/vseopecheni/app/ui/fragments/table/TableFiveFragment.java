@@ -9,13 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,7 +66,7 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((BaseActivity)getActivity()).showLoading();
+        ((BaseActivity) getActivity()).showLoading();
         View v = inflater.inflate(R.layout.table_five_fragment, container, false);
         unbinder = ButterKnife.bind(this, v);
 
@@ -72,135 +75,79 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
 
     @OnClick(R.id.drinks)
     public void getDrinks() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(DRINKS_ID);
-        } else {
-            moveNewFragmentWithoutInternet(DRINKS_ID);
-        }
+        moveNewFragmentWithoutInternet(DRINKS_ID);
     }
 
     @OnClick(R.id.soup)
     public void getSoup() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(SOUP_ID);
-        } else {
-            moveNewFragmentWithoutInternet(SOUP_ID);
-        }
+        moveNewFragmentWithoutInternet(SOUP_ID);
     }
 
     @OnClick(R.id.porrige)
     public void getPorrige() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(PORRIDGE_ID);
-        } else {
-            moveNewFragmentWithoutInternet(PORRIDGE_ID);
-        }
+        moveNewFragmentWithoutInternet(PORRIDGE_ID);
     }
 
     @OnClick(R.id.pasta)
     public void getPasta() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(PASTA_ID);
-        } else {
-            moveNewFragmentWithoutInternet(PASTA_ID);
-        }
+        moveNewFragmentWithoutInternet(PASTA_ID);
     }
 
     @OnClick(R.id.meat)
     public void getMeat() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(MEAT_ID);
-        } else {
-            moveNewFragmentWithoutInternet(MEAT_ID);
-        }
+        moveNewFragmentWithoutInternet(MEAT_ID);
     }
 
     @OnClick(R.id.bread)
     public void getBread() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(BREAD_ID);
-        } else {
-            moveNewFragmentWithoutInternet(BREAD_ID);
-        }
+        moveNewFragmentWithoutInternet(BREAD_ID);
     }
 
     @OnClick(R.id.milk)
     public void getMilk() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(MILK_ID);
-        } else {
-            moveNewFragmentWithoutInternet(MILK_ID);
-        }
+        moveNewFragmentWithoutInternet(MILK_ID);
     }
 
     @OnClick(R.id.vegetables)
     public void getVegetables() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(VEG_ID);
-        } else {
-            moveNewFragmentWithoutInternet(VEG_ID);
-        }
+        moveNewFragmentWithoutInternet(VEG_ID);
     }
 
     @OnClick(R.id.fruits)
     public void getFruits() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(FRUIT_ID);
-        } else {
-            moveNewFragmentWithoutInternet(FRUIT_ID);
-        }
+        moveNewFragmentWithoutInternet(FRUIT_ID);
     }
 
     @OnClick(R.id.eggs)
     public void getEggs() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(EGGS_ID);
-        } else {
-            moveNewFragmentWithoutInternet(EGGS_ID);
-        }
+        moveNewFragmentWithoutInternet(EGGS_ID);
     }
 
     @OnClick(R.id.butter)
     public void getButter() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(BUTTER_ID);
-        } else {
-            moveNewFragmentWithoutInternet(BUTTER_ID);
-        }
+        moveNewFragmentWithoutInternet(BUTTER_ID);
     }
 
     @OnClick(R.id.snacks)
     public void getSnacks() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(SNACKS_ID);
-        } else {
-            moveNewFragmentWithoutInternet(SNACKS_ID);
-        }
+        moveNewFragmentWithoutInternet(SNACKS_ID);
     }
 
     @OnClick(R.id.sauce)
     public void getSauce() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(SAUSE_ID);
-        } else {
-            moveNewFragmentWithoutInternet(SAUSE_ID);
-        }
+        moveNewFragmentWithoutInternet(SAUSE_ID);
     }
 
     @OnClick(R.id.sweet)
     public void getSweet() {
-        if (((MainActivity) Objects.requireNonNull(getActivity())).isInternet()) {
-            presenter.getProducts(SWEET_ID);
-        } else {
-            moveNewFragmentWithoutInternet(SWEET_ID);
-        }
+        moveNewFragmentWithoutInternet(SWEET_ID);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
-        ((BaseActivity)getActivity()).hideLoading();
+        ((BaseActivity) getActivity()).hideLoading();
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -228,7 +175,7 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
         StringBuilder sb = new StringBuilder();
         String line;
         try {
-            stream = Objects.requireNonNull(getActivity()).openFileInput(id);
+            stream = Objects.requireNonNull(getActivity()).openFileInput("jsonProducts");
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
                 while ((line = reader.readLine()) != null) {
@@ -236,10 +183,16 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
                 }
             } finally {
                 Gson gson = new Gson();
-                ResponseProducts responseProducts = gson.fromJson(sb.toString(), ResponseProducts.class);
+                Type listOfObject = new TypeToken<List<ResponseProducts>>() {
+                }.getType();
+                List<ResponseProducts> responseProducts = gson.fromJson(sb.toString(), listOfObject);
                 Bundle bundle = new Bundle();
-                bundle.putString(YES, responseProducts.getYes()); // Put anything what you want
-                bundle.putString(NO, responseProducts.getNo()); // Put anything what you want
+                for (ResponseProducts items : responseProducts) {
+                    if (items.getId().equals(id)){
+                        bundle.putString(YES, items.getYes());
+                        bundle.putString(NO, items.getNo());
+                    }
+                }
                 TableFiveProductsFragment tableFiveProductsFragment = new TableFiveProductsFragment();
                 tableFiveProductsFragment.setArguments(bundle);
                 ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(tableFiveProductsFragment);

@@ -26,13 +26,12 @@ public interface Constant {
         return null;
     }
 
-    static boolean isInternet(Context context){
-        ConnectivityManager connectivityManager = (ConnectivityManager)Objects.requireNonNull(context).getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+    static boolean isInternet(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) Objects.requireNonNull(context).getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

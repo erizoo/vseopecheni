@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResponseFullRecipes {
 
+    @SerializedName("id")
+    private String id;
     @SerializedName("pagetitle")
     private String title;
     @SerializedName("tv.image")
@@ -12,6 +14,15 @@ public class ResponseFullRecipes {
     private String content;
     @SerializedName("tv.sostav")
     private String sostav;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

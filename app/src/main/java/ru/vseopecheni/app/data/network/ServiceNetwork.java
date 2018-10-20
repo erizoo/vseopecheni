@@ -10,9 +10,8 @@ import ru.vseopecheni.app.data.models.ResponseRecipes;
 
 public interface ServiceNetwork {
 
-    Observable<List<ResponseProducts>> getProducts(String drinksId);
 
-    Observable<List<ResponseRecipes>> getRecipes();
+    Observable<List<ResponseFullRecipes>> getFullRecipe();
 
-    Observable<List<ResponseFullRecipes>> getFullRecipe(String id);
+    Observable<List<ResponseProducts>> getProducts();
 }

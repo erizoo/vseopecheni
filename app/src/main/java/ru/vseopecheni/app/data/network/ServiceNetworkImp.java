@@ -13,8 +13,7 @@ import ru.vseopecheni.app.data.models.ResponseRecipes;
 public class ServiceNetworkImp implements ServiceNetwork {
 
     private static final String KEY = "hfiwehlgewjhg2342few";
-    private static final String TYPE = "article";
-    private static final String TYPE_RECIPES = "list_article_json";
+    private static final String TYPE_RECIPES = "list_article_rcp_json";
 
     private ApiMethods apiMethods;
 
@@ -25,17 +24,12 @@ public class ServiceNetworkImp implements ServiceNetwork {
 
 
     @Override
-    public Observable<List<ResponseProducts>> getProducts(String drinksId) {
-        return apiMethods.getProducts(KEY, drinksId, TYPE);
+    public Observable<List<ResponseProducts>> getProducts() {
+        return apiMethods.getProducts(KEY);
     }
 
     @Override
-    public Observable<List<ResponseRecipes>> getRecipes() {
-        return apiMethods.getRecipes(KEY, TYPE_RECIPES);
-    }
-
-    @Override
-    public Observable<List<ResponseFullRecipes>> getFullRecipe(String id) {
-        return apiMethods.getFullRecipe(KEY, id, TYPE);
+    public Observable<List<ResponseFullRecipes>> getFullRecipe() {
+        return apiMethods.getFullRecipe(KEY, TYPE_RECIPES);
     }
 }

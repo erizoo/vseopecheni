@@ -22,4 +22,10 @@
     // table 5
     <string name="yes">МОЖНО</string>
     <string name="no">НЕЛЬЗЯ</string>
+
+    <string name="yes_dialog">Сохранить данные</string>
+    <string name="no_dialog">В другой раз</string>
+    <string name="title_dialog">Кеширование данных</string>
+    <string name="content_dialog">Для работы приложенияв без интернета нужно закешировать данные (Это может занять около 2 минут)</string>
+
 </resources>

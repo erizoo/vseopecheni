@@ -1,10 +1,12 @@
 package ru.vseopecheni.app.ui.fragments.recipes;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +18,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,13 +32,14 @@ import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
+import ru.vseopecheni.app.ui.fragments.MainFragment;
 import ru.vseopecheni.app.ui.model.RecipeCompositionModel;
 import ru.vseopecheni.app.utils.Constant;
 
-public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpView {
+import static android.content.Context.MODE_PRIVATE;
 
-    @Inject
-    FullRecipePresenter<FullRecipeMvpView> presenter;
+public class FullRecipeFragment extends BaseFragment {
+
 
     @BindView(R.id.full_recipe_imageView)
     ImageView imageView;
@@ -49,6 +53,7 @@ public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpVie
     private Unbinder unbinder;
     private String id;
     private Bitmap bitmap;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,35 +67,40 @@ public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpVie
         View v = inflater.inflate(R.layout.recipe_full_fragment, container, false);
         unbinder = ButterKnife.bind(this, v);
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
-        presenter.onAttach(this);
         Bundle bundle = this.getArguments();
-            if (bundle != null) {
-            if (Constant.isInternet(getContext())) {
-                ((BaseActivity)getActivity()).showLoading();
-                id = bundle.getString("id");
-                presenter.getFullRecipe(id);
-            } else {
-                bitmap = bundle.getParcelable("BitmapImage");
+        if (bundle != null) {
+            id = bundle.getString("id");
+            FileInputStream stream = null;
+            StringBuilder sb = new StringBuilder();
+            String line;
+            ResponseFullRecipes responseFullRecipes = new ResponseFullRecipes();
+            try {
+                stream = Objects.requireNonNull(getActivity()).openFileInput("jsonRecipes");
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line);
+                    }
+                } finally {
+                    Gson gson = new Gson();
+                    Type listOfObject = new TypeToken<List<ResponseFullRecipes>>() {
+                    }.getType();
+                    List<ResponseFullRecipes> responseFullRecipesList = gson.fromJson(sb.toString(), listOfObject);
+                    for (ResponseFullRecipes item : responseFullRecipesList) {
+                        if (item.getId().equals(id)) {
+                            responseFullRecipes.setContent(item.getContent());
+                            responseFullRecipes.setSostav(item.getSostav());
+                            responseFullRecipes.setTitle(item.getTitle());
+                        }
+                    }
+                    stream.close();
+                    ((BaseActivity) getActivity()).hideLoading();
+                }
+            } catch (Exception e) {
+                Log.d(Constant.TAG, "Файла нет или произошла ошибка при чтении");
             }
-        }
-        return v;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onFullRecipeUpdated(List<ResponseFullRecipes> responseFullRecipes) {
-        if (Constant.isInternet(getContext())){
-            Glide.with(Objects.requireNonNull(getContext()))
-                    .asBitmap()
-                    .load("https://vseopecheni.ru" + responseFullRecipes.get(0).getImage())
-                    .apply(RequestOptions.circleCropTransform())
-                    .apply(new RequestOptions().fitCenter())
-                    .into(imageView);
-        } else {
+            writeView(responseFullRecipes);
+            bitmap = bundle.getParcelable("BitmapImage");
             Glide.with(Objects.requireNonNull(getContext()))
                     .asBitmap()
                     .load(bitmap)
@@ -98,18 +108,39 @@ public class FullRecipeFragment extends BaseFragment implements FullRecipeMvpVie
                     .apply(new RequestOptions().fitCenter())
                     .into(imageView);
         }
-        title.setText(responseFullRecipes.get(0).getTitle());
+        return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Objects.requireNonNull(getView()).setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener((v, keyCode, event) -> {
+            if( keyCode == KeyEvent.KEYCODE_BACK ) {
+                sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor ed = sharedPreferences.edit();
+                ed.putString("id", id);
+                ed.apply();
+                ((BaseActivity)getActivity()).moveToNewFragment(new RecipeFragment());
+                return true;
+            }
+            return false;
+        });
+    }
+
+    public void writeView(ResponseFullRecipes responseFullRecipes) {
+        title.setText(responseFullRecipes.getTitle());
         Gson gson = new Gson();
         Type listOfObject = new TypeToken<List<RecipeCompositionModel>>() {
         }.getType();
         List<RecipeCompositionModel> recipeCompositionModels = gson.fromJson(
-                responseFullRecipes.get(0).getSostav(), listOfObject);
+                responseFullRecipes.getSostav(), listOfObject);
         StringBuilder sb = new StringBuilder();
         for (RecipeCompositionModel items : recipeCompositionModels) {
             sb.append(".").append(" ").append(items.getName()).append(" ").append(items.getValue()).append(System.getProperty("line.separator"));
         }
         compositionRecipe.setText(sb.toString());
-        cookingMethodFull.setText(responseFullRecipes.get(0).getContent());
-        ((BaseActivity)getActivity()).hideLoading();
+        cookingMethodFull.setText(responseFullRecipes.getContent());
     }
 }
