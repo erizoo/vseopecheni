@@ -26,6 +26,7 @@ import ru.vseopecheni.app.data.models.ResponseRecipes;
 import ru.vseopecheni.app.ui.MainActivity;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
+import ru.vseopecheni.app.ui.fragments.hepatoprotectors.HepatoprotectorsFragment;
 import ru.vseopecheni.app.ui.fragments.recipes.RecipeFragment;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveFragment;
 
@@ -62,6 +63,12 @@ public class MainFragment extends BaseFragment implements MainMvpView {
     public void getRecipes(){
         RecipeFragment recipeFragment = new RecipeFragment();
         ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(recipeFragment);
+    }
+
+    @OnClick(R.id.hepatoprotectors)
+    public void getHepatoprotectors(){
+        HepatoprotectorsFragment hepatoprotectorsFragment = new HepatoprotectorsFragment();
+        ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(hepatoprotectorsFragment);
     }
 
 
