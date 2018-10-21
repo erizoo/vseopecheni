@@ -12,8 +12,8 @@
             android:id="@+id/layout_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="20dp">
 
             <ImageView
@@ -42,8 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_first"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="50dp">
 
             <ImageView
