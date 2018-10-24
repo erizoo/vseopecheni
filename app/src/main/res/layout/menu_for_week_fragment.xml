@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/monday"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorAccent"
+            android:text="@string/monday"
+            android:textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:id="@+id/monday_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/monday"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/panel_white"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_monday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/tuesday"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/monday_layout"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
+            android:text="@string/tuesday"
+            android:textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:id="@+id/tuesday_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tuesday"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/panel_white"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_tuesday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/wednesday"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/tuesday_layout"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
+            android:text="@string/wednesday"
+            android:textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:id="@+id/wednesday_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/wednesday"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/panel_white"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_wednesday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/thursday"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/wednesday_layout"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
+            android:text="@string/thursday"
+            android:textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:id="@+id/thursday_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/thursday"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/panel_white"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_thursday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/friday"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/thursday_layout"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
+            android:text="@string/friday"
+            android:textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:id="@+id/friday_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friday"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/panel_white"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_friday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/saturday"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/friday_layout"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
+            android:text="@string/saturday"
+            android:textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:id="@+id/saturday_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/saturday"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/panel_white"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_saturday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/sunday"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/saturday_layout"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
+            android:text="@string/sunday"
+            android:textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:id="@+id/sunday_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sunday"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/panel_white"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_sunday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

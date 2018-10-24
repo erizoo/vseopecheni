@@ -14,6 +14,9 @@ import ru.vseopecheni.app.ui.MainActivityPresenterImpl;
 import ru.vseopecheni.app.ui.fragments.MainMvpView;
 import ru.vseopecheni.app.ui.fragments.MainPresenter;
 import ru.vseopecheni.app.ui.fragments.MainPresenterImpl;
+import ru.vseopecheni.app.ui.fragments.menu.MenuForWeekMvpView;
+import ru.vseopecheni.app.ui.fragments.menu.MenuForWeekPresenter;
+import ru.vseopecheni.app.ui.fragments.menu.MenuForWeekPresenterImpl;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveMvpView;
 import ru.vseopecheni.app.ui.fragments.table.TableFivePresenter;
 import ru.vseopecheni.app.ui.fragments.table.TableFivePresenterImpl;
@@ -58,6 +61,12 @@ public class ScreenModule {
     @Provides
     @PerScreen
     MainActivityPresenter<MainActivityMvpView> provideMainActivityPresenter(MainActivityPresenterImpl<MainActivityMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerScreen
+    MenuForWeekPresenter<MenuForWeekMvpView> provideMenuForWeekPresenter(MenuForWeekPresenterImpl<MenuForWeekMvpView> presenter) {
         return presenter;
     }
 

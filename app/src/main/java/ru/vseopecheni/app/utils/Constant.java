@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public interface Constant {
 
-    String BASE_URI = "https://vseopecheni.ru/";
+    String BASE_URI = "https://api.myjson.com/bins/";
     String TAG = "READ";
 
     static ProgressDialog showLoadingDialog(Context context) {
