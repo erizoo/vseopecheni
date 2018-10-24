@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -18,11 +21,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseMenuForWeek;
+import ru.vseopecheni.app.data.models.ResponseType;
 import ru.vseopecheni.app.ui.base.BaseViewHolder;
 
 public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<ResponseMenuForWeek> menuForWeekList = new ArrayList<>();
+    private ResponseType responseType;
 
     @NonNull
     @Override
@@ -39,7 +43,11 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        return menuForWeekList.size();
+        return 5;
+    }
+
+    public void setItems(ResponseType responseType) {
+        this.responseType = responseType;
     }
 
     public class MenuForWeekViewHolder extends BaseViewHolder {
@@ -50,7 +58,7 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         TextView typeMenu;
         @BindView(R.id.image_menu)
         ImageView imageView;
-        @BindView(R.id.title_recipe_rv)
+        @BindView(R.id.title_menu_rv)
         TextView title;
 
         MenuForWeekViewHolder(View itemView) {
@@ -62,6 +70,25 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             super.onBind(position);
+            if (position == 0){
+                typeMenu.setText("Завтрак");
+                Glide.with(context)
+                        .asBitmap()
+                        .load("https://app.vseopecheni.ru/" + responseType.getBreakfast().getImgUrl())
+                        .apply(new RequestOptions().fitCenter())
+                        .into(imageView);
+                title.setText(responseType.getBreakfast().getTitle());
+            }
+            if (position == 1){
+                typeMenu.setText("Второй завтрак");
+                Glide.with(context)
+                        .asBitmap()
+                        .load("https://app.vseopecheni.ru/" + responseType.getTiffin().getImgUrl())
+                        .apply(new RequestOptions().fitCenter())
+                        .into(imageView);
+                title.setText(responseType.getTiffin().getTitle());
+            }
+
         }
     }
 }

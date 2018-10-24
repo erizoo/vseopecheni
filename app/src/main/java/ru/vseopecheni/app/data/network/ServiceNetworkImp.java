@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
+import ru.vseopecheni.app.data.models.ResponseMenu;
 import ru.vseopecheni.app.data.models.ResponseMenuForWeek;
 import ru.vseopecheni.app.data.models.ResponseProducts;
 import ru.vseopecheni.app.data.models.ResponseRecipes;
@@ -30,7 +31,7 @@ public class ServiceNetworkImp implements ServiceNetwork {
     }
 
     @Override
-    public Observable<List<ResponseMenuForWeek>> getMenuForWeek() {
+    public Observable<ResponseMenu> getMenuForWeek() {
         return apiMethods.getMenuForWeek();
     }
 

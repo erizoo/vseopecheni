@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
+import ru.vseopecheni.app.data.models.ResponseMenu;
 import ru.vseopecheni.app.data.models.ResponseMenuForWeek;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
@@ -60,6 +61,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
     MenuForWeekPresenter<MenuForWeekMvpView> presenter;
     private Unbinder unbinder;
     private MenuForWeekAdapter menuForWeekAdapter;
+    private ResponseMenu responseMenu;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
         View v = inflater.inflate(R.layout.menu_for_week_fragment, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        menuForWeekAdapter = new MenuForWeekAdapter();
+                menuForWeekAdapter = new MenuForWeekAdapter();
 
         recyclerViewMonday.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewMonday.setAdapter(menuForWeekAdapter);
@@ -98,6 +100,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             mondayLayout.setVisibility(View.GONE);
         } else {
             mondayLayout.setVisibility(View.VISIBLE);
+            menuForWeekAdapter.setItems(responseMenu.getArray().get(0).getMonday());
         }
     }
 
@@ -107,6 +110,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             tuesdayLayout.setVisibility(View.GONE);
         } else {
             tuesdayLayout.setVisibility(View.VISIBLE);
+            menuForWeekAdapter.setItems(responseMenu.getArray().get(1).getTuesday());
         }
     }
 
@@ -116,6 +120,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             wednesdayLayout.setVisibility(View.GONE);
         } else {
             wednesdayLayout.setVisibility(View.VISIBLE);
+            menuForWeekAdapter.setItems(responseMenu.getArray().get(2).getWednesday());
         }
     }
 
@@ -125,6 +130,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             thursdayLayout.setVisibility(View.GONE);
         } else {
             thursdayLayout.setVisibility(View.VISIBLE);
+            menuForWeekAdapter.setItems(responseMenu.getArray().get(3).getThursday());
         }
     }
 
@@ -134,6 +140,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             fridayLayout.setVisibility(View.GONE);
         } else {
             fridayLayout.setVisibility(View.VISIBLE);
+            menuForWeekAdapter.setItems(responseMenu.getArray().get(4).getFriday());
         }
     }
 
@@ -143,6 +150,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             saturdayLayout.setVisibility(View.GONE);
         } else {
             saturdayLayout.setVisibility(View.VISIBLE);
+            menuForWeekAdapter.setItems(responseMenu.getArray().get(5).getSaturday());
         }
     }
 
@@ -152,6 +160,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             sundayLayout.setVisibility(View.GONE);
         } else {
             sundayLayout.setVisibility(View.VISIBLE);
+            menuForWeekAdapter.setItems(responseMenu.getArray().get(6).getSunday());
         }
     }
 
@@ -164,7 +173,8 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
     }
 
     @Override
-    public void onMenuForWeekUpdated(List<ResponseMenuForWeek> responseMenuForWeeks) {
-        System.out.println("dsg");
+    public void onMenuForWeekUpdated(ResponseMenu responseMenu) {
+        this.responseMenu = new ResponseMenu();
+        this.responseMenu.setArray(responseMenu.getArray());
     }
 }

@@ -9,7 +9,7 @@ public class ResponseMenuFull {
     @SerializedName("title")
     private String title;
     @SerializedName("content")
-    private ResponseFullRecipes content;
+    private ResponseFullRecipesForMenu content;
 
     public String getImgUrl() {
         return imgUrl;
@@ -27,11 +27,11 @@ public class ResponseMenuFull {
         this.title = title;
     }
 
-    public ResponseFullRecipes getContent() {
+    public ResponseFullRecipesForMenu getContent() {
         return content;
     }
 
-    public void setContent(ResponseFullRecipes content) {
+    public void setContent(ResponseFullRecipesForMenu content) {
         this.content = content;
     }
 }
