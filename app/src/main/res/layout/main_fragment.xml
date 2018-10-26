@@ -4,71 +4,135 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/layout_first"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/table_five_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:contentDescription="TODO"
-                app:srcCompat="@drawable/cat1" />
+            <RelativeLayout
+                android:id="@+id/layout_first"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp">
 
-            <ImageView
-                android:id="@+id/recipes_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="0dp"
-                android:layout_marginTop="0dp"
-                app:srcCompat="@drawable/cat2" />
+                <ImageView
+                    android:id="@+id/table_five_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:contentDescription="TODO"
+                    app:srcCompat="@drawable/cat1" />
+
+                <ImageView
+                    android:id="@+id/recipes_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    app:srcCompat="@drawable/cat2" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_second"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_first"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="15dp">
+
+                <ImageView
+                    android:id="@+id/menu_week"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:contentDescription="TODO"
+                    app:srcCompat="@drawable/cat3" />
+
+                <ImageView
+                    android:id="@+id/hepatoprotectors"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    app:srcCompat="@drawable/cat4" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_third"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_second"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="15dp">
+
+                <ImageView
+                    android:id="@+id/about_liver"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:contentDescription="TODO"
+                    app:srcCompat="@drawable/cat5" />
+
+                <ImageView
+                    android:id="@+id/how"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    app:srcCompat="@drawable/cat6" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_fourth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_third"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="15dp">
+
+                <ImageView
+                    android:id="@+id/bad_liver"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:contentDescription="TODO"
+                    app:srcCompat="@drawable/cat7" />
+
+                <ImageView
+                    android:id="@+id/alarm"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    app:srcCompat="@drawable/cat8" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/layout_second"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_first"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="50dp">
-
-            <ImageView
-                android:id="@+id/menu_week"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:contentDescription="TODO"
-                app:srcCompat="@drawable/cat3" />
-
-            <ImageView
-                android:id="@+id/hepatoprotectors"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="0dp"
-                android:layout_marginTop="0dp"
-                app:srcCompat="@drawable/cat4" />
-
-        </RelativeLayout>
-
-
-    </RelativeLayout>
-
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

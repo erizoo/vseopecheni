@@ -4,11 +4,10 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import ru.vseopecheni.app.data.models.ResponseAbout;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
-import ru.vseopecheni.app.data.models.ResponseMenu;
 import ru.vseopecheni.app.data.models.ResponseMenuForWeek;
 import ru.vseopecheni.app.data.models.ResponseProducts;
-import ru.vseopecheni.app.data.models.ResponseRecipes;
 
 public interface ServiceNetwork {
 
@@ -17,5 +16,13 @@ public interface ServiceNetwork {
 
     Observable<List<ResponseProducts>> getProducts();
 
-    Observable<ResponseMenu> getMenuForWeek();
+    Observable<ResponseMenuForWeek> getMenuForWeek();
+
+    Observable<List<ResponseAbout>> getFull(String number);
+
+    Observable<List<ResponseAbout>> getInfoAboutTreat(String number);
+
+    Observable<List<ResponseProducts>> getProductsForNet(String drinksId);
+
+    Observable<Object> saveProduct();
 }

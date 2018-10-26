@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rl_1"
+                android:layout_width="match_parent"
+                android:layout_height="220dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon01" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="#AA000000"
+                    android:gravity="center"
+                    android:padding="12dip"
+                    android:textAllCaps="true"
+                    android:text="@string/liver_diagnosis"
+                    android:textColor="#ffffffff" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_2"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/rl_1"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon02" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="#AA000000"
+                    android:gravity="center"
+                    android:padding="12dip"
+                    android:textAllCaps="true"
+                    android:text="@string/function_liver"
+                    android:textColor="#ffffffff" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_3"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/rl_2"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon03" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="#AA000000"
+                    android:gravity="center"
+                    android:padding="12dip"
+                    android:textAllCaps="true"
+                    android:text="@string/hepatoprotectors"
+                    android:textColor="#ffffffff" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_4"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/rl_3"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon04" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="#AA000000"
+                    android:gravity="center"
+                    android:padding="12dip"
+                    android:textAllCaps="true"
+                    android:text="@string/question"
+                    android:textColor="#ffffffff" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_5"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/rl_4"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon05" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="#AA000000"
+                    android:gravity="center"
+                    android:padding="12dip"
+                    android:textAllCaps="true"
+                    android:text="@string/drug_selection"
+                    android:textColor="#ffffffff" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_6"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/rl_5"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon06" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="#AA000000"
+                    android:gravity="center"
+                    android:padding="12dip"
+                    android:textAllCaps="true"
+                    android:text="@string/ursodeoxycholic_acid"
+                    android:textColor="#ffffffff" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -5,12 +5,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import java.util.List;
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -20,12 +25,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
-import ru.vseopecheni.app.data.models.ResponseMenu;
 import ru.vseopecheni.app.data.models.ResponseMenuForWeek;
+import ru.vseopecheni.app.ui.MainActivity;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
+import ru.vseopecheni.app.utils.Constant;
 
-public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView {
+public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView, MenuForWeekAdapter.Callback {
 
     @BindView(R.id.monday_layout)
     LinearLayout mondayLayout;
@@ -61,7 +67,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
     MenuForWeekPresenter<MenuForWeekMvpView> presenter;
     private Unbinder unbinder;
     private MenuForWeekAdapter menuForWeekAdapter;
-    private ResponseMenu responseMenu;
+    private ResponseMenuForWeek responseMenuForWeek;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +80,11 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
         View v = inflater.inflate(R.layout.menu_for_week_fragment, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-                menuForWeekAdapter = new MenuForWeekAdapter();
+        showLoading();
+        menuForWeekAdapter = new MenuForWeekAdapter();
+        responseMenuForWeek = new ResponseMenuForWeek();
+
+        menuForWeekAdapter.setCallback(this);
 
         recyclerViewMonday.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewMonday.setAdapter(menuForWeekAdapter);
@@ -100,7 +110,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             mondayLayout.setVisibility(View.GONE);
         } else {
             mondayLayout.setVisibility(View.VISIBLE);
-            menuForWeekAdapter.setItems(responseMenu.getArray().get(0).getMonday());
+            menuForWeekAdapter.setItems(responseMenuForWeek.getMonday(), "monday");
         }
     }
 
@@ -110,7 +120,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             tuesdayLayout.setVisibility(View.GONE);
         } else {
             tuesdayLayout.setVisibility(View.VISIBLE);
-            menuForWeekAdapter.setItems(responseMenu.getArray().get(1).getTuesday());
+            menuForWeekAdapter.setItems(responseMenuForWeek.getTuesday(), "tuesday");
         }
     }
 
@@ -120,7 +130,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             wednesdayLayout.setVisibility(View.GONE);
         } else {
             wednesdayLayout.setVisibility(View.VISIBLE);
-            menuForWeekAdapter.setItems(responseMenu.getArray().get(2).getWednesday());
+            menuForWeekAdapter.setItems(responseMenuForWeek.getWednesday(), "wednesday");
         }
     }
 
@@ -130,7 +140,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             thursdayLayout.setVisibility(View.GONE);
         } else {
             thursdayLayout.setVisibility(View.VISIBLE);
-            menuForWeekAdapter.setItems(responseMenu.getArray().get(3).getThursday());
+            menuForWeekAdapter.setItems(responseMenuForWeek.getThursday(), "thursday");
         }
     }
 
@@ -140,7 +150,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             fridayLayout.setVisibility(View.GONE);
         } else {
             fridayLayout.setVisibility(View.VISIBLE);
-            menuForWeekAdapter.setItems(responseMenu.getArray().get(4).getFriday());
+            menuForWeekAdapter.setItems(responseMenuForWeek.getFriday(), "friday");
         }
     }
 
@@ -150,7 +160,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             saturdayLayout.setVisibility(View.GONE);
         } else {
             saturdayLayout.setVisibility(View.VISIBLE);
-            menuForWeekAdapter.setItems(responseMenu.getArray().get(5).getSaturday());
+            menuForWeekAdapter.setItems(responseMenuForWeek.getSaturday(), "saturday");
         }
     }
 
@@ -160,7 +170,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
             sundayLayout.setVisibility(View.GONE);
         } else {
             sundayLayout.setVisibility(View.VISIBLE);
-            menuForWeekAdapter.setItems(responseMenu.getArray().get(6).getSunday());
+            menuForWeekAdapter.setItems(responseMenuForWeek.getSunday(), "sunday");
         }
     }
 
@@ -168,13 +178,58 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
-        presenter.getMenuForWeek();
+        if (Constant.isInternet(getContext())) {
+            presenter.getMenuForWeek();
+        } else {
+            FileInputStream stream = null;
+            StringBuilder sb = new StringBuilder();
+            String line;
+            try {
+                stream = Objects.requireNonNull(getActivity()).openFileInput("menuForWeek");
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line);
+                    }
+                } finally {
+                    Gson gson = new Gson();
+                    ResponseMenuForWeek responseMenuForWeek = gson.fromJson(sb.toString(), ResponseMenuForWeek.class);
+                    stream.close();
+                    this.responseMenuForWeek.setMonday(responseMenuForWeek.getMonday());
+                    this.responseMenuForWeek.setTuesday(responseMenuForWeek.getTuesday());
+                    this.responseMenuForWeek.setWednesday(responseMenuForWeek.getWednesday());
+                    this.responseMenuForWeek.setThursday(responseMenuForWeek.getThursday());
+                    this.responseMenuForWeek.setFriday(responseMenuForWeek.getFriday());
+                    this.responseMenuForWeek.setSaturday(responseMenuForWeek.getSaturday());
+                    this.responseMenuForWeek.setSunday(responseMenuForWeek.getSunday());
+                    hideLoading();
+                }
+            } catch (Exception e) {
+                Log.d(Constant.TAG, "Файла нет или произошла ошибка при чтении");
+            }
+        }
+
         super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
-    public void onMenuForWeekUpdated(ResponseMenu responseMenu) {
-        this.responseMenu = new ResponseMenu();
-        this.responseMenu.setArray(responseMenu.getArray());
+    public void onMenuForWeekUpdated(ResponseMenuForWeek responseMenuForWeek) {
+        this.responseMenuForWeek.setMonday(responseMenuForWeek.getMonday());
+        this.responseMenuForWeek.setTuesday(responseMenuForWeek.getTuesday());
+        this.responseMenuForWeek.setWednesday(responseMenuForWeek.getWednesday());
+        this.responseMenuForWeek.setThursday(responseMenuForWeek.getThursday());
+        this.responseMenuForWeek.setFriday(responseMenuForWeek.getFriday());
+        this.responseMenuForWeek.setSaturday(responseMenuForWeek.getSaturday());
+        this.responseMenuForWeek.setSunday(responseMenuForWeek.getSunday());
+        hideLoading();
+    }
+
+    @Override
+    public void showRecipe(String json) {
+        Bundle bundle = new Bundle();
+        FullRecipeForWeekFragment fullRecipeForWeekFragment = new FullRecipeForWeekFragment();
+        bundle.putString("json", json);
+        fullRecipeForWeekFragment.setArguments(bundle);
+        ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(fullRecipeForWeekFragment);
     }
 }

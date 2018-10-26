@@ -19,7 +19,7 @@ public class TableFivePresenterImpl <V extends TableFiveMvpView> extends BasePre
     @Override
     public void getProducts(String drinksId) {
         getCompositeDisposable().add(
-                getRepositoryManager().getServiceNetwork().getProducts()
+                getRepositoryManager().getServiceNetwork().getProductsForNet(drinksId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

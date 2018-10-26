@@ -49,5 +49,22 @@
     <string name="friday">пятнциа</string>
     <string name="saturday">суббота</string>
     <string name="sunday">воскресенье</string>
+    <string name="word_about_liver">слово о печени</string>
+    <string name="word_about_liver_content">У древних вавилонян и китайцев (2000-1000 лет до н.э.) печень считалась вместилищем души.</string>
+    <string name="liver_structure">строение печени</string>
+    <string name="liver_hurt">болит ли печень?</string>
+    <string name="mif">5 мифов о работе печени</string>
+    <string name="mif_content">Печень является важнейшим органом и главным фильтром человеческого организма.</string>
+    <string name="cholesterol">Печень и холестерин</string>
+    <string name="cholesterol_content">Печень – это основное место синтеза холестерина и желчных кислот.</string>
+    <string name="connection">Есть ли связь между ИМТ и печенью</string>
+    <string name="connection_content">На вопрос, поставленный в заголовке статьи, можно ответить так: связь есть, причём самая прямая.</string>
+    <string name="liver_structure_content">Важно понимать, что у печени нервных окончаний нет, поэтому болеть она не может.</string>
+    <string name="liver_hurt_content">И в частной беседе, и в кабинете врача как часто, как привычно мы слышим: «У меня болит печень».</string>
+    <string name="liver_diagnosis">диагностика печени</string>
+    <string name="function_liver">Как восстановить функции печени</string>
+    <string name="question">К вопросу о выборе лекарств</string>
+    <string name="drug_selection">Выбор препарата на примере урсодезоксихолевой кислоты</string>
+    <string name="ursodeoxycholic_acid">Урсодезоксихолевая кислота (УДХК)</string>
 
 </resources>

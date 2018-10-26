@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -75,72 +74,128 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
 
     @OnClick(R.id.drinks)
     public void getDrinks() {
-        moveNewFragmentWithoutInternet(DRINKS_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(DRINKS_ID);
+        } else {
+            presenter.getProducts(DRINKS_ID);
+        }
     }
 
     @OnClick(R.id.soup)
     public void getSoup() {
-        moveNewFragmentWithoutInternet(SOUP_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(SOUP_ID);
+        } else {
+            presenter.getProducts(SOUP_ID);
+        }
     }
 
     @OnClick(R.id.porrige)
     public void getPorrige() {
-        moveNewFragmentWithoutInternet(PORRIDGE_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(PORRIDGE_ID);
+        } else {
+            presenter.getProducts(PORRIDGE_ID);
+        }
     }
 
     @OnClick(R.id.pasta)
     public void getPasta() {
-        moveNewFragmentWithoutInternet(PASTA_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(PASTA_ID);
+        } else {
+            presenter.getProducts(PASTA_ID);
+        }
     }
 
     @OnClick(R.id.meat)
     public void getMeat() {
-        moveNewFragmentWithoutInternet(MEAT_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(MEAT_ID);
+        } else {
+            presenter.getProducts(MEAT_ID);
+        }
     }
 
     @OnClick(R.id.bread)
     public void getBread() {
-        moveNewFragmentWithoutInternet(BREAD_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(BREAD_ID);
+        } else {
+            presenter.getProducts(BREAD_ID);
+        }
     }
 
     @OnClick(R.id.milk)
     public void getMilk() {
-        moveNewFragmentWithoutInternet(MILK_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(MILK_ID);
+        } else {
+            presenter.getProducts(MILK_ID);
+        }
     }
 
     @OnClick(R.id.vegetables)
     public void getVegetables() {
-        moveNewFragmentWithoutInternet(VEG_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(VEG_ID);
+        } else {
+            presenter.getProducts(VEG_ID);
+        }
     }
 
     @OnClick(R.id.fruits)
     public void getFruits() {
-        moveNewFragmentWithoutInternet(FRUIT_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(FRUIT_ID);
+        } else {
+            presenter.getProducts(FRUIT_ID);
+        }
     }
 
     @OnClick(R.id.eggs)
     public void getEggs() {
-        moveNewFragmentWithoutInternet(EGGS_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(EGGS_ID);
+        } else {
+            presenter.getProducts(EGGS_ID);
+        }
     }
 
     @OnClick(R.id.butter)
     public void getButter() {
-        moveNewFragmentWithoutInternet(BUTTER_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(BUTTER_ID);
+        } else {
+            presenter.getProducts(BUTTER_ID);
+        }
     }
 
     @OnClick(R.id.snacks)
     public void getSnacks() {
-        moveNewFragmentWithoutInternet(SNACKS_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(SNACKS_ID);
+        } else {
+            presenter.getProducts(SNACKS_ID);
+        }
     }
 
     @OnClick(R.id.sauce)
     public void getSauce() {
-        moveNewFragmentWithoutInternet(SAUSE_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(SAUSE_ID);
+        } else {
+            presenter.getProducts(SAUSE_ID);
+        }
     }
 
     @OnClick(R.id.sweet)
     public void getSweet() {
-        moveNewFragmentWithoutInternet(SWEET_ID);
+        if (!Constant.isInternet(getContext())) {
+            moveNewFragmentWithoutInternet(SWEET_ID);
+        } else {
+            presenter.getProducts(SWEET_ID);
+        }
     }
 
     @Override
@@ -188,7 +243,7 @@ public class TableFiveFragment extends Fragment implements TableFiveMvpView {
                 List<ResponseProducts> responseProducts = gson.fromJson(sb.toString(), listOfObject);
                 Bundle bundle = new Bundle();
                 for (ResponseProducts items : responseProducts) {
-                    if (items.getId().equals(id)){
+                    if (items.getId().equals(id)) {
                         bundle.putString(YES, items.getYes());
                         bundle.putString(NO, items.getNo());
                     }

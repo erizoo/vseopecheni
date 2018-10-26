@@ -1,9 +1,11 @@
 package ru.vseopecheni.app.ui.fragments.table;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +16,16 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.ui.base.BaseFragment;
-import ru.vseopecheni.app.utils.Constant;
 
 public class TableFiveProductsFragment extends BaseFragment {
-
-    private String yes;
-    private String no;
-    private Unbinder unbinder;
 
     @BindView(R.id.text_yes)
     TextView textYes;
     @BindView(R.id.text_no)
     TextView textNo;
+    private String yes;
+    private String no;
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,13 +39,24 @@ public class TableFiveProductsFragment extends BaseFragment {
         View v = inflater.inflate(R.layout.table_five_products_fragment, container, false);
         unbinder = ButterKnife.bind(this, v);
         Bundle bundle = this.getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             yes = bundle.getString("YES");
             no = bundle.getString("NO");
-            String resultYes = yes.replaceAll("\r\n\t", "\n- ");
-            textYes.setText(resultYes);
-            String resultNo = no.replaceAll("\r\n\t", "\n- ");
-            textNo.setText(resultNo);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                textYes.setText(Html.fromHtml(yes, Html.FROM_HTML_MODE_COMPACT));
+                String text = textYes.getText().toString();
+                textYes.setText(text.replaceAll(";", "\n- "));
+                textNo.setText(Html.fromHtml(no, Html.FROM_HTML_MODE_COMPACT));
+                String text2 = textNo.getText().toString();
+                textNo.setText(text.replaceAll(";", "\n- "));
+            } else {
+                textYes.setText(Html.fromHtml(yes));
+                String text = textYes.getText().toString();
+                textYes.setText(text.replaceAll(";", "\n- "));
+                textNo.setText(Html.fromHtml(no));
+                String text2 = textNo.getText().toString();
+                textNo.setText(text.replaceAll(";", "\n- "));
+            }
         }
         return v;
     }

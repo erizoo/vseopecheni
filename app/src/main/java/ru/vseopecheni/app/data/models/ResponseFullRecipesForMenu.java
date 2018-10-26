@@ -15,6 +15,7 @@ public class ResponseFullRecipesForMenu {
     @SerializedName("content")
     private String content;
     @SerializedName("tv.sostav")
+
     private List<ResponseMenuSostav> sostav;
 
     public String getId() {

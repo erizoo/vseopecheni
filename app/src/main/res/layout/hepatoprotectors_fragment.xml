@@ -1,260 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="UselessParent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:id="@+id/rl_hepato_layout"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/rl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp">
-
-                <TextView
-                    android:id="@+id/title_textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="90dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="@string/title_hepatoprotectors"
-                    android:textColor="#0080b2"
-                    android:textSize="21sp" />
+                android:layout_marginTop="30dp">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/imageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="30dp"
                     app:srcCompat="@drawable/ic_1" />
 
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/full_recipe_imageView"
-                android:layout_width="260dp"
-                android:layout_height="200dp"
-                android:layout_below="@+id/rl_hepato_layout"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:background="#f67f47"
-                android:padding="1dp"
-                android:src="@drawable/im195" />
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:textAllCaps="true"
+                    android:textColor="#0080b2"
+                    android:textSize="19sp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/p1_textView"
-                android:layout_width="match_parent"
+                android:id="@+id/content"
+                android:layout_below="@+id/rl"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/full_recipe_imageView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/p1"
-                android:textColor="#9a9a9a" />
-
-            <ImageView
-                android:id="@+id/p1_imageView"
-                android:layout_width="360dp"
-                android:layout_height="220dp"
-                android:layout_below="@+id/p1_textView"
-                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="20dp"
-                android:background="#f67f47"
-                android:padding="1dp"
-                android:src="@drawable/liver" />
-
-            <TextView
-                android:id="@+id/p2_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/p1_imageView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/p2"
-                android:textColor="#9a9a9a" />
-
-            <ImageView
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/p2_textView"
-                android:layout_centerHorizontal="true"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="#000000" />
-
-            <TextView
-                android:id="@+id/h1_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/line"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/h1"
                 android:textColor="#9a9a9a"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/p3_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/h1_textView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/p3"
-                android:textColor="#9a9a9a" />
-
-            <TextView
-                android:id="@+id/p4_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/p3_textView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/p4"
-                android:textColor="#9a9a9a"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/p5_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/p4_textView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/p5"
-                android:textColor="#9a9a9a" />
-
-            <TextView
-                android:id="@+id/p6_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/p5_textView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/p6"
-                android:textColor="#9a9a9a" />
-
-            <ImageView
-                android:id="@+id/line_two"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/p6_textView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="#000000" />
-
-            <TextView
-                android:id="@+id/h2_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/line_two"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/h2"
-                android:textColor="#9a9a9a"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/p7_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/h2_textView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:autoLink="all"
-                android:clickable="true"
-                android:focusable="true"
-                android:linksClickable="true"
-                android:text="@string/p7"
-                android:textColor="#9a9a9a" />
-
-            <TextView
-                android:id="@+id/h3_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/p7_textView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/h3"
-                android:textColor="#9a9a9a"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/p8_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/h3_textView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:autoLink="all"
-                android:clickable="true"
-                android:focusable="true"
-                android:linksClickable="true"
-                android:text="@string/p8"
-                android:textColor="#9a9a9a" />
-
-            <ImageView
-                android:id="@+id/p2_imageView"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_below="@+id/p8_textView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:background="#f67f47"
-                android:padding="1dp"
-                android:src="@drawable/n" />
-
-            <TextView
-                android:id="@+id/p9_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/p2_imageView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:autoLink="all"
-                android:clickable="true"
-                android:focusable="true"
-                android:linksClickable="true"
-                android:text="@string/p9"
-                android:textColor="#9a9a9a" />
+                android:textSize="19sp" />
 
         </RelativeLayout>
 
     </ScrollView>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -8,6 +8,6 @@ import ru.vseopecheni.app.ui.base.MvpView;
 
 public interface MenuForWeekMvpView extends MvpView {
 
-    void onMenuForWeekUpdated(ResponseMenu responseMenu);
+    void onMenuForWeekUpdated(ResponseMenuForWeek responseMenuForWeek);
 
 }

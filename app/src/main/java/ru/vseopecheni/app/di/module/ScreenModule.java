@@ -14,12 +14,25 @@ import ru.vseopecheni.app.ui.MainActivityPresenterImpl;
 import ru.vseopecheni.app.ui.fragments.MainMvpView;
 import ru.vseopecheni.app.ui.fragments.MainPresenter;
 import ru.vseopecheni.app.ui.fragments.MainPresenterImpl;
+import ru.vseopecheni.app.ui.fragments.about.AboutLiverFull;
+import ru.vseopecheni.app.ui.fragments.about.AboutLiverFullMvpView;
+import ru.vseopecheni.app.ui.fragments.about.AboutLiverFullPresenter;
+import ru.vseopecheni.app.ui.fragments.about.AboutLiverFullPresenterImpl;
+import ru.vseopecheni.app.ui.fragments.disease.LiverDiseaseMvpView;
+import ru.vseopecheni.app.ui.fragments.disease.LiverDiseasePresenter;
+import ru.vseopecheni.app.ui.fragments.disease.LiverDiseasePresenterImpl;
+import ru.vseopecheni.app.ui.fragments.hepatoprotectors.HepatoprotectorsMvpView;
+import ru.vseopecheni.app.ui.fragments.hepatoprotectors.HepatoprotectorsPresenter;
+import ru.vseopecheni.app.ui.fragments.hepatoprotectors.HepatoprotectorsPresenterImpl;
 import ru.vseopecheni.app.ui.fragments.menu.MenuForWeekMvpView;
 import ru.vseopecheni.app.ui.fragments.menu.MenuForWeekPresenter;
 import ru.vseopecheni.app.ui.fragments.menu.MenuForWeekPresenterImpl;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveMvpView;
 import ru.vseopecheni.app.ui.fragments.table.TableFivePresenter;
 import ru.vseopecheni.app.ui.fragments.table.TableFivePresenterImpl;
+import ru.vseopecheni.app.ui.fragments.treat.HowToTreatFullMvpView;
+import ru.vseopecheni.app.ui.fragments.treat.HowToTreatFullPresenter;
+import ru.vseopecheni.app.ui.fragments.treat.HowToTreatFullPresenterImpl;
 
 @Module
 public class ScreenModule {
@@ -67,6 +80,30 @@ public class ScreenModule {
     @Provides
     @PerScreen
     MenuForWeekPresenter<MenuForWeekMvpView> provideMenuForWeekPresenter(MenuForWeekPresenterImpl<MenuForWeekMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerScreen
+    LiverDiseasePresenter<LiverDiseaseMvpView> provideLiverDiseasePresenter(LiverDiseasePresenterImpl<LiverDiseaseMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerScreen
+    AboutLiverFullPresenter<AboutLiverFullMvpView> provideAboutLiverFullPresenter(AboutLiverFullPresenterImpl<AboutLiverFullMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerScreen
+    HepatoprotectorsPresenter<HepatoprotectorsMvpView> provideHepatoprotectorsPresenter(HepatoprotectorsPresenterImpl<HepatoprotectorsMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerScreen
+    HowToTreatFullPresenter<HowToTreatFullMvpView> provideHowToTreatFullPresenter(HowToTreatFullPresenterImpl<HowToTreatFullMvpView> presenter) {
         return presenter;
     }
 

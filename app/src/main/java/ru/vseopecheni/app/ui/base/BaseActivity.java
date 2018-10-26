@@ -24,6 +24,8 @@ import ru.vseopecheni.app.di.component.ScreenComponent;
 import ru.vseopecheni.app.di.module.ScreenModule;
 import ru.vseopecheni.app.ui.ViewPagerAdapter;
 import ru.vseopecheni.app.ui.fragments.MainFragment;
+import ru.vseopecheni.app.ui.fragments.about.AboutLiverFragment;
+import ru.vseopecheni.app.ui.fragments.menu.MenuWeekFragment;
 import ru.vseopecheni.app.ui.fragments.recipes.RecipeFragment;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveFragment;
 import ru.vseopecheni.app.utils.Constant;
@@ -106,6 +108,12 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
                 break;
             case "HepatoprotectorsFragment":
                 moveToNewFragment(new MainFragment());
+                break;
+            case "AboutLiverFull":
+                moveToNewFragment(new AboutLiverFragment());
+                break;
+            case "FullRecipeForWeekFragment":
+                moveToNewFragment(new MenuWeekFragment());
                 break;
             case "FullRecipeFragment":
                 break;

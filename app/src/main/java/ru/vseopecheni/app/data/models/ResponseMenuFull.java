@@ -1,5 +1,6 @@
 package ru.vseopecheni.app.data.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ResponseMenuFull {
@@ -9,6 +10,7 @@ public class ResponseMenuFull {
     @SerializedName("title")
     private String title;
     @SerializedName("content")
+    @Expose
     private ResponseFullRecipesForMenu content;
 
     public String getImgUrl() {
