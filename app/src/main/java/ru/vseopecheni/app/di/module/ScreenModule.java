@@ -27,6 +27,9 @@ import ru.vseopecheni.app.ui.fragments.hepatoprotectors.HepatoprotectorsPresente
 import ru.vseopecheni.app.ui.fragments.menu.MenuForWeekMvpView;
 import ru.vseopecheni.app.ui.fragments.menu.MenuForWeekPresenter;
 import ru.vseopecheni.app.ui.fragments.menu.MenuForWeekPresenterImpl;
+import ru.vseopecheni.app.ui.fragments.recipes.RecipeMvpView;
+import ru.vseopecheni.app.ui.fragments.recipes.RecipePresenter;
+import ru.vseopecheni.app.ui.fragments.recipes.RecipePresenterImpl;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveMvpView;
 import ru.vseopecheni.app.ui.fragments.table.TableFivePresenter;
 import ru.vseopecheni.app.ui.fragments.table.TableFivePresenterImpl;
@@ -104,6 +107,12 @@ public class ScreenModule {
     @Provides
     @PerScreen
     HowToTreatFullPresenter<HowToTreatFullMvpView> provideHowToTreatFullPresenter(HowToTreatFullPresenterImpl<HowToTreatFullMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerScreen
+    RecipePresenter<RecipeMvpView> provideRecipePresenter(RecipePresenterImpl<RecipeMvpView> presenter) {
         return presenter;
     }
 

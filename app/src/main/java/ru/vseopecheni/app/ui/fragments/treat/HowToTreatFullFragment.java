@@ -1,5 +1,8 @@
 package ru.vseopecheni.app.ui.fragments.treat;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -49,6 +55,8 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
     ImageView imageView;
     @BindView(R.id.scrollView_about)
     ScrollView scrollView;
+    @BindView(R.id.web_view)
+    WebView webView;
 
     private Unbinder unbinder;
     private String number;
@@ -58,6 +66,7 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,8 +80,48 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
         if (bundle != null) {
             number = bundle.getString(NUMBER);
             if (Constant.isInternet(getContext())){
-                presenter.getInfoAboutTreat(number);
+                v.findViewById(R.id.scrollView_about).setVisibility(View.GONE);
+                webView.setVisibility(View.VISIBLE);
+                WebSettings webSettings = webView.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+                webView.setWebViewClient(new WebViewClient() {
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        if (url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
+                            view.getContext().startActivity(
+                                    new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        webView.loadUrl("javascript:(function() { " +
+                                "document.getElementsByTagName('header')[0].style.display='none'; " + "document.getElementsById('nav_menu')[0].style.display='none'; " + "})()");
+                    }
+                });
+                hideLoading();
+                if (number.equals("1")){
+                    webView.loadUrl("https://app.vseopecheni.ru/kak-lechit-pechen/diagnostika-pecheni/");
+                }
+                if (number.equals("2")){
+                    webView.loadUrl("https://app.vseopecheni.ru/kak-lechit-pechen/diagnostika-pecheni/");
+                }
+                if (number.equals("3")){
+                    webView.loadUrl("https://app.vseopecheni.ru/kak-lechit-pechen/gepatoprotektori/");
+                }
+                if (number.equals("4")){
+                    webView.loadUrl("https://app.vseopecheni.ru/kak-lechit-pechen/gepatoprotektori/k-voprosu-o-vibore-lekarstv/");
+                }
+                if (number.equals("5")){
+                    webView.loadUrl("https://app.vseopecheni.ru/kak-lechit-pechen/gepatoprotektori/vibor-preparata-na-primere-ursodezoksiholevoj-kisloti/");
+                }
+                if (number.equals("6")){
+                    webView.loadUrl("https://app.vseopecheni.ru/about-liver/ursodezoksiholevaja-kislota-udhk/");
+                }
             } else {
+                v.findViewById(R.id.scrollView_about).setVisibility(View.VISIBLE);
                 withoutInternet(number);
             }
 

@@ -2,9 +2,12 @@ package ru.vseopecheni.app.ui.fragments.recipes;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -29,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
+import ru.vseopecheni.app.data.models.ResponseAbout;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
@@ -52,6 +56,7 @@ public class FullRecipeFragment extends BaseFragment {
 
     private Unbinder unbinder;
     private String id;
+    private String json;
     private Bitmap bitmap;
     private SharedPreferences sharedPreferences;
 
@@ -68,46 +73,74 @@ public class FullRecipeFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, v);
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            id = bundle.getString("id");
-            FileInputStream stream = null;
-            StringBuilder sb = new StringBuilder();
-            String line;
-            ResponseFullRecipes responseFullRecipes = new ResponseFullRecipes();
-            try {
-                stream = Objects.requireNonNull(getActivity()).openFileInput("jsonRecipes");
+        if (!Constant.isInternet(getContext())){
+            if (bundle != null) {
+                id = bundle.getString("id");
+                FileInputStream stream = null;
+                StringBuilder sb = new StringBuilder();
+                String line;
+                ResponseFullRecipes responseFullRecipes = new ResponseFullRecipes();
                 try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line);
-                    }
-                } finally {
-                    Gson gson = new Gson();
-                    Type listOfObject = new TypeToken<List<ResponseFullRecipes>>() {
-                    }.getType();
-                    List<ResponseFullRecipes> responseFullRecipesList = gson.fromJson(sb.toString(), listOfObject);
-                    for (ResponseFullRecipes item : responseFullRecipesList) {
-                        if (item.getId().equals(id)) {
-                            responseFullRecipes.setContent(item.getContent());
-                            responseFullRecipes.setSostav(item.getSostav());
-                            responseFullRecipes.setTitle(item.getTitle());
+                    stream = Objects.requireNonNull(getActivity()).openFileInput("jsonRecipes");
+                    try {
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
                         }
+                    } finally {
+                        Gson gson = new Gson();
+                        Type listOfObject = new TypeToken<List<ResponseFullRecipes>>() {
+                        }.getType();
+                        List<ResponseFullRecipes> responseFullRecipesList = gson.fromJson(sb.toString(), listOfObject);
+                        for (ResponseFullRecipes item : responseFullRecipesList) {
+                            if (item.getId().equals(id)) {
+                                responseFullRecipes.setContent(item.getContent());
+                                responseFullRecipes.setSostav(item.getSostav());
+                                responseFullRecipes.setTitle(item.getTitle());
+                            }
+                        }
+                        stream.close();
+                        ((BaseActivity) getActivity()).hideLoading();
                     }
-                    stream.close();
-                    ((BaseActivity) getActivity()).hideLoading();
+                } catch (Exception e) {
+                    Log.d(Constant.TAG, "Файла нет или произошла ошибка при чтении");
                 }
-            } catch (Exception e) {
-                Log.d(Constant.TAG, "Файла нет или произошла ошибка при чтении");
+                writeView(responseFullRecipes);
+                bitmap = bundle.getParcelable("BitmapImage");
+                Glide.with(Objects.requireNonNull(getContext()))
+                        .asBitmap()
+                        .load(bitmap)
+                        .apply(RequestOptions.circleCropTransform())
+                        .apply(new RequestOptions().fitCenter())
+                        .into(imageView);
             }
-            writeView(responseFullRecipes);
-            bitmap = bundle.getParcelable("BitmapImage");
+        } else {
+            json = Objects.requireNonNull(bundle).getString("json");
+            Gson gson = new Gson();
+            ResponseFullRecipes responseFullRecipes = gson.fromJson(json, ResponseFullRecipes.class);
             Glide.with(Objects.requireNonNull(getContext()))
                     .asBitmap()
-                    .load(bitmap)
+                    .load("https://app.vseopecheni.ru/" + responseFullRecipes.getImage())
                     .apply(RequestOptions.circleCropTransform())
                     .apply(new RequestOptions().fitCenter())
                     .into(imageView);
+            Type listOfObject = new TypeToken<List<RecipeCompositionModel>>() {
+            }.getType();
+            List<RecipeCompositionModel> recipeCompositionModels = gson.fromJson(
+                    responseFullRecipes.getSostav(), listOfObject);
+            StringBuilder sb = new StringBuilder();
+            for (RecipeCompositionModel items : recipeCompositionModels) {
+                sb.append(".").append(" ").append(items.getName()).append(" ").append(items.getValue()).append(System.getProperty("line.separator"));
+            }
+            compositionRecipe.setText(sb.toString());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                cookingMethodFull.setText(Html.fromHtml(responseFullRecipes.getContent(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                cookingMethodFull.setText(Html.fromHtml(responseFullRecipes.getContent()));
+            }
+            title.setText(responseFullRecipes.getTitle());
         }
+
         return v;
     }
 

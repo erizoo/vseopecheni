@@ -79,8 +79,6 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.menu_for_week_fragment, container, false);
         unbinder = ButterKnife.bind(this, v);
-
-        showLoading();
         menuForWeekAdapter = new MenuForWeekAdapter();
         responseMenuForWeek = new ResponseMenuForWeek();
 
@@ -179,6 +177,7 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
         if (Constant.isInternet(getContext())) {
+            showLoading();
             presenter.getMenuForWeek();
         } else {
             FileInputStream stream = null;

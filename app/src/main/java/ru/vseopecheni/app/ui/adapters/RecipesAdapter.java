@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ import ru.vseopecheni.app.data.models.ResponseRecipes;
 import ru.vseopecheni.app.ui.MainActivity;
 import ru.vseopecheni.app.ui.base.BaseViewHolder;
 import ru.vseopecheni.app.ui.fragments.recipes.FullRecipeFragment;
+import ru.vseopecheni.app.utils.Constant;
 import ru.vseopecheni.app.utils.ImageSaver;
 
 public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -71,24 +73,42 @@ public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            Bitmap bitmap = new ImageSaver(context).
-                    setFileName(responseFullRecipes.get(position).getId() + ".jpg")
-                    .setDirectoryName("images")
-                    .load();
-            Glide.with(context)
-                    .asBitmap()
-                    .load(bitmap)
-                    .apply(new RequestOptions().fitCenter())
-                    .into(imageViewRecipes);
-            title.setText(responseFullRecipes.get(position).getTitle());
-            imageViewRecipes.setOnClickListener(v -> {
-                Bundle bundle = new Bundle();
-                bundle.putString("id", responseFullRecipes.get(position).getId());
-                bundle.putParcelable("BitmapImage", bitmap);
-                FullRecipeFragment fullRecipeFragment = new FullRecipeFragment();
-                fullRecipeFragment.setArguments(bundle);
-                ((MainActivity) Objects.requireNonNull(context)).moveToNewFragment(fullRecipeFragment);
-            });
+            if (!Constant.isInternet(context)){
+                Bitmap bitmap = new ImageSaver(context).
+                        setFileName(responseFullRecipes.get(position).getId() + ".jpg")
+                        .setDirectoryName("images")
+                        .load();
+                Glide.with(context)
+                        .asBitmap()
+                        .load(bitmap)
+                        .apply(new RequestOptions().fitCenter())
+                        .into(imageViewRecipes);
+                title.setText(responseFullRecipes.get(position).getTitle());
+                imageViewRecipes.setOnClickListener(v -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", responseFullRecipes.get(position).getId());
+                    bundle.putParcelable("BitmapImage", bitmap);
+                    FullRecipeFragment fullRecipeFragment = new FullRecipeFragment();
+                    fullRecipeFragment.setArguments(bundle);
+                    ((MainActivity) Objects.requireNonNull(context)).moveToNewFragment(fullRecipeFragment);
+                });
+            } else {
+                title.setText(responseFullRecipes.get(position).getTitle());
+                Glide.with(context)
+                        .asBitmap()
+                        .load("https://app.vseopecheni.ru/" + responseFullRecipes.get(position).getImage())
+                        .apply(new RequestOptions().fitCenter())
+                        .into(imageViewRecipes);
+                String json = new Gson().toJson(responseFullRecipes.get(position));
+                imageViewRecipes.setOnClickListener(v -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", responseFullRecipes.get(position).getId());
+                    bundle.putString("json", json);
+                    FullRecipeFragment fullRecipeFragment = new FullRecipeFragment();
+                    fullRecipeFragment.setArguments(bundle);
+                    ((MainActivity) Objects.requireNonNull(context)).moveToNewFragment(fullRecipeFragment);
+                });
+            }
         }
     }
 }

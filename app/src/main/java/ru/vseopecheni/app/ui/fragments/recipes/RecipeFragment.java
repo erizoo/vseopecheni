@@ -23,17 +23,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.ui.adapters.RecipesAdapter;
 import ru.vseopecheni.app.ui.base.BaseActivity;
+import ru.vseopecheni.app.ui.fragments.table.TableFiveMvpView;
+import ru.vseopecheni.app.ui.fragments.table.TableFivePresenter;
 import ru.vseopecheni.app.utils.Constant;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class RecipeFragment extends Fragment {
+public class RecipeFragment extends Fragment implements RecipeMvpView {
 
     private Unbinder unbinder;
     private RecyclerView recyclerViewRecipes;
@@ -43,36 +47,42 @@ public class RecipeFragment extends Fragment {
 
     private List<ResponseFullRecipes> responseFullRecipes = new ArrayList<>();
 
+    @Inject
+    RecipePresenter<RecipeMvpView> presenter;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
-
+        presenter.onAttach(this);
         ((BaseActivity) getActivity()).showLoading();
         sharedPreferences = getActivity().getPreferences(MODE_PRIVATE);
         id = sharedPreferences.getString("id", "");
-        FileInputStream stream = null;
-        StringBuilder sb = new StringBuilder();
-        String line;
-        try {
-            stream = Objects.requireNonNull(getActivity()).openFileInput("jsonRecipes");
+        if (!Constant.isInternet(getContext())){
+            FileInputStream stream = null;
+            StringBuilder sb = new StringBuilder();
+            String line;
             try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
+                stream = Objects.requireNonNull(getActivity()).openFileInput("jsonRecipes");
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line);
+                    }
+                } finally {
+                    Gson gson = new Gson();
+                    Type listOfObject = new TypeToken<List<ResponseFullRecipes>>() {
+                    }.getType();
+                    List<ResponseFullRecipes> responseFullRecipes = gson.fromJson(sb.toString(), listOfObject);
+                    this.responseFullRecipes.addAll(responseFullRecipes);
+                    stream.close();
+                    ((BaseActivity) getActivity()).hideLoading();
                 }
-            } finally {
-                Gson gson = new Gson();
-                Type listOfObject = new TypeToken<List<ResponseFullRecipes>>() {
-                }.getType();
-                List<ResponseFullRecipes> responseFullRecipes = gson.fromJson(sb.toString(), listOfObject);
-                this.responseFullRecipes.addAll(responseFullRecipes);
-                stream.close();
-                ((BaseActivity) getActivity()).hideLoading();
+            } catch (Exception e) {
+                Log.d(Constant.TAG, "Файла нет или произошла ошибка при чтении");
             }
-        } catch (Exception e) {
-            Toast.makeText(getContext(), "Подключите интернет", Toast.LENGTH_LONG).show();
-            Log.d(Constant.TAG, "Файла нет или произошла ошибка при чтении");
+        } else {
+            presenter.gertRecipies();
         }
     }
 
@@ -98,5 +108,11 @@ public class RecipeFragment extends Fragment {
             }
         }
         return v;
+    }
+
+    @Override
+    public void onProductsUpdate(List<ResponseFullRecipes> responseFullRecipes) {
+        recipesAdapter.setItems(responseFullRecipes);
+        ((BaseActivity) Objects.requireNonNull(getActivity())).hideLoading();
     }
 }

@@ -1252,5 +1252,6 @@ public class MainFragment extends BaseFragment implements MainMvpView {
             } catch (Exception ignored) {
             }
         }).start();
+        hideLoading();
     }
 }

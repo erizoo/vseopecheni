@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity
 //                progressDialog = Constant.showLoadingDialog(this);
 //                presenter.saveAll();
             } else {
-                Snackbar.make(findViewById(R.id.recipes_image), "Подключите интернет для загрузки данных", Snackbar.LENGTH_LONG).show();
+//                Snackbar.make(findViewById(R.id.recipes_image), "Подключите интернет для загрузки данных", Snackbar.LENGTH_LONG).show();
             }
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

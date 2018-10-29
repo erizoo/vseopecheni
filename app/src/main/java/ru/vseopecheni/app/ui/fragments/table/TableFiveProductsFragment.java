@@ -45,17 +45,17 @@ public class TableFiveProductsFragment extends BaseFragment {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 textYes.setText(Html.fromHtml(yes, Html.FROM_HTML_MODE_COMPACT));
                 String text = textYes.getText().toString();
-                textYes.setText(text.replaceAll(";", "\n- "));
+                textYes.setText(text.replaceAll(";", "\n "));
                 textNo.setText(Html.fromHtml(no, Html.FROM_HTML_MODE_COMPACT));
                 String text2 = textNo.getText().toString();
-                textNo.setText(text.replaceAll(";", "\n- "));
+                textNo.setText(text2.replaceAll(";", "\n "));
             } else {
                 textYes.setText(Html.fromHtml(yes));
                 String text = textYes.getText().toString();
-                textYes.setText(text.replaceAll(";", "\n- "));
+                textYes.setText(text.replaceAll(";", "\n "));
                 textNo.setText(Html.fromHtml(no));
                 String text2 = textNo.getText().toString();
-                textNo.setText(text.replaceAll(";", "\n- "));
+                textNo.setText(text2.replaceAll(";", "\n "));
             }
         }
         return v;

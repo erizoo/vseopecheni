@@ -1,5 +1,8 @@
 package ru.vseopecheni.app.ui.fragments.hepatoprotectors;
 
+import  android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,17 +12,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,16 +34,11 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseAbout;
-import ru.vseopecheni.app.data.models.ResponseProducts;
-import ru.vseopecheni.app.ui.MainActivity;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
-import ru.vseopecheni.app.ui.fragments.table.TableFiveProductsFragment;
 import ru.vseopecheni.app.utils.Constant;
 
 public class HepatoprotectorsFragment extends BaseFragment implements HepatoprotectorsMvpView {
-
-    private Unbinder unbinder;
 
     @BindView(R.id.title)
     TextView title;
@@ -49,15 +48,18 @@ public class HepatoprotectorsFragment extends BaseFragment implements Hepatoprot
     ImageView imageView;
     @BindView(R.id.scrollView)
     ScrollView scrollView;
-
+    @BindView(R.id.web_view)
+    WebView webView;
     @Inject
     HepatoprotectorsPresenter<HepatoprotectorsMvpView> presenter;
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,10 +68,17 @@ public class HepatoprotectorsFragment extends BaseFragment implements Hepatoprot
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
         scrollView.setVisibility(View.GONE);
-        if (Constant.isInternet(getContext())){
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        if (Constant.isInternet(getContext())) {
             presenter.getFull("210");
+            content.setVisibility(View.GONE);
+            webView.setVisibility(View.VISIBLE);
+            v.findViewById(R.id.rl).setVisibility(View.GONE);
         } else {
             withoutInternet("210");
+            content.setVisibility(View.VISIBLE);
+            webView.setVisibility(View.GONE);
         }
         return v;
     }
@@ -107,6 +116,24 @@ public class HepatoprotectorsFragment extends BaseFragment implements Hepatoprot
     @Override
     public void onFullInfoUpdated(List<ResponseAbout> responseAbouts) {
         title.setText("Гепатопротекторы");
+        webView.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
+                    view.getContext().startActivity(
+                            new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                webView.loadUrl("javascript:(function() { " +
+                        "document.getElementsByTagName('header')[0].style.display='none'; " + "document.getElementsById('nav_menu')[0].style.display='none'; " + "})()");
+            }
+        });
+        webView.loadUrl("https://app.vseopecheni.ru/kak-lechit-pechen/gepatoprotektori/");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             content.setText(Html.fromHtml(responseAbouts.get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
             content.setMovementMethod(LinkMovementMethod.getInstance());

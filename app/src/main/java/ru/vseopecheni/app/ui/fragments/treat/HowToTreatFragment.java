@@ -49,32 +49,32 @@ public class HowToTreatFragment extends BaseFragment {
         HowToTreatFullFragment howToTreatFullFragment = new HowToTreatFullFragment();
         Bundle bundle = new Bundle();
         layout1.setOnClickListener(v1 -> {
-            bundle.putString(NUMBER, "204");
+            bundle.putString(NUMBER, "1");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
         layout2.setOnClickListener(v1 -> {
-            bundle.putString(NUMBER, "204");
+            bundle.putString(NUMBER, "2");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
         layout3.setOnClickListener(v1 -> {
-            bundle.putString(NUMBER, "210");
+            bundle.putString(NUMBER, "3");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
         layout4.setOnClickListener(v1 -> {
-            bundle.putString(NUMBER, "212");
+            bundle.putString(NUMBER, "4");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
         layout5.setOnClickListener(v1 -> {
-            bundle.putString(NUMBER, "213");
+            bundle.putString(NUMBER, "5");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
         layout6.setOnClickListener(v1 -> {
-            bundle.putString(NUMBER, "16");
+            bundle.putString(NUMBER, "6");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
