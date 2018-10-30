@@ -146,7 +146,11 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                     break;
             }
         };
-        boolean isSaved = sharedPreferences.getBoolean("SAVED",false);
+        boolean isSaved = false;
+        try {
+            isSaved = sharedPreferences.getBoolean("SAVED",false);
+        } catch (NullPointerException e){
+        }
         if (!isSaved){
             AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
             adb.setTitle(R.string.title_dialog);
