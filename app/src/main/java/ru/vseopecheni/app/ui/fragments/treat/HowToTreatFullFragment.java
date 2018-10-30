@@ -43,6 +43,7 @@ import ru.vseopecheni.app.utils.Constant;
 public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFullMvpView {
 
     private static final String NUMBER = "NUMBER";
+    private static final String ID = "ID";
 
     @Inject
     HowToTreatFullPresenter<HowToTreatFullMvpView> presenter;
@@ -60,6 +61,7 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
 
     private Unbinder unbinder;
     private String number;
+    private String id;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,10 +77,10 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
         scrollView.setVisibility(View.GONE);
-        showLoading();
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             number = bundle.getString(NUMBER);
+            id = bundle.getString(ID);
             if (Constant.isInternet(getContext())){
                 v.findViewById(R.id.scrollView_about).setVisibility(View.GONE);
                 webView.setVisibility(View.VISIBLE);
@@ -122,7 +124,7 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
                 }
             } else {
                 v.findViewById(R.id.scrollView_about).setVisibility(View.VISIBLE);
-                withoutInternet(number);
+                withoutInternet(id);
             }
 
         }
@@ -145,10 +147,10 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
                 ResponseAbout responseAbouts = gson.fromJson(sb.toString(), ResponseAbout.class);
                 title.setText(responseAbouts.getTitle());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    content.setText(Html.fromHtml(responseAbouts.getContent(), Html.FROM_HTML_MODE_COMPACT));
+                    content.setText(Html.fromHtml(responseAbouts.getContent().replaceAll("<img.+?>", ""), Html.FROM_HTML_MODE_COMPACT));
                     content.setMovementMethod(LinkMovementMethod.getInstance());
                 } else {
-                    content.setText(Html.fromHtml(responseAbouts.getContent()));
+                    content.setText(Html.fromHtml(responseAbouts.getContent().replaceAll("<img.+?>", "")));
                     content.setMovementMethod(LinkMovementMethod.getInstance());
                 }
                 scrollView.setVisibility(View.VISIBLE);
@@ -164,10 +166,10 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
     public void onInfoAboutTreatUpdated(List<ResponseAbout> responseAbouts) {
         title.setText(responseAbouts.get(0).getTitle());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            content.setText(Html.fromHtml(responseAbouts.get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+            content.setText(Html.fromHtml(responseAbouts.get(0).getContent().replaceAll("<img.+?>", ""), Html.FROM_HTML_MODE_COMPACT));
             content.setMovementMethod(LinkMovementMethod.getInstance());
         } else {
-            content.setText(Html.fromHtml(responseAbouts.get(0).getContent()));
+            content.setText(Html.fromHtml(responseAbouts.get(0).getContent().replaceAll("<img.+?>", "")));
             content.setMovementMethod(LinkMovementMethod.getInstance());
         }
         hideLoading();

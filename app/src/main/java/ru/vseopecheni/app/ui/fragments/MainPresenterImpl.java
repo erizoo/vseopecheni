@@ -75,4 +75,30 @@ public class MainPresenterImpl <V extends MainMvpView> extends BasePresenter<V>
                         )
         );
     }
+
+    @Override
+    public void getProducts() {
+        getCompositeDisposable().add(
+                getRepositoryManager().getServiceNetwork().getProducts()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                getMvpView()::onProductsUpdated,
+                                Throwable::printStackTrace
+                        )
+        );
+    }
+
+    @Override
+    public void saveRecipes() {
+        getCompositeDisposable().add(
+                getRepositoryManager().getServiceNetwork().getFullRecipe()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                getMvpView()::onSavedRecipes,
+                                Throwable::printStackTrace
+                        )
+        );
+    }
 }

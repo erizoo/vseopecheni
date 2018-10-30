@@ -14,6 +14,10 @@ public class BaseFragment extends Fragment {
         ((BaseActivity)Objects.requireNonNull(getActivity())).showLoading();
     }
 
+    public void showLoadingWithMessage(String title) {
+        ((BaseActivity)Objects.requireNonNull(getActivity())).showLoadingWithMessage(title);
+    }
+
     public void hideLoading() {
         ((BaseActivity)Objects.requireNonNull(getActivity())).hideLoading();
     }

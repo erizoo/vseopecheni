@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,6 @@ import com.google.gson.Gson;
 import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -30,6 +31,7 @@ import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseAbout;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.data.models.ResponseMenuForWeek;
+import ru.vseopecheni.app.data.models.ResponseProducts;
 import ru.vseopecheni.app.ui.MainActivity;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
@@ -43,6 +45,8 @@ import ru.vseopecheni.app.ui.fragments.treat.HowToTreatFragment;
 import ru.vseopecheni.app.ui.model.SaveInfo;
 import ru.vseopecheni.app.utils.ImageSaver;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class MainFragment extends BaseFragment implements MainMvpView {
 
     @Inject
@@ -50,6 +54,7 @@ public class MainFragment extends BaseFragment implements MainMvpView {
 
     private ImageView tableFive;
     private Unbinder unbinder;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,7 +118,7 @@ public class MainFragment extends BaseFragment implements MainMvpView {
         OnClickListener myClickListener = myClickListener = (dialog, which) -> {
             switch (which) {
                 case Dialog.BUTTON_POSITIVE:
-                    showLoading();
+                    showLoadingWithMessage("");
                     presenter.getFull("1");
                     presenter.getFull("2");
                     presenter.getFull("3");
@@ -125,7 +130,15 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                     presenter.getFull("212");
                     presenter.getFull("213");
                     presenter.getFull("16");
+                    presenter.getProducts();
                     presenter.saveMenuForWeek();
+                    hideLoading();
+                    showLoadingWithMessage("Оосталось немного.");
+                    presenter.saveRecipes();
+                    sharedPreferences = getActivity().getPreferences(MODE_PRIVATE);
+                    SharedPreferences.Editor ed = sharedPreferences.edit();
+                    ed.putBoolean("SAVED", true);
+                    ed.apply();
                     break;
                 case Dialog.BUTTON_NEGATIVE:
                     break;
@@ -133,16 +146,18 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                     break;
             }
         };
-
-        AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
-        adb.setTitle(R.string.title_dialog);
-        adb.setMessage(R.string.content_dialog);
-        adb.setIcon(android.R.drawable.ic_dialog_info);
-        adb.setPositiveButton(R.string.yes_dialog, myClickListener);
-        adb.setNegativeButton(R.string.no_dialog, myClickListener);
-        adb.setCancelable(false);
-        adb.create();
-        adb.show();
+        boolean isSaved = sharedPreferences.getBoolean("SAVED",false);
+        if (!isSaved){
+            AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
+            adb.setTitle(R.string.title_dialog);
+            adb.setMessage(R.string.content_dialog);
+            adb.setIcon(android.R.drawable.ic_dialog_info);
+            adb.setPositiveButton(R.string.yes_dialog, myClickListener);
+            adb.setNegativeButton(R.string.no_dialog, myClickListener);
+            adb.setCancelable(false);
+            adb.create();
+            adb.show();
+        }
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -150,7 +165,7 @@ public class MainFragment extends BaseFragment implements MainMvpView {
     public void onInfoSaved(SaveInfo saveInfo) {
         FileOutputStream outputStream;
         try {
-            outputStream = Objects.requireNonNull(getActivity()).openFileOutput(saveInfo.getResponseProducts().get(0).getId(), Context.MODE_PRIVATE);
+            outputStream = Objects.requireNonNull(getActivity()).openFileOutput(saveInfo.getResponseProducts().get(0).getId(), MODE_PRIVATE);
             outputStream.
                     write(new Gson().toJson(saveInfo.getResponseProducts().get(0)).getBytes());
             outputStream.close();
@@ -168,7 +183,7 @@ public class MainFragment extends BaseFragment implements MainMvpView {
     public void onSaveFullUpdated(List<ResponseAbout> responseAbouts) {
         FileOutputStream outputStream;
         try {
-            outputStream = Objects.requireNonNull(getActivity()).openFileOutput(responseAbouts.get(0).getId(), Context.MODE_PRIVATE);
+            outputStream = Objects.requireNonNull(getActivity()).openFileOutput(responseAbouts.get(0).getId(), MODE_PRIVATE);
             outputStream.
                     write(new Gson().toJson(responseAbouts.get(0)).getBytes());
             outputStream.close();
@@ -182,7 +197,7 @@ public class MainFragment extends BaseFragment implements MainMvpView {
         new Thread(() -> {
             FileOutputStream outputStream;
             try {
-                outputStream = Objects.requireNonNull(getActivity()).openFileOutput("menuForWeek", Context.MODE_PRIVATE);
+                outputStream = Objects.requireNonNull(getActivity()).openFileOutput("menuForWeek", MODE_PRIVATE);
                 outputStream.
                         write(new Gson().toJson(responseMenuForWeek).getBytes());
                 outputStream.close();
@@ -295,18 +310,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .get();
                     }
 
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getMonday().getAfternoon().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("afternoon.jpg")
-                            .setDirectoryName("monday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("afternoon.jpg")
+                        .setDirectoryName("monday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -326,18 +340,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .get();
                     }
 
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getMonday().getDinner().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("dinner.jpg")
-                            .setDirectoryName("monday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("dinner.jpg")
+                        .setDirectoryName("monday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             //вторник
@@ -357,19 +370,19 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getTuesday().getBreakfast().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("breakfast.jpg")
-                            .setDirectoryName("tuesday")
-                            .save(theBitmap);
                 }
-            } catch (Exception ignored) {
+                new ImageSaver(getContext()).
+                        setFileName("breakfast.jpg")
+                        .setDirectoryName("tuesday")
+                        .save(theBitmap);
+            } catch (Exception e) {
+                Log.e("SAVE_IMAGE_FOR_WEEK", e.getMessage());
             }
             try {
                 Bitmap theBitmap = null;
@@ -387,18 +400,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getTuesday().getTiffin().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("tiffin.jpg")
-                            .setDirectoryName("tuesday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("tiffin.jpg")
+                        .setDirectoryName("tuesday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -417,18 +429,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getTuesday().getLunch().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("lunch.jpg")
-                            .setDirectoryName("tuesday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("lunch.jpg")
+                        .setDirectoryName("tuesday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -447,18 +458,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getTuesday().getAfternoon().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("afternoon.jpg")
-                            .setDirectoryName("tuesday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("afternoon.jpg")
+                        .setDirectoryName("tuesday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -477,18 +487,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getTuesday().getDinner().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("dinner.jpg")
-                            .setDirectoryName("tuesday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("dinner.jpg")
+                        .setDirectoryName("tuesday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
 
@@ -509,18 +518,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getWednesday().getBreakfast().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("breakfast.jpg")
-                            .setDirectoryName("wednesday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("breakfast.jpg")
+                        .setDirectoryName("wednesday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -539,18 +547,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getWednesday().getTiffin().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("tiffin.jpg")
-                            .setDirectoryName("wednesday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("tiffin.jpg")
+                        .setDirectoryName("wednesday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -569,18 +576,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getWednesday().getLunch().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("lunch.jpg")
-                            .setDirectoryName("wednesday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("lunch.jpg")
+                        .setDirectoryName("wednesday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -599,18 +605,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getWednesday().getAfternoon().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("afternoon.jpg")
-                            .setDirectoryName("wednesday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("afternoon.jpg")
+                        .setDirectoryName("wednesday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -629,18 +634,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getWednesday().getDinner().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("dinner.jpg")
-                            .setDirectoryName("wednesday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("dinner.jpg")
+                        .setDirectoryName("wednesday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
 
@@ -661,18 +665,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getThursday().getBreakfast().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("breakfast.jpg")
-                            .setDirectoryName("thursday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("breakfast.jpg")
+                        .setDirectoryName("thursday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -691,18 +694,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getThursday().getTiffin().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("tiffin.jpg")
-                            .setDirectoryName("thursday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("tiffin.jpg")
+                        .setDirectoryName("thursday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -721,18 +723,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getThursday().getLunch().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("lunch.jpg")
-                            .setDirectoryName("thursday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("lunch.jpg")
+                        .setDirectoryName("thursday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -751,18 +752,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getThursday().getAfternoon().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("afternoon.jpg")
-                            .setDirectoryName("thursday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("afternoon.jpg")
+                        .setDirectoryName("thursday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -781,21 +781,19 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getThursday().getDinner().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("dinner.jpg")
-                            .setDirectoryName("thursday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("dinner.jpg")
+                        .setDirectoryName("thursday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
-
             //пятница
             try {
                 Bitmap theBitmap = null;
@@ -813,18 +811,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getFriday().getBreakfast().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("breakfast.jpg")
-                            .setDirectoryName("friday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("breakfast.jpg")
+                        .setDirectoryName("friday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -843,18 +840,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getFriday().getTiffin().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("tiffin.jpg")
-                            .setDirectoryName("friday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("tiffin.jpg")
+                        .setDirectoryName("friday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -873,18 +869,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getFriday().getLunch().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("lunch.jpg")
-                            .setDirectoryName("friday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("lunch.jpg")
+                        .setDirectoryName("friday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -903,18 +898,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getFriday().getAfternoon().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("afternoon.jpg")
-                            .setDirectoryName("friday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("afternoon.jpg")
+                        .setDirectoryName("friday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -933,21 +927,19 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getFriday().getDinner().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("dinner.jpg")
-                            .setDirectoryName("friday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("dinner.jpg")
+                        .setDirectoryName("friday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
-
             //суббота
             try {
                 Bitmap theBitmap = null;
@@ -965,18 +957,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getSaturday().getBreakfast().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("breakfast.jpg")
-                            .setDirectoryName("saturday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("breakfast.jpg")
+                        .setDirectoryName("saturday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -995,18 +986,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getSaturday().getTiffin().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("tiffin.jpg")
-                            .setDirectoryName("saturday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("tiffin.jpg")
+                        .setDirectoryName("saturday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -1025,18 +1015,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getSaturday().getLunch().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("lunch.jpg")
-                            .setDirectoryName("saturday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("lunch.jpg")
+                        .setDirectoryName("saturday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -1055,18 +1044,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getSaturday().getAfternoon().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("afternoon.jpg")
-                            .setDirectoryName("saturday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("afternoon.jpg")
+                        .setDirectoryName("saturday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -1085,18 +1073,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getSaturday().getDinner().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("dinner.jpg")
-                            .setDirectoryName("saturday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("dinner.jpg")
+                        .setDirectoryName("saturday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
 
@@ -1117,18 +1104,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getSunday().getBreakfast().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("breakfast.jpg")
-                            .setDirectoryName("sunday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("breakfast.jpg")
+                        .setDirectoryName("sunday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -1147,18 +1133,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getSunday().getTiffin().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("tiffin.jpg")
-                            .setDirectoryName("sunday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("tiffin.jpg")
+                        .setDirectoryName("sunday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -1177,18 +1162,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getSunday().getLunch().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("lunch.jpg")
-                            .setDirectoryName("sunday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("lunch.jpg")
+                        .setDirectoryName("sunday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -1207,18 +1191,17 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getSunday().getAfternoon().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("afternoon.jpg")
-                            .setDirectoryName("sunday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("afternoon.jpg")
+                        .setDirectoryName("sunday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
             try {
@@ -1237,21 +1220,72 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                                 .into(500, 300)
                                 .get();
                     }
-                }
-                else {
+                } else {
                     theBitmap = Glide.with(Objects.requireNonNull(getContext()))
                             .asBitmap()
                             .load("https://vseopecheni.ru/" + responseMenuForWeek.getSunday().getDinner().getImgUrl())
                             .into(500, 300)
                             .get();
-                    new ImageSaver(getContext()).
-                            setFileName("dinner.jpg")
-                            .setDirectoryName("sunday")
-                            .save(theBitmap);
                 }
+                new ImageSaver(getContext()).
+                        setFileName("dinner.jpg")
+                        .setDirectoryName("sunday")
+                        .save(theBitmap);
             } catch (Exception ignored) {
             }
         }).start();
-        hideLoading();
+    }
+
+    @Override
+    public void onProductsUpdated(List<ResponseProducts> responseProducts) {
+        FileOutputStream outputStream;
+        try {
+            outputStream = Objects.requireNonNull(getActivity()).openFileOutput("jsonProducts", MODE_PRIVATE);
+            String json = new Gson().toJson(responseProducts);
+            outputStream.
+                    write(json.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onSavedRecipes(List<ResponseFullRecipes> responseFullRecipes) {
+        FileOutputStream outputStream;
+        try {
+            outputStream = Objects.requireNonNull(getActivity()).openFileOutput("jsonRecipes", MODE_PRIVATE);
+            outputStream.
+                    write(new Gson().toJson(responseFullRecipes).getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        new Thread(() -> {
+            for (ResponseFullRecipes items : responseFullRecipes) {
+                try {
+                    Bitmap theBitmap = null;
+                    if (items.getContent().contains("/f/")) {
+                        theBitmap = Glide.with(Objects.requireNonNull(getContext()))
+                                .asBitmap()
+                                .load("https://vseopecheni.ru" + items.getImage())
+                                .into(500, 300)
+                                .get();
+                    } else {
+                        theBitmap = Glide.with(Objects.requireNonNull(getContext()))
+                                .asBitmap()
+                                .load("https://vseopecheni.ru/" + items.getImage())
+                                .into(500, 300)
+                                .get();
+                    }
+                    new ImageSaver(getContext()).
+                            setFileName(items.getId() + ".jpg")
+                            .setDirectoryName("recipes")
+                            .save(theBitmap);
+                } catch (Exception ignored) {
+                }
+            }
+            getActivity().runOnUiThread(this::hideLoading);
+        }).start();
     }
 }

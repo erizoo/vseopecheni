@@ -11,4 +11,8 @@ public interface MainPresenter <V extends MainMvpView> extends MvpPresenter<V> {
     void getFull(String s);
 
     void saveMenuForWeek();
+
+    void getProducts();
+
+    void saveRecipes();
 }

@@ -28,6 +28,7 @@ import ru.vseopecheni.app.ui.fragments.about.AboutLiverFragment;
 import ru.vseopecheni.app.ui.fragments.menu.MenuWeekFragment;
 import ru.vseopecheni.app.ui.fragments.recipes.RecipeFragment;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveFragment;
+import ru.vseopecheni.app.ui.fragments.treat.HowToTreatFragment;
 import ru.vseopecheni.app.utils.Constant;
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView {
@@ -65,6 +66,10 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
 
     public void showLoading() {
         progressDialog = Constant.showLoadingDialog(this);
+    }
+
+    public void showLoadingWithMessage(String title) {
+        progressDialog = Constant.showLoadingDialog(this, title);
     }
 
     public void hideLoading() {
@@ -118,6 +123,9 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
             case "FullRecipeFragment":
                 break;
             case "MainFragment":
+                break;
+            case "HowToTreatFullFragment":
+                moveToNewFragment(new HowToTreatFragment());
                 break;
             default:
                 moveToNewFragment(new MainFragment());

@@ -164,10 +164,10 @@ public class AboutLiverFull extends BaseFragment implements AboutLiverFullMvpVie
                 ResponseAbout responseAbouts = gson.fromJson(sb.toString(), ResponseAbout.class);
                 title.setText(responseAbouts.getTitle());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    content.setText(Html.fromHtml(responseAbouts.getContent(), Html.FROM_HTML_MODE_COMPACT));
+                    content.setText(Html.fromHtml(responseAbouts.getContent().replaceAll("<img.+?>", ""), Html.FROM_HTML_MODE_COMPACT));
                     content.setMovementMethod(LinkMovementMethod.getInstance());
                 } else {
-                    content.setText(Html.fromHtml(responseAbouts.getContent()));
+                    content.setText(Html.fromHtml(responseAbouts.getContent().replaceAll("<img.+?>", "")));
                     content.setMovementMethod(LinkMovementMethod.getInstance());
                 }
                 scrollView.setVisibility(View.VISIBLE);
@@ -183,10 +183,10 @@ public class AboutLiverFull extends BaseFragment implements AboutLiverFullMvpVie
     public void onFullInfoUpdated(List<ResponseAbout> responseAbouts) {
         title.setText(responseAbouts.get(0).getTitle());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            content.setText(Html.fromHtml(responseAbouts.get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+            content.setText(Html.fromHtml(responseAbouts.get(0).getContent().replaceAll("<img.+?>", ""), Html.FROM_HTML_MODE_COMPACT));
             content.setMovementMethod(LinkMovementMethod.getInstance());
         } else {
-            content.setText(Html.fromHtml(responseAbouts.get(0).getContent()));
+            content.setText(Html.fromHtml(responseAbouts.get(0).getContent().replaceAll("<img.+?>", "")));
             content.setMovementMethod(LinkMovementMethod.getInstance());
         }
         hideLoading();

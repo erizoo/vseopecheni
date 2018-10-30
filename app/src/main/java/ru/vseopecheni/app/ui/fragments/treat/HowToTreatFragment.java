@@ -21,6 +21,7 @@ import ru.vseopecheni.app.ui.base.BaseFragment;
 public class HowToTreatFragment extends BaseFragment {
 
     private static final String NUMBER = "NUMBER";
+    private static final String ID = "ID";
     @BindView(R.id.rl_1)
     RelativeLayout layout1;
     @BindView(R.id.rl_2)
@@ -50,31 +51,37 @@ public class HowToTreatFragment extends BaseFragment {
         Bundle bundle = new Bundle();
         layout1.setOnClickListener(v1 -> {
             bundle.putString(NUMBER, "1");
+            bundle.putString(ID, "204");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
         layout2.setOnClickListener(v1 -> {
             bundle.putString(NUMBER, "2");
+            bundle.putString(ID, "204");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
         layout3.setOnClickListener(v1 -> {
             bundle.putString(NUMBER, "3");
+            bundle.putString(ID, "210");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
         layout4.setOnClickListener(v1 -> {
             bundle.putString(NUMBER, "4");
+            bundle.putString(ID, "212");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
         layout5.setOnClickListener(v1 -> {
             bundle.putString(NUMBER, "5");
+            bundle.putString(ID, "213");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });
         layout6.setOnClickListener(v1 -> {
             bundle.putString(NUMBER, "6");
+            bundle.putString(ID, "16");
             howToTreatFullFragment.setArguments(bundle);
             ((MainActivity)Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFullFragment);
         });

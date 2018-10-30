@@ -26,6 +26,20 @@ public interface Constant {
         return null;
     }
 
+    static ProgressDialog showLoadingDialog(Context context, String title) {
+        if (context != null) {
+            ProgressDialog progressDialog = new ProgressDialog(context);
+            progressDialog.setMessage("Идет загрузка..." + " " + title);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+            return progressDialog;
+        }
+
+        return null;
+    }
+
     static boolean isInternet(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) Objects.requireNonNull(context).getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||

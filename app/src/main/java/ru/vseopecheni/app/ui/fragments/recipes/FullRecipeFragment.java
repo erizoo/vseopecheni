@@ -170,10 +170,18 @@ public class FullRecipeFragment extends BaseFragment {
         List<RecipeCompositionModel> recipeCompositionModels = gson.fromJson(
                 responseFullRecipes.getSostav(), listOfObject);
         StringBuilder sb = new StringBuilder();
-        for (RecipeCompositionModel items : recipeCompositionModels) {
-            sb.append(".").append(" ").append(items.getName()).append(" ").append(items.getValue()).append(System.getProperty("line.separator"));
+        try {
+            for (RecipeCompositionModel items : recipeCompositionModels) {
+                sb.append(".").append(" ").append(items.getName()).append(" ").append(items.getValue()).append(System.getProperty("line.separator"));
+            }
+        } catch (Exception e){
+            sb.append("-");
         }
         compositionRecipe.setText(sb.toString());
-        cookingMethodFull.setText(responseFullRecipes.getContent());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            cookingMethodFull.setText(Html.fromHtml(responseFullRecipes.getContent(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            cookingMethodFull.setText(Html.fromHtml(responseFullRecipes.getContent()));
+        }
     }
 }

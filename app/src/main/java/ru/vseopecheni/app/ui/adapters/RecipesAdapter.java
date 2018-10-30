@@ -76,7 +76,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (!Constant.isInternet(context)){
                 Bitmap bitmap = new ImageSaver(context).
                         setFileName(responseFullRecipes.get(position).getId() + ".jpg")
-                        .setDirectoryName("images")
+                        .setDirectoryName("recipes")
                         .load();
                 Glide.with(context)
                         .asBitmap()

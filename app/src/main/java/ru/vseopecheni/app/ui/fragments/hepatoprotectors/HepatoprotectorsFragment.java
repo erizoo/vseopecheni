@@ -99,10 +99,10 @@ public class HepatoprotectorsFragment extends BaseFragment implements Hepatoprot
                 ResponseAbout responseAbouts = gson.fromJson(sb.toString(), ResponseAbout.class);
                 title.setText("Гепатопротекторы");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    content.setText(Html.fromHtml(responseAbouts.getContent(), Html.FROM_HTML_MODE_COMPACT));
+                    content.setText(Html.fromHtml(responseAbouts.getContent().replaceAll("<img.+?>", ""), Html.FROM_HTML_MODE_COMPACT));
                     content.setMovementMethod(LinkMovementMethod.getInstance());
                 } else {
-                    content.setText(Html.fromHtml(responseAbouts.getContent()));
+                    content.setText(Html.fromHtml(responseAbouts.getContent().replaceAll("<img.+?>", "")));
                     content.setMovementMethod(LinkMovementMethod.getInstance());
                 }
                 scrollView.setVisibility(View.VISIBLE);

@@ -6,7 +6,7 @@ public class ResponseAbout {
 
     @SerializedName("id")
     private String id;
-    @SerializedName("longtitle")
+    @SerializedName("pagetitle")
     private String title;
     @SerializedName("tv.image")
     private String img;
