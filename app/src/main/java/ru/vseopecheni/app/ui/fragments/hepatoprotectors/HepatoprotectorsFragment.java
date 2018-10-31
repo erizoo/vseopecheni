@@ -50,6 +50,7 @@ public class HepatoprotectorsFragment extends BaseFragment implements Hepatoprot
     ScrollView scrollView;
     @BindView(R.id.web_view)
     WebView webView;
+
     @Inject
     HepatoprotectorsPresenter<HepatoprotectorsMvpView> presenter;
     private Unbinder unbinder;
