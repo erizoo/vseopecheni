@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App</string>
+    <string name="app_name">Все о печени</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -46,7 +46,7 @@
     <string name="tuesday">вторник</string>
     <string name="wednesday">среда</string>
     <string name="thursday">четверг</string>
-    <string name="friday">пятнциа</string>
+    <string name="friday">пятница</string>
     <string name="saturday">суббота</string>
     <string name="sunday">воскресенье</string>
     <string name="word_about_liver">слово о печени</string>
@@ -66,5 +66,14 @@
     <string name="question">К вопросу о выборе лекарств</string>
     <string name="drug_selection">Выбор препарата на примере урсодезоксихолевой кислоты</string>
     <string name="ursodeoxycholic_acid">Урсодезоксихолевая кислота (УДХК)</string>
+    <string name="medication_button">ПРИЕМ ЛЕКАРСТВ</string>
+    <string name="food_intake_button">ПРИЕМ ПИЩИ</string>
+    <string name="medicine_name">Название лекарства</string>
+    <string name="first_appointment">Первый прием</string>
+    <string name="second_appointment">Второй прием</string>
+    <string name="third_appointment">Третий прием</string>
+    <string name="save">СОХРАНИТЬ</string>
+    <string name="close">ОТМЕНА</string>
+    <string name="first_time">Время первого приема пищи</string>
 
 </resources>

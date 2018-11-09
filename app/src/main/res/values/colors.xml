@@ -3,5 +3,7 @@
     <color name="colorPrimary">#007db0</color>
     <color name="colorPrimaryDark">#007db0</color>
     <color name="colorAccent">#007db0</color>
+    <color name="colorButtonGreen">#12c10e</color>
     <color name="logoBackground">#FFFFFF</color>
+
 </resources>

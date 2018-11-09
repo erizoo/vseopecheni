@@ -1,5 +1,7 @@
 package ru.vseopecheni.app.ui;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +14,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.io.FileOutputStream;
+import java.sql.Time;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -41,8 +45,14 @@ import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.data.models.ResponseProducts;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.fragments.MainFragment;
+import ru.vseopecheni.app.ui.fragments.about.AboutLiverFragment;
+import ru.vseopecheni.app.ui.fragments.alarm.AlarmFragment;
+import ru.vseopecheni.app.ui.fragments.disease.LiverDiseaseFragment;
+import ru.vseopecheni.app.ui.fragments.hepatoprotectors.HepatoprotectorsFragment;
+import ru.vseopecheni.app.ui.fragments.menu.MenuWeekFragment;
 import ru.vseopecheni.app.ui.fragments.recipes.RecipeFragment;
 import ru.vseopecheni.app.ui.fragments.table.TableFiveFragment;
+import ru.vseopecheni.app.ui.fragments.treat.HowToTreatFragment;
 import ru.vseopecheni.app.ui.model.SaveInfo;
 import ru.vseopecheni.app.utils.Constant;
 import ru.vseopecheni.app.utils.ImageSaver;
@@ -76,6 +86,8 @@ public class MainActivity extends BaseActivity
 //                Snackbar.make(findViewById(R.id.recipes_image), "Подключите интернет для загрузки данных", Snackbar.LENGTH_LONG).show();
             }
         }
+
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -111,6 +123,24 @@ public class MainActivity extends BaseActivity
         }
         if (id == R.id.recipient) {
             moveToNewFragment(new RecipeFragment());
+        }
+        if (id == R.id.menu_week) {
+            moveToNewFragment(new MenuWeekFragment());
+        }
+        if (id == R.id.hepatoprotectors) {
+            moveToNewFragment(new HepatoprotectorsFragment());
+        }
+        if (id == R.id.about_liver) {
+            moveToNewFragment(new AboutLiverFragment());
+        }
+        if (id == R.id.how_to_treat) {
+            moveToNewFragment(new HowToTreatFragment());
+        }
+        if (id == R.id.liver_disease) {
+            moveToNewFragment(new LiverDiseaseFragment());
+        }
+        if (id == R.id.alarm_clock) {
+            moveToNewFragment(new AlarmFragment());
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

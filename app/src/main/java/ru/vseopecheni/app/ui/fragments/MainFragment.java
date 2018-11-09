@@ -36,6 +36,7 @@ import ru.vseopecheni.app.ui.MainActivity;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
 import ru.vseopecheni.app.ui.fragments.about.AboutLiverFragment;
+import ru.vseopecheni.app.ui.fragments.alarm.AlarmFragment;
 import ru.vseopecheni.app.ui.fragments.disease.LiverDiseaseFragment;
 import ru.vseopecheni.app.ui.fragments.hepatoprotectors.HepatoprotectorsFragment;
 import ru.vseopecheni.app.ui.fragments.menu.MenuWeekFragment;
@@ -110,6 +111,13 @@ public class MainFragment extends BaseFragment implements MainMvpView {
         HowToTreatFragment howToTreatFragment = new HowToTreatFragment();
         ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFragment);
     }
+
+    @OnClick(R.id.alarm)
+    public void getAlarm() {
+        AlarmFragment alarmFragment = new AlarmFragment();
+        ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(alarmFragment);
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

@@ -13,43 +13,18 @@
     android:paddingEnd="30dp"
     android:visibility="visible">
 
-    <EditText
-        android:id="@+id/medicine_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:hint="@string/medicine_name" />
-
     <TextView
-        android:id="@+id/first_appointment"
+        android:id="@+id/time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:ems="10"
-        android:hint="@string/first_appointment" />
-
-    <TextView
-        android:id="@+id/second_appointment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:hint="@string/second_appointment" />
-
-    <TextView
-        android:id="@+id/third_appointment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:ems="10"
-        android:hint="@string/third_appointment" />
+        android:hint="@string/first_time" />
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="30dp"
         android:background="@color/colorAccent"
         android:text="@string/save"
         android:textColor="#FFFFFF" />
