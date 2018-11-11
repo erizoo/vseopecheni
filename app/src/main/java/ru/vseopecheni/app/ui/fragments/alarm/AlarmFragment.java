@@ -1,13 +1,16 @@
 package ru.vseopecheni.app.ui.fragments.alarm;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,9 +40,9 @@ import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.ui.base.BaseFragment;
 import ru.vseopecheni.app.utils.AlarmManagerBroadcastReceiver;
+import ru.vseopecheni.app.utils.AlarmReceiver;
 import ru.vseopecheni.app.utils.FifthPushNotif;
 import ru.vseopecheni.app.utils.FourthPushNotif;
-import ru.vseopecheni.app.utils.LocalData;
 import ru.vseopecheni.app.utils.NotificationScheduler;
 import ru.vseopecheni.app.utils.SecondPushNotif;
 import ru.vseopecheni.app.utils.ThirdPushNotif;
@@ -48,7 +55,10 @@ public class AlarmFragment extends BaseFragment {
     Button medicationButton;
     @BindView(R.id.food_intake_rv)
     TextView foodIntakeText;
-
+    @BindView(R.id.medication_button_rv)
+    RecyclerView recyclerView;
+    int myHour = 14;
+    int myMinute = 35;
     private Unbinder unbinder;
     private View v;
     private TextView first;
@@ -64,15 +74,65 @@ public class AlarmFragment extends BaseFragment {
     private String time3;
     private String time4;
     private String time5;
+    TimePickerDialog.OnTimeSetListener myCallBack = (view, hourOfDay, minute) -> {
+        myHour = hourOfDay;
+        myMinute = minute;
+        StringBuilder sb = new StringBuilder();
+        time = myHour + ":" + myMinute;
+        time2 = getTime(time, 3);
+        time3 = getTime(time, 6);
+        time4 = getTime(time, 9);
+        time5 = getTime(time, 12);
+        sb.append("Приемы пищи: ").append(myHour).append(":").append(myMinute).append(",").append(" ")
+                .append(time2).append(" ")
+                .append(time3).append(" ")
+                .append(time4).append(" ")
+                .append(time5).append(" ");
+        firstTime.setText(sb);
+        foodIntakeText.setText(sb);
+        sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sharedPreferences.edit();
+        ed.putString("FOOD_ALARM", sb.toString());
+        ed.apply();
+    };
     private String foodTime;
-    int myHour = 14;
-    int myMinute = 35;
     private String firstTimeAlarm;
+    TimePickerDialog.OnTimeSetListener myCallBackFirst = new TimePickerDialog.OnTimeSetListener() {
+        @SuppressLint("SetTextI18n")
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            myHour = hourOfDay;
+            myMinute = minute;
+            first.setText("Первый прием " + myHour + " : " + myMinute);
+            firstTimeAlarm = myHour + ":" + myMinute;
+        }
+    };
     private String secondTimeAlarm;
+    TimePickerDialog.OnTimeSetListener myCallBackSecond = new TimePickerDialog.OnTimeSetListener() {
+        @SuppressLint("SetTextI18n")
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            myHour = hourOfDay;
+            myMinute = minute;
+            second.setText("Второй прием " + myHour + " : " + myMinute);
+            secondTimeAlarm = myHour + ":" + myMinute;
+        }
+    };
     private String thirdTimeAlarm;
+    TimePickerDialog.OnTimeSetListener myCallBackThird = new TimePickerDialog.OnTimeSetListener() {
+        @SuppressLint("SetTextI18n")
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            myHour = hourOfDay;
+            myMinute = minute;
+            third.setText("Третий прием " + myHour + " : " + myMinute);
+            thirdTimeAlarm = myHour + ":" + myMinute;
+        }
+    };
     private AlarmFoodAdapter alarmFoodAdapter;
-
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
     private List<String> times = new ArrayList<>();
+    private int idAlarm;
+    private List<AlarmModel> alarmModels = new ArrayList<>();
+    private String timeFoodAlarm;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,8 +148,26 @@ public class AlarmFragment extends BaseFragment {
         alarmFoodAdapter = new AlarmFoodAdapter();
         sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
         foodTime = sharedPreferences.getString("FOOD_ALARM", "");
-        if (!Objects.requireNonNull(foodTime).equals("")){
+        if (!Objects.requireNonNull(foodTime).equals("")) {
             foodIntakeText.setText(foodTime);
+        }
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(alarmFoodAdapter);
+        alarmMgr = (AlarmManager) Objects.requireNonNull(getContext()).getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), AlarmFragment.class);
+        alarmIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
+
+        sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
+        timeFoodAlarm = sharedPreferences.getString("TIME_FOOD_ALARM", "");
+        Type listOfObject = new TypeToken<List<AlarmModel>>() {
+        }.getType();
+        List<AlarmModel> alarmModels = new Gson().fromJson(timeFoodAlarm, listOfObject);
+        try {
+            alarmFoodAdapter.setItems(alarmModels);
+        } catch (NullPointerException ignored) {
         }
         return v;
     }
@@ -146,58 +224,6 @@ public class AlarmFragment extends BaseFragment {
         NotificationScheduler.setReminder(getContext(), FifthPushNotif.class, Integer.parseInt(str5[0]), Integer.parseInt(str5[1]), 104);
     }
 
-    TimePickerDialog.OnTimeSetListener myCallBack = (view, hourOfDay, minute) -> {
-        myHour = hourOfDay;
-        myMinute = minute;
-        StringBuilder sb = new StringBuilder();
-        time = myHour + ":" + myMinute;
-        time2 = getTime(time, 3);
-        time3 = getTime(time, 6);
-        time4 = getTime(time, 9);
-        time5 = getTime(time, 12);
-        sb.append("Приемы пищи: ").append(myHour).append(":").append(myMinute).append(",").append(" ")
-                .append(time2).append(" ")
-                .append(time3).append(" ")
-                .append(time4).append(" ")
-                .append(time5).append(" ");
-        firstTime.setText(sb);
-        foodIntakeText.setText(sb);
-        sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor ed = sharedPreferences.edit();
-        ed.putString("FOOD_ALARM", sb.toString());
-        ed.apply();
-    };
-
-    TimePickerDialog.OnTimeSetListener myCallBackFirst = new TimePickerDialog.OnTimeSetListener() {
-        @SuppressLint("SetTextI18n")
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            myHour = hourOfDay;
-            myMinute = minute;
-            first.setText("Первый прием " + myHour + " : " + myMinute);
-            firstTimeAlarm = myHour + ":" + myMinute;
-        }
-    };
-
-    TimePickerDialog.OnTimeSetListener myCallBackSecond = new TimePickerDialog.OnTimeSetListener() {
-        @SuppressLint("SetTextI18n")
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            myHour = hourOfDay;
-            myMinute = minute;
-            second.setText("Второй прием " + myHour + " : " + myMinute);
-            secondTimeAlarm = myHour + ":" + myMinute;
-        }
-    };
-
-    TimePickerDialog.OnTimeSetListener myCallBackThird = new TimePickerDialog.OnTimeSetListener() {
-        @SuppressLint("SetTextI18n")
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            myHour = hourOfDay;
-            myMinute = minute;
-            third.setText("Третий прием " + myHour + " : " + myMinute);
-            thirdTimeAlarm = myHour + ":" + myMinute;
-        }
-    };
-
     @SuppressLint("SetTextI18n")
     private void showPopupMenuAlarm(View v) {
         @SuppressLint("InflateParams") View popupView = LayoutInflater.from(getContext()).inflate(R.layout.popup, null);
@@ -229,24 +255,58 @@ public class AlarmFragment extends BaseFragment {
         saveButton.setOnClickListener(v1 -> {
             medicationButton.setEnabled(true);
             times = new ArrayList<>();
-            if (!first.getText().toString().equals("")){
+            if (!first.getText().toString().equals("")) {
                 times.add(first.getText().toString());
             }
-            if (!second.getText().toString().equals("")){
+            if (!second.getText().toString().equals("")) {
                 times.add(second.getText().toString());
             }
-            if (!third.getText().toString().equals("")){
+            if (!third.getText().toString().equals("")) {
                 times.add(third.getText().toString());
             }
-            AlarmModel alarmModel = new AlarmModel(name.getText().toString(), times);
-            alarmFoodAdapter.setItems(alarmModel);
+            sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
+            timeFoodAlarm = sharedPreferences.getString("TIME_FOOD_ALARM", "");
+            if (!Objects.requireNonNull(timeFoodAlarm).equals("")){
+                Type listOfObject = new TypeToken<List<AlarmModel>>() {
+                }.getType();
+                List<AlarmModel> alarmModels = new Gson().fromJson(timeFoodAlarm, listOfObject);
+                alarmModels.add(new AlarmModel(name.getText().toString(), times));
+                String model = new Gson().toJson(alarmModels);
+                sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor ed = sharedPreferences.edit();
+                ed.putString("TIME_FOOD_ALARM", model);
+                ed.apply();
+                alarmFoodAdapter.setItem(alarmModels.get(alarmModels.size() - 1));
+            } else {
+                alarmModels.add(new AlarmModel(name.getText().toString(), times));
+                String model = new Gson().toJson(alarmModels);
+                sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor ed = sharedPreferences.edit();
+                ed.putString("TIME_FOOD_ALARM", model);
+                ed.apply();
+                alarmFoodAdapter.setItem(alarmModels.get(alarmModels.size() - 1));
+            }
+            alarmModels.clear();
             alarmPopup.dismiss();
+            startAlarmDrugs(times, name.getText().toString());
             System.out.println();
         });
         closeButton.setOnClickListener(v1 -> {
             alarmPopup.dismiss();
             medicationButton.setEnabled(true);
         });
+    }
+
+    private void startAlarmDrugs(List<String> times, String name) {
+        sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
+        idAlarm = sharedPreferences.getInt("ID_ALARM", 105);
+        for (String items : times) {
+            String[] str = items.split(" ");
+            NotificationScheduler.setReminder(getContext(), AlarmReceiver.class, Integer.parseInt(str[2]), Integer.parseInt(str[4]), idAlarm);
+            SharedPreferences.Editor ed = sharedPreferences.edit();
+            ed.putInt("ID_ALARM", idAlarm++);
+            ed.apply();
+        }
     }
 
     private String getTime(String time, int hours) {

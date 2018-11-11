@@ -19,7 +19,6 @@ import ru.vseopecheni.app.R;
 
 import static android.content.Context.ALARM_SERVICE;
 
-
 public class NotificationScheduler {
 
     public static final int DAILY_REMINDER_REQUEST_CODE = 100;
@@ -28,6 +27,8 @@ public class NotificationScheduler {
     public static final int DAILY_REMINDER_REQUEST_CODE_FOURTH = 103;
     public static final int DAILY_REMINDER_REQUEST_CODE_FIFTH = 104;
     public static final String TAG = "NotificationScheduler";
+
+    private static int idAlarm;
 
     public static void setReminder(Context context, Class<?> cls, int hour, int min, int id) {
         Calendar calendar = Calendar.getInstance();
@@ -57,6 +58,7 @@ public class NotificationScheduler {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        idAlarm = id;
         System.out.println();
     }
 
@@ -159,4 +161,30 @@ public class NotificationScheduler {
         }
     }
 
+    public static void showNotification(Context context, Class<?> cls, String title) {
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        Intent notificationIntent = new Intent(context, cls);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addParentStack(cls);
+        stackBuilder.addNextIntent(notificationIntent);
+
+
+        for (int i = 105; i <= idAlarm; i++) {
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(i, PendingIntent.FLAG_UPDATE_CURRENT);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+            Notification notification = builder.setContentTitle(title)
+                    .setContentText("")
+                    .setAutoCancel(true)
+                    .setSound(alarmSound)
+                    .setSmallIcon(R.drawable.stol5)
+                    .setContentIntent(pendingIntent).build();
+
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(i, notification);
+        }
+    }
 }

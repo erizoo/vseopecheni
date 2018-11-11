@@ -37,10 +37,12 @@
         android:textColor="#FFFFFF" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/medication_button_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
         android:layout_below="@+id/medication_button"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="67dp" />
