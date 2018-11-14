@@ -12,4 +12,12 @@ public interface MainActivityPresenter  <V extends MainActivityMvpView> extends 
     void saveAll();
 
     void saveRecipesImages(List<ResponseFullRecipes> responseFullRecipes, Context context, MainActivity mainActivity);
+
+    void getFull(String s);
+
+    void getProducts();
+
+    void saveMenuForWeek();
+
+    void saveRecipes();
 }

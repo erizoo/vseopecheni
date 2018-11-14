@@ -79,4 +79,56 @@ public class MainActivityPresenterImpl<V extends MainActivityMvpView> extends Ba
         }).start();
     }
 
+    @Override
+    public void getFull(String s) {
+        getCompositeDisposable().add(
+                getRepositoryManager().getServiceNetwork().getFull(s)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                getMvpView()::onSaveFullUpdated,
+                                Throwable::printStackTrace
+                        )
+        );
+    }
+
+    @Override
+    public void getProducts() {
+        getCompositeDisposable().add(
+                getRepositoryManager().getServiceNetwork().getProducts()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                getMvpView()::onProductsUpdated,
+                                Throwable::printStackTrace
+                        )
+        );
+    }
+
+    @Override
+    public void saveMenuForWeek() {
+        getCompositeDisposable().add(
+                getRepositoryManager().getServiceNetwork().getMenuForWeek()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                getMvpView()::onSavedMenuForWeek,
+                                Throwable::printStackTrace
+                        )
+        );
+    }
+
+    @Override
+    public void saveRecipes() {
+        getCompositeDisposable().add(
+                getRepositoryManager().getServiceNetwork().getFullRecipe()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                getMvpView()::onSavedRecipes,
+                                Throwable::printStackTrace
+                        )
+        );
+    }
+
 }

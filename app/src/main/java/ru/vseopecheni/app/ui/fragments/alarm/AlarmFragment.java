@@ -40,9 +40,9 @@ import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.ui.base.BaseFragment;
 import ru.vseopecheni.app.utils.AlarmManagerBroadcastReceiver;
-import ru.vseopecheni.app.utils.AlarmReceiver;
 import ru.vseopecheni.app.utils.FifthPushNotif;
 import ru.vseopecheni.app.utils.FourthPushNotif;
+import ru.vseopecheni.app.utils.NotificationAlarm;
 import ru.vseopecheni.app.utils.NotificationScheduler;
 import ru.vseopecheni.app.utils.SecondPushNotif;
 import ru.vseopecheni.app.utils.ThirdPushNotif;
@@ -266,7 +266,7 @@ public class AlarmFragment extends BaseFragment {
             }
             sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
             timeFoodAlarm = sharedPreferences.getString("TIME_FOOD_ALARM", "");
-            if (!Objects.requireNonNull(timeFoodAlarm).equals("")){
+            if (!Objects.requireNonNull(timeFoodAlarm).equals("")) {
                 Type listOfObject = new TypeToken<List<AlarmModel>>() {
                 }.getType();
                 List<AlarmModel> alarmModels = new Gson().fromJson(timeFoodAlarm, listOfObject);
@@ -302,9 +302,13 @@ public class AlarmFragment extends BaseFragment {
         idAlarm = sharedPreferences.getInt("ID_ALARM", 105);
         for (String items : times) {
             String[] str = items.split(" ");
-            NotificationScheduler.setReminder(getContext(), AlarmReceiver.class, Integer.parseInt(str[2]), Integer.parseInt(str[4]), idAlarm);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(str[2]));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(str[4]));
+            calendar.set(Calendar.SECOND, 0);
+            NotificationAlarm.SheduleNotification(getContext(), calendar.getTimeInMillis(), name, "Пора принимать лекрство" + idAlarm, ++idAlarm);
             SharedPreferences.Editor ed = sharedPreferences.edit();
-            ed.putInt("ID_ALARM", idAlarm++);
+            ed.putInt("ID_ALARM", idAlarm);
             ed.apply();
         }
     }

@@ -18,6 +18,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -57,6 +58,8 @@ public class AboutLiverFull extends BaseFragment implements AboutLiverFullMvpVie
     ScrollView scrollView;
     @BindView(R.id.web_view)
     WebView webView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     private Unbinder unbinder;
     private String number;
@@ -74,6 +77,7 @@ public class AboutLiverFull extends BaseFragment implements AboutLiverFullMvpVie
         unbinder = ButterKnife.bind(this, v);
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
+        webView.setVisibility(View.GONE);
         scrollView.setVisibility(View.GONE);
         showLoading();
         Bundle bundle = this.getArguments();
@@ -81,7 +85,6 @@ public class AboutLiverFull extends BaseFragment implements AboutLiverFullMvpVie
             number = bundle.getString(NUMBER);
             if (Constant.isInternet(getContext())){
                 v.findViewById(R.id.scrollView_about).setVisibility(View.GONE);
-                webView.setVisibility(View.VISIBLE);
                 WebSettings webSettings = webView.getSettings();
                 webSettings.setJavaScriptEnabled(true);
                 webView.setWebViewClient(new WebViewClient() {
@@ -97,6 +100,8 @@ public class AboutLiverFull extends BaseFragment implements AboutLiverFullMvpVie
 
                     @Override
                     public void onPageFinished(WebView view, String url) {
+                        progressBar.setVisibility(View.GONE);
+                        webView.setVisibility(View.VISIBLE);
                         webView.loadUrl("javascript:(function() { " +
                                 "document.getElementsByTagName('header')[0].style.display='none'; " + "document.getElementsById('nav_menu')[0].style.display='none'; " + "})()");
                     }

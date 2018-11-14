@@ -75,5 +75,6 @@
     <string name="save">СОХРАНИТЬ</string>
     <string name="close">ОТМЕНА</string>
     <string name="first_time">Время первого приема пищи</string>
+    <string name="save_info">Загрузить оффлайн версию</string>
 
 </resources>

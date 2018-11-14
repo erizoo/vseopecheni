@@ -5,8 +5,8 @@
 
     <group android:checkableBehavior="single">
         <item
-        android:id="@+id/begin"
-        android:title="@string/begin" />
+            android:id="@+id/begin"
+            android:title="@string/begin" />
         <item
             android:id="@+id/table_five"
             android:icon="@drawable/ic_11"
@@ -39,5 +39,9 @@
             android:id="@+id/alarm_clock"
             android:icon="@drawable/ic_18"
             android:title="@string/alarm_clock" />
+        <item
+            android:id="@+id/save_info"
+            android:icon="@drawable/ic_save_disk"
+            android:title="@string/save_info" />
     </group>
 </menu>
