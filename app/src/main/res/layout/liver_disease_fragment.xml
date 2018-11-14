@@ -9,6 +9,7 @@
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         tools:ignore="WebViewLayout">
 
     </WebView>
@@ -46,19 +47,1298 @@
                     android:textSize="19sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/content"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rl"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:textColor="#9a9a9a"
-                android:textSize="19sp" />
+                android:layout_below="@+id/rl">
+
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Существуют ли безопасные дозы алкоголя?"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:clickable="true"
+                    android:text="Существуют ли безопасные дозы алкоголя?"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="В рюмке прозрачно, в печени мрачно"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c2"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Опасный миф: Слабый алкоголь – слабое воздействие на печень?"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c3"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Как выпить и не забыть о печени. Или алкогольному гепатиту Нет!"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c4"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Алкогольная болезнь печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c5"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Аутоиммунный гепатит симптомы, причины, диагностика, лечение."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c6"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Билиарный панкреатит: причины, симптомы, диагностика, лечение и прогноз"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c7"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Болезни накопления: выявление, диагностика, лечение, профилактика."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p2"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Болезни накопления: выявление, диагностика, лечение, профилактика."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c8"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Гемохроматоз (бронзовый диабет) - причины, симптомы, диагностика, лечение"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c9"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Порфирии: разновидности, причины, признаки, основные симптомы и лечение"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Болезнь Вильсона-Коновалова. Симптомы, причины, диагностика, лечение, осложнения и последствия."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c11"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Амилоидоз печени. Это нужно знать каждому!"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c12"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Что такое фокальная нодулярная (или очаговая узловая) гиперплазия печени."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c13"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Болезнь Бадда-Киари, лечение, причины, симптомы, профилактика."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p3"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Гемангиома печени - виды, причины, симптомы, диагностика, лечение"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p4"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Гепатиты: симптомы, классификация гепатитов, причины, пути заражения, диагностика и лечение."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p5"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Гепатиты: симптомы, классификация гепатитов, причины, пути заражения, диагностика и лечение."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c14"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Препараты нового поколения в терапии гепатита С"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c15"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Вирусный гепатит С: симптомы и признаки у женщин и мужчин"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c16"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Вирусный гепатит А – симптомы, профилактика, лечение. Как передается гепатит А?"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c17"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Вирусный гепатит B: лечение, симптомы, причины, профилактика, диагностика"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c18"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Гепатит С: причины, первые признаки, симптомы и генотипы"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c19"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Гепатит Д. Причины, способы инфицирования, диагностика и лечение заболевания."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c20"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Алкогольный гепатит: диагностика, симптомы, лечение. Как распознать гепатит алкогольного генеза"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c21"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Армия и гепатит. Годен или не годен?"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c22"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Гепатоз (стеатоз печени). Причины, симптомы, диагностика и лечение жирового гепатоза"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p6"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Что такое гепатомегалия - как лечить. Признаки гепатомегалии, что означает этот диагноз?"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p7"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Что такое гепатомегалия - как лечить. Признаки гепатомегалии, что означает этот диагноз?"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c23"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Гепатомегалия у детей, причины образования и способы лечения гепатомегалии"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c24"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Желчнокаменная болезнь (Статья Трухан Д.И.)"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p8"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Желчнокаменная болезнь (Статья Трухан Д.И.)"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c25"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Желчнокаменная болезнь (Статья Трухан Д.И.)"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Желчнокаменная болезнь (обзорная статья доктора Вялова С.С.)"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c27"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Заболевания печени у детей. Причины заболеваний, симптомы, диагностика и лечение."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p9"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Дискинезия желчевыводящих путей: симптомы, причины появления, формы, принципы лечения"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Диффузные изменения печени. Что это такое, признаки и лечение."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p11"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Жировая болезнь печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p12"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Жировая болезнь печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c28"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Симптомы жировой болезни печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c29"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Профилактика жировой болезни печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c30"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Лечение жировой болезни печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c31"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Диагностика жировой болезни печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c32"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Сахарный диабет и жировая болезнь печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c33"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Зуд при заболеваниях печени - лечение и диета"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p13"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Киста печени - причины, симптомы, диагностика и лечение"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p14"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Лекарственная болезнь печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p15"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Лекарственная болезнь печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c35"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c34"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Симптомы лекарственной болезни печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c35"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Все, что вам нужно знать о муковисцидозе"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p16"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Все, что вам нужно знать о муковисцидозе"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c37"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c36"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Лечение муковисцидоза"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c38"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c37"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="УДХК и муковисцидоз"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c39"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c38"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="ПИТАНИЕ ПРИ МУКОВИСЦИДОЗЕ: РЕКОМЕНДАЦИИ ДЛЯ ВРАЧЕЙ"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c39"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Что нужно знать о некрозе печени? Причины возникновения. Симптоматика."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p17"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Что нужно знать о некрозе печени? Причины возникновения. Симптоматика."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c41"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c40"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Симптомы некроза печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c41"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Какие паразиты живут в печени человека — виды, симптомы, диагностика и лечение."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c43"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p18"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Какие паразиты живут в печени человека — виды, симптомы, диагностика и лечение."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c44"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c43"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Лямблии в печени - симптомы и лечение, лямблии у взрослых и детей"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c44"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Эхинококкоз (цистодоз) печени - что это такое, симптомы, диагностика и лечение."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c45"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Печеночная недостаточность"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c46"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p19"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Печеночная недостаточность"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c47"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c46"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Симптомы печеночной недостаточности"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c47"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Проявление печеночной недостаточности"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c48"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Профилактика острой печёночной недостаточности"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c49"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Рак печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p20"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Симптомы и синдромы печени – признаки и описание."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p21"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Симптомы и синдромы печени – признаки и описание."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c51"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c50"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Желтуха. Причины, диагностика, лечение, профилактика"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c52"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c51"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Метастазы в печени - лечение химиотерапией и диета. Сколько живут с метастазами в печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c53"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c52"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Синдром Жильбера симптомы, причины, диагностика, лечение. Осложнения и последствия."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c54"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c53"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Гепатолиенальный синдром — причины возникновения, признаки, диагностика, лечение."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c55"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c54"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Кожные проявления при заболеваниях печени"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c55"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Лапароскопическая холецистэктомия (операция по удаленю желчного пузыря). Памятка для пациентов"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c56"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p22"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Лапароскопическая холецистэктомия (операция по удаленю желчного пузыря). Памятка для пациентов"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c57"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c56"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Надо ли удалять желчный пузырь если есть камни? Когда удаляют желчный пузырь, показания."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c58"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c57"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Как подготовиться к операции по удалению желчного пузыря"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c59"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c58"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Жизнь после удаления желчного пузыря. Без желчного пузыря жить можно."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c59"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Фиброз печени - что это такое, причины, симптомы, можно ли его вылечить, как лечить"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p23"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Фиброз печени - что это такое, причины, симптомы, можно ли его вылечить, как лечить"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c61"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c60"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Классификация фиброза печени: определение, его патологические процессы, обратимость и диагностика."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c62"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c61"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Фиброз печени: симптомы, диагностика, лечение, причины и профилактика"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c62"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Холецистит"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c63"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p24"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Холецистит"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c64"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c63"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Симптомы холецистита"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c65"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c64"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Диагностика холецистита"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c66"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c65"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Профилактика холецистита"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c67"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c66"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Холецистит – воспаление желчного пузыря, диагностика и лечение холецистита"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c67"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Цирроз печени: признаки, лечение, сколько с ним живут"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/p26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p25"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Желтуха.Симптомы, причины и лечение. Желтуха у детей (новорожденных) и взрослых."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/c68"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Желтуха.Симптомы, причины и лечение. Желтуха у детей (новорожденных) и взрослых."
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c69"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c68"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Диагностика желтухи"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c70"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c69"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Желтуха: механизм возникновения"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c71"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c70"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Симптомы желтухи"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c72"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c71"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Лечение желтухи: народные средства, диета"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c73"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c72"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Как избежать желтухи? Важные советы по профилактике"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/c74"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c73"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Заболевания печени (Л-Я)"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/p27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/c74"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Стеатогепатит: симптомы и методы лечения"
+                    android:textColor="#9a9a9a"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
 
         </RelativeLayout>
-
     </ScrollView>
-
 </android.support.constraint.ConstraintLayout>

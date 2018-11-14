@@ -16,6 +16,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -50,6 +51,8 @@ public class HepatoprotectorsFragment extends BaseFragment implements Hepatoprot
     ScrollView scrollView;
     @BindView(R.id.web_view)
     WebView webView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     @Inject
     HepatoprotectorsPresenter<HepatoprotectorsMvpView> presenter;
@@ -68,18 +71,17 @@ public class HepatoprotectorsFragment extends BaseFragment implements Hepatoprot
         unbinder = ButterKnife.bind(this, v);
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
+        webView.setVisibility(View.GONE);
         scrollView.setVisibility(View.GONE);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         if (Constant.isInternet(getContext())) {
             presenter.getFull("210");
             content.setVisibility(View.GONE);
-            webView.setVisibility(View.VISIBLE);
             v.findViewById(R.id.rl).setVisibility(View.GONE);
         } else {
             withoutInternet("210");
             content.setVisibility(View.VISIBLE);
-            webView.setVisibility(View.GONE);
         }
         return v;
     }
@@ -117,6 +119,8 @@ public class HepatoprotectorsFragment extends BaseFragment implements Hepatoprot
     @Override
     public void onFullInfoUpdated(List<ResponseAbout> responseAbouts) {
         title.setText("Гепатопротекторы");
+        webView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
         webView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url != null && (url.startsWith("http://") || url.startsWith("https://"))) {

@@ -1,7 +1,10 @@
 package ru.vseopecheni.app.ui.fragments.menu;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +71,12 @@ public class FullRecipeForWeekFragment extends BaseFragment {
                 .load("https://app.vseopecheni.ru" + responseFullRecipesForMenu.getImage())
                 .apply(new RequestOptions().fitCenter())
                 .into(imageView);
-        cookingMethodFull.setText(stringBuilder);
+        compositionRecipe.setText(stringBuilder);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            cookingMethodFull.setText(Html.fromHtml(responseFullRecipesForMenu.getContent(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            cookingMethodFull.setText(Html.fromHtml(responseFullRecipesForMenu.getContent()));
+        }
         hideLoading();
         return v;
     }

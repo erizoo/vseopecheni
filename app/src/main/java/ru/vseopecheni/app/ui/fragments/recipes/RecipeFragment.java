@@ -2,6 +2,7 @@ package ru.vseopecheni.app.ui.fragments.recipes;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,8 +32,6 @@ import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.ui.adapters.RecipesAdapter;
 import ru.vseopecheni.app.ui.base.BaseActivity;
-import ru.vseopecheni.app.ui.fragments.table.TableFiveMvpView;
-import ru.vseopecheni.app.ui.fragments.table.TableFivePresenter;
 import ru.vseopecheni.app.utils.Constant;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -58,7 +57,7 @@ public class RecipeFragment extends Fragment implements RecipeMvpView {
         ((BaseActivity) getActivity()).showLoading();
         sharedPreferences = getActivity().getPreferences(MODE_PRIVATE);
         id = sharedPreferences.getString("id", "");
-        if (!Constant.isInternet(getContext())){
+        if (!Constant.isInternet(getContext())) {
             FileInputStream stream = null;
             StringBuilder sb = new StringBuilder();
             String line;
@@ -79,6 +78,8 @@ public class RecipeFragment extends Fragment implements RecipeMvpView {
                     ((BaseActivity) getActivity()).hideLoading();
                 }
             } catch (Exception e) {
+                ((BaseActivity) getActivity()).hideLoading();
+                Toast.makeText(getContext(), "Подключите интеренет", Toast.LENGTH_LONG).show();
                 Log.d(Constant.TAG, "Файла нет или произошла ошибка при чтении");
             }
         } else {
@@ -103,10 +104,11 @@ public class RecipeFragment extends Fragment implements RecipeMvpView {
         recipesAdapter.setItems(responseFullRecipes);
 
         for (int i = 0; i < responseFullRecipes.size() - 1; i++) {
-            if (responseFullRecipes.get(i).getId().equals(id)){
+            if (responseFullRecipes.get(i).getId().equals(id)) {
                 recyclerViewRecipes.scrollToPosition(i);
             }
         }
+
         return v;
     }
 
@@ -114,5 +116,14 @@ public class RecipeFragment extends Fragment implements RecipeMvpView {
     public void onProductsUpdate(List<ResponseFullRecipes> responseFullRecipes) {
         recipesAdapter.setItems(responseFullRecipes);
         ((BaseActivity) Objects.requireNonNull(getActivity())).hideLoading();
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String id = bundle.getString("id");
+            for (int i = 0; i < responseFullRecipes.size() - 1; i++) {
+                if (responseFullRecipes.get(i).getId().equals(id)) {
+                    recyclerViewRecipes.scrollToPosition(i);
+                }
+            }
+        }
     }
 }

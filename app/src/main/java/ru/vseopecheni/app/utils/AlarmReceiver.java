@@ -36,6 +36,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        Objects.requireNonNull(notificationManager).notify(42, notification);
+        Objects.requireNonNull(notificationManager).notify((int) System.currentTimeMillis(), notification);
     }
 }

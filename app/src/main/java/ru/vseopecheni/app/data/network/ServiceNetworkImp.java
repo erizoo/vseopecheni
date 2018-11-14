@@ -92,6 +92,11 @@ public class ServiceNetworkImp implements ServiceNetwork {
     }
 
     @Override
+    public Observable<List<ResponseAbout>> getFullAbout(String s) {
+        return apiMethods.getFull(TYPE_ARTICLE, s, KEY);
+    }
+
+    @Override
     public Observable<List<ResponseFullRecipes>> getFullRecipe() {
         return apiMethods.getFullRecipe(KEY, TYPE_RECIPES);
     }

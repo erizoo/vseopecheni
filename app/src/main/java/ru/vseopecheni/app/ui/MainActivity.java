@@ -141,27 +141,15 @@ public class MainActivity extends BaseActivity
             DialogInterface.OnClickListener myClickListener = myClickListener = (dialog, which) -> {
                 switch (which) {
                     case Dialog.BUTTON_POSITIVE:
-                        showLoadingWithMessage("");
-                        presenter.getFull("1");
-                        presenter.getFull("2");
-                        presenter.getFull("3");
-                        presenter.getFull("4");
-                        presenter.getFull("5");
-                        presenter.getFull("6");
-                        presenter.getFull("210");
-                        presenter.getFull("204");
-                        presenter.getFull("212");
-                        presenter.getFull("213");
-                        presenter.getFull("16");
-                        presenter.getProducts();
+//                        presenter.getProducts();
+//                        getFull();
                         presenter.saveMenuForWeek();
-                        hideLoading();
-                        showLoadingWithMessage("Оосталось немного.");
-                        presenter.saveRecipes();
-                        sharedPreferences = this.getPreferences(MODE_PRIVATE);
-                        SharedPreferences.Editor ed = sharedPreferences.edit();
-                        ed.putBoolean("SAVED", true);
-                        ed.apply();
+//                        hideLoading();
+//                        presenter.saveRecipes();
+//                        sharedPreferences = this.getPreferences(MODE_PRIVATE);
+//                        SharedPreferences.Editor ed = sharedPreferences.edit();
+//                        ed.putBoolean("SAVED", true);
+//                        ed.apply();
                         break;
                     case Dialog.BUTTON_NEGATIVE:
                         break;
@@ -175,7 +163,7 @@ public class MainActivity extends BaseActivity
             } catch (NullPointerException e){
             }
             if (!isSaved){
-                AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
+                AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
                 adb.setTitle(R.string.title_dialog);
                 adb.setMessage(R.string.content_dialog);
                 adb.setIcon(android.R.drawable.ic_dialog_info);
@@ -189,6 +177,106 @@ public class MainActivity extends BaseActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void getFull() {
+        Runnable runnable = () -> {
+            presenter.getFull("1");
+            presenter.getFull("2");
+            presenter.getFull("3");
+            presenter.getFull("4");
+            presenter.getFull("5");
+            presenter.getFull("6");
+            presenter.getFull("210");
+            presenter.getFull("204");
+            presenter.getFull("212");
+            presenter.getFull("213");
+            presenter.getFull("16");
+            presenter.getFull("231");
+            presenter.getFull("233");
+            presenter.getFull("235");
+            presenter.getFull("236");
+            presenter.getFull("237");
+            presenter.getFull("238");
+            presenter.getFull("239");
+            presenter.getFull("240");
+            presenter.getFull("241");
+            presenter.getFull("242");
+            presenter.getFull("243");
+            presenter.getFull("244");
+            presenter.getFull("245");
+            presenter.getFull("248");
+            presenter.getFull("249");
+            presenter.getFull("250");
+            presenter.getFull("251");
+            presenter.getFull("252");
+            presenter.getFull("253");
+            presenter.getFull("256");
+            presenter.getFull("257");
+            presenter.getFull("258");
+            presenter.getFull("265");
+            presenter.getFull("266");
+            presenter.getFull("273");
+            presenter.getFull("278");
+            presenter.getFull("280");
+            presenter.getFull("281");
+            presenter.getFull("282");
+            presenter.getFull("283");
+            presenter.getFull("284");
+            presenter.getFull("286");
+            presenter.getFull("295");
+            presenter.getFull("296");
+            presenter.getFull("297");
+            presenter.getFull("298");
+            presenter.getFull("299");
+            presenter.getFull("300");
+            presenter.getFull("301");
+            presenter.getFull("302");
+            presenter.getFull("303");
+            presenter.getFull("304");
+            presenter.getFull("305");
+            presenter.getFull("306");
+            presenter.getFull("307");
+            presenter.getFull("308");
+            presenter.getFull("95");
+            presenter.getFull("310");
+            presenter.getFull("311");
+            presenter.getFull("312");
+            presenter.getFull("313");
+            presenter.getFull("314");
+            presenter.getFull("315");
+            presenter.getFull("316");
+            presenter.getFull("317");
+            presenter.getFull("318");
+            presenter.getFull("319");
+            presenter.getFull("320");
+            presenter.getFull("321");
+            presenter.getFull("322");
+            presenter.getFull("323");
+            presenter.getFull("324");
+            presenter.getFull("325");
+            presenter.getFull("326");
+            presenter.getFull("327");
+            presenter.getFull("267");
+            presenter.getFull("268");
+            presenter.getFull("269");
+            presenter.getFull("270");
+            presenter.getFull("271");
+            presenter.getFull("272");
+            presenter.getFull("294");
+            presenter.getFull("246");
+            presenter.getFull("247");
+            presenter.getFull("256");
+            presenter.getFull("6976");
+            presenter.getFull("6912");
+            presenter.getFull("34");
+            presenter.getFull("287");
+            presenter.getFull("6980");
+            presenter.getFull("309");
+            presenter.getFull("328");
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 
     public boolean isInternet() {

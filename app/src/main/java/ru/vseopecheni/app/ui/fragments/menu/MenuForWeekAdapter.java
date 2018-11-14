@@ -355,7 +355,7 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         });
                     }
                 }
-            } catch (NullPointerException e) {
+            } catch (Exception e) {
                 Snackbar.make(imageView, "Ошибка получения данных, подключите интернет", Snackbar.LENGTH_LONG).show();
             }
 

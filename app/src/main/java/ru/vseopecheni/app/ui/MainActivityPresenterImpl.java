@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 
 import javax.inject.Inject;
@@ -82,7 +83,7 @@ public class MainActivityPresenterImpl<V extends MainActivityMvpView> extends Ba
     @Override
     public void getFull(String s) {
         getCompositeDisposable().add(
-                getRepositoryManager().getServiceNetwork().getFull(s)
+                getRepositoryManager().getServiceNetwork().getFullAbout(s)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
@@ -130,5 +131,7 @@ public class MainActivityPresenterImpl<V extends MainActivityMvpView> extends Ba
                         )
         );
     }
+
+
 
 }

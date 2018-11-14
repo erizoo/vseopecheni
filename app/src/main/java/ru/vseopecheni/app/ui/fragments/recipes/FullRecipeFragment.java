@@ -59,6 +59,7 @@ public class FullRecipeFragment extends BaseFragment {
     private String json;
     private Bitmap bitmap;
     private SharedPreferences sharedPreferences;
+    private ResponseFullRecipes responseFullRecipes;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,7 +118,7 @@ public class FullRecipeFragment extends BaseFragment {
         } else {
             json = Objects.requireNonNull(bundle).getString("json");
             Gson gson = new Gson();
-            ResponseFullRecipes responseFullRecipes = gson.fromJson(json, ResponseFullRecipes.class);
+            responseFullRecipes = gson.fromJson(json, ResponseFullRecipes.class);
             Glide.with(Objects.requireNonNull(getContext()))
                     .asBitmap()
                     .load("https://app.vseopecheni.ru/" + responseFullRecipes.getImage())
@@ -155,7 +156,11 @@ public class FullRecipeFragment extends BaseFragment {
                 SharedPreferences.Editor ed = sharedPreferences.edit();
                 ed.putString("id", id);
                 ed.apply();
-                ((BaseActivity)getActivity()).moveToNewFragment(new RecipeFragment());
+                RecipeFragment recipeFragment = new RecipeFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", responseFullRecipes.getId());
+                recipeFragment.setArguments(bundle);
+                ((BaseActivity)getActivity()).moveToNewFragment(recipeFragment);
                 return true;
             }
             return false;

@@ -20,4 +20,5 @@ public interface MainActivityPresenter  <V extends MainActivityMvpView> extends 
     void saveMenuForWeek();
 
     void saveRecipes();
+
 }

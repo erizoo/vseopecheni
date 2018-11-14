@@ -16,6 +16,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -58,6 +59,8 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
     ScrollView scrollView;
     @BindView(R.id.web_view)
     WebView webView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     private Unbinder unbinder;
     private String number;
@@ -76,7 +79,9 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
         unbinder = ButterKnife.bind(this, v);
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         presenter.onAttach(this);
+        webView.setVisibility(View.GONE);
         scrollView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             number = bundle.getString(NUMBER);
@@ -99,6 +104,8 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
 
                     @Override
                     public void onPageFinished(WebView view, String url) {
+                        progressBar.setVisibility(View.GONE);
+                        webView.setVisibility(View.VISIBLE);
                         webView.loadUrl("javascript:(function() { " +
                                 "document.getElementsByTagName('header')[0].style.display='none'; " + "document.getElementsById('nav_menu')[0].style.display='none'; " + "})()");
                     }

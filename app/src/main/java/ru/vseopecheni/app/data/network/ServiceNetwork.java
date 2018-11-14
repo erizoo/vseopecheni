@@ -25,4 +25,6 @@ public interface ServiceNetwork {
     Observable<List<ResponseProducts>> getProductsForNet(String drinksId);
 
     Observable<Object> saveProduct();
+
+    Observable<List<ResponseAbout>> getFullAbout(String s);
 }
