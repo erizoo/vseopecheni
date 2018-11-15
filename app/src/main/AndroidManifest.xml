@@ -30,23 +30,7 @@
             </intent-filter>
         </activity>
         <!-- Register the Alarm Receiver -->
-        <receiver android:name=".utils.AlarmManagerBroadcastReceiver"
-            android:enabled="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
         <receiver android:name=".utils.AlarmReceiver"/>
-        <receiver android:name=".utils.AlarmBootReceiver"
-            android:enabled="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".utils.SecondPushNotif"/>
-        <receiver android:name=".utils.ThirdPushNotif"/>
-        <receiver android:name=".utils.FourthPushNotif"/>
-        <receiver android:name=".utils.FifthPushNotif"/>
     </application>
 
 </manifest>

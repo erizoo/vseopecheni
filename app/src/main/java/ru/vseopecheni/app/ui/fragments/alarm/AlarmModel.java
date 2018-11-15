@@ -4,6 +4,7 @@ import java.util.List;
 
 public class AlarmModel {
 
+    private int id;
     private String name;
     private List<String> times;
 
@@ -13,6 +14,20 @@ public class AlarmModel {
     public AlarmModel(String name, List<String> times) {
         this.name = name;
         this.times = times;
+    }
+
+    public AlarmModel(int id, String name, List<String> times) {
+        this.id = id;
+        this.name = name;
+        this.times = times;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

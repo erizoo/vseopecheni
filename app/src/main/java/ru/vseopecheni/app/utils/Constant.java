@@ -1,11 +1,15 @@
 package ru.vseopecheni.app.utils;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.util.Objects;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public interface Constant {
 
@@ -48,6 +52,18 @@ public interface Constant {
         } else {
             return false;
         }
+    }
+
+    static void saveToSharedPreference(String id, String content, Activity activity) {
+        SharedPreferences sharedPreferences = activity.getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sharedPreferences.edit();
+        ed.putString(id, content);
+        ed.apply();
+    }
+
+    static String getFromSharedPreference(String id, Activity activity) {
+        SharedPreferences sharedPreferences = activity.getPreferences(MODE_PRIVATE);
+        return sharedPreferences.getString(id, "");
     }
 
 }

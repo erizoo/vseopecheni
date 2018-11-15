@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import ru.vseopecheni.app.ui.base.BaseViewHolder;
 public class AlarmFoodAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private List<AlarmModel> alarmModels = new ArrayList<>();
+    private Callback callback;
 
     @NonNull
     @Override
@@ -39,6 +42,7 @@ public class AlarmFoodAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void setItems(List<AlarmModel> alarmModels) {
+        this.alarmModels.clear();
         this.alarmModels.addAll(alarmModels);
         notifyDataSetChanged();
     }
@@ -48,13 +52,31 @@ public class AlarmFoodAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
+
+    public interface Callback{
+
+        void editAlarm(AlarmModel alarmModel);
+
+        void deleteItemFromAlarm(List<AlarmModel> alarmModels);
+
+    }
+
     public class AlarmFoodViewHolder extends BaseViewHolder {
+
+        private Context context;
 
         @BindView(R.id.name)
         TextView name;
         @BindView(R.id.time)
         TextView time;
-        private Context context;
+        @BindView(R.id.layout)
+        RelativeLayout relativeLayout;
+        @BindView(R.id.imageButton)
+        ImageButton imageButton;
+
         private String firstTime;
         private String secondTime;
         private String thirdTime;
@@ -68,6 +90,14 @@ public class AlarmFoodAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             super.onBind(position);
+            relativeLayout.setOnClickListener(v -> {
+                callback.editAlarm(alarmModels.get(position));
+            });
+            imageButton.setOnClickListener(v -> {
+                alarmModels.remove(position);
+                notifyItemRemoved(alarmModels.size());
+                callback.deleteItemFromAlarm(alarmModels);
+            });
             name.setText(alarmModels.get(position).getName());
             try {
                 firstTime = alarmModels.get(position).getTimes().get(0);

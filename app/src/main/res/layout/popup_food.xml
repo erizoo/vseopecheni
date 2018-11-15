@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
+    android:layout_marginEnd="20dp"
     android:layout_marginStart="20dp"
     android:layout_marginTop="29dp"
-    android:layout_marginEnd="20dp"
-    android:layout_marginBottom="6dp"
     android:background="@drawable/panel_white"
     android:elevation="4dp"
     android:orientation="vertical"
-    android:paddingStart="30dp"
     android:paddingEnd="30dp"
+    android:paddingStart="30dp"
     android:visibility="visible">
 
     <TextView
@@ -19,6 +20,47 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:hint="@string/first_time" />
+
+    <RelativeLayout
+        android:id="@+id/time_food_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/hours"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:ems="2"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="number"
+            android:maxLength="2"
+            tools:ignore="LabelFor" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/hours"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="45dp"
+            android:text=":" />
+
+        <EditText
+            android:id="@+id/minutes"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/hours"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="50dp"
+            android:ems="2"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="number"
+            android:maxLength="2" />
+
+    </RelativeLayout>
+
 
     <Button
         android:id="@+id/save_button"
@@ -33,8 +75,8 @@
         android:id="@+id/close_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
         android:background="@color/colorButtonGreen"
         android:text="@string/close"
         android:textColor="#000000" />
