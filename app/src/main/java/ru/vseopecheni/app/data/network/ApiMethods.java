@@ -7,6 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 import ru.vseopecheni.app.data.models.ResponseAbout;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
+import ru.vseopecheni.app.data.models.ResponseId;
 import ru.vseopecheni.app.data.models.ResponseMenu;
 import ru.vseopecheni.app.data.models.ResponseMenuForWeek;
 import ru.vseopecheni.app.data.models.ResponseProducts;
@@ -33,4 +34,7 @@ public interface ApiMethods {
     Observable<List<ResponseProducts>> getProductsForNet(@Query("type") String typeArticle,
                                                          @Query("id") String id,
                                                          @Query("key") String key);
+    @GET("json")
+    Observable<List<ResponseId>> getAllId(@Query("type") String typeArticle,
+                                          @Query("key") String key);
 }

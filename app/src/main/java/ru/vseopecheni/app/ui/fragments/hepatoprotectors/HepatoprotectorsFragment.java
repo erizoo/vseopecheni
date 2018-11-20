@@ -82,6 +82,7 @@ public class HepatoprotectorsFragment extends BaseFragment implements Hepatoprot
         } else {
             withoutInternet("210");
             content.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
         }
         return v;
     }

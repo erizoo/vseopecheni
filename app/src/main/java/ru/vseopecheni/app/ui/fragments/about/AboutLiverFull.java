@@ -79,11 +79,11 @@ public class AboutLiverFull extends BaseFragment implements AboutLiverFullMvpVie
         presenter.onAttach(this);
         webView.setVisibility(View.GONE);
         scrollView.setVisibility(View.GONE);
-        showLoading();
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             number = bundle.getString(NUMBER);
             if (Constant.isInternet(getContext())){
+                showLoading();
                 v.findViewById(R.id.scrollView_about).setVisibility(View.GONE);
                 WebSettings webSettings = webView.getSettings();
                 webSettings.setJavaScriptEnabled(true);
@@ -126,8 +126,10 @@ public class AboutLiverFull extends BaseFragment implements AboutLiverFullMvpVie
                     webView.loadUrl("https://app.vseopecheni.ru/about-liver/est-li-svjaz-mezhdu-pokazatelem-indeksa-massi-tela-imt-i-pechenju-/");
                 }
             } else {
+                hideLoading();
                 withoutInternet(number);
                 v.findViewById(R.id.scrollView_about).setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 webView.setVisibility(View.GONE);
             }
         }

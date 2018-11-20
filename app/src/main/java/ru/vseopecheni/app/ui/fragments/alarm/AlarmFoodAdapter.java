@@ -60,7 +60,7 @@ public class AlarmFoodAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         void editAlarm(AlarmModel alarmModel);
 
-        void deleteItemFromAlarm(List<AlarmModel> alarmModels);
+        void deleteItemFromAlarm(AlarmModel alarmModels);
 
     }
 
@@ -92,25 +92,27 @@ public class AlarmFoodAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             super.onBind(position);
             relativeLayout.setOnClickListener(v -> {
                 callback.editAlarm(alarmModels.get(position));
+                notifyDataSetChanged();
             });
             imageButton.setOnClickListener(v -> {
+                callback.deleteItemFromAlarm(alarmModels.get(getAdapterPosition()));
                 alarmModels.remove(position);
-                notifyItemRemoved(alarmModels.size());
-                callback.deleteItemFromAlarm(alarmModels);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(0, alarmModels.size());
             });
             name.setText(alarmModels.get(position).getName());
             try {
-                firstTime = alarmModels.get(position).getTimes().get(0);
+                firstTime = alarmModels.get(position).getFirstTime();
             } catch (Exception e) {
                 firstTime = "";
             }
             try {
-                secondTime = alarmModels.get(position).getTimes().get(1);
+                secondTime = alarmModels.get(position).getSecondTime();
             } catch (Exception e) {
                 secondTime = "";
             }
             try {
-                thirdTime = alarmModels.get(position).getTimes().get(2);
+                thirdTime = alarmModels.get(position).getThirdTime();
             } catch (Exception e) {
                 thirdTime = "";
             }

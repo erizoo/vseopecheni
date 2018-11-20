@@ -66,4 +66,16 @@ public interface Constant {
         return sharedPreferences.getString(id, "");
     }
 
+    static void saveToSharedPreferenceAlarm(String id, int content, Activity activity) {
+        SharedPreferences sharedPreferences = activity.getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sharedPreferences.edit();
+        ed.putInt(id, content);
+        ed.apply();
+    }
+
+    static int getFromSharedPreferenceAlarm(String id, Activity activity) {
+        SharedPreferences sharedPreferences = activity.getPreferences(MODE_PRIVATE);
+        return sharedPreferences.getInt(id, 106);
+    }
+
 }

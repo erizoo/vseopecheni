@@ -6,6 +6,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import ru.vseopecheni.app.data.models.ResponseAbout;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
+import ru.vseopecheni.app.data.models.ResponseId;
 import ru.vseopecheni.app.data.models.ResponseMenuForWeek;
 import ru.vseopecheni.app.data.models.ResponseProducts;
 
@@ -27,4 +28,6 @@ public interface ServiceNetwork {
     Observable<Object> saveProduct();
 
     Observable<List<ResponseAbout>> getFullAbout(String s);
+
+    Observable<List<ResponseId>> getAllId();
 }

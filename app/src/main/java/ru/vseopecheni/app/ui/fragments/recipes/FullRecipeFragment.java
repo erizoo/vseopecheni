@@ -158,7 +158,9 @@ public class FullRecipeFragment extends BaseFragment {
                 ed.apply();
                 RecipeFragment recipeFragment = new RecipeFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("id", responseFullRecipes.getId());
+                if (Constant.isInternet(getContext())){
+                    bundle.putString("id", responseFullRecipes.getId());
+                }
                 recipeFragment.setArguments(bundle);
                 ((BaseActivity)getActivity()).moveToNewFragment(recipeFragment);
                 return true;

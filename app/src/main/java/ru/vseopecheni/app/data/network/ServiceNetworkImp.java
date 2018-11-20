@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import ru.vseopecheni.app.data.models.ResponseAbout;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
+import ru.vseopecheni.app.data.models.ResponseId;
 import ru.vseopecheni.app.data.models.ResponseMenu;
 import ru.vseopecheni.app.data.models.ResponseMenuForWeek;
 import ru.vseopecheni.app.data.models.ResponseProducts;
@@ -17,6 +18,7 @@ public class ServiceNetworkImp implements ServiceNetwork {
 
     private static final String KEY = "hfiwehlgewjhg2342few";
     private static final String TYPE_RECIPES = "list_article_rcp_json";
+    private static final String TYPE = "list_article_json";
     private static final String TYPE_ARTICLE = "article";
     private String id;
 
@@ -94,6 +96,11 @@ public class ServiceNetworkImp implements ServiceNetwork {
     @Override
     public Observable<List<ResponseAbout>> getFullAbout(String s) {
         return apiMethods.getFull(TYPE_ARTICLE, s, KEY);
+    }
+
+    @Override
+    public Observable<List<ResponseId>> getAllId() {
+        return apiMethods.getAllId(TYPE, KEY);
     }
 
     @Override

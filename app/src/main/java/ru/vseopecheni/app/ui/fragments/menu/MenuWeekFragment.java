@@ -231,4 +231,15 @@ public class MenuWeekFragment extends BaseFragment implements MenuForWeekMvpView
         fullRecipeForWeekFragment.setArguments(bundle);
         ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(fullRecipeForWeekFragment);
     }
+
+    @Override
+    public void showRecipeWithoutInternet(String json, String type, String typeTwo) {
+        Bundle bundle = new Bundle();
+        FullRecipeForWeekFragment fullRecipeForWeekFragment = new FullRecipeForWeekFragment();
+        bundle.putString("json", json);
+        bundle.putString("type", type);
+        bundle.putString("typeTwo", typeTwo);
+        fullRecipeForWeekFragment.setArguments(bundle);
+        ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(fullRecipeForWeekFragment);
+    }
 }

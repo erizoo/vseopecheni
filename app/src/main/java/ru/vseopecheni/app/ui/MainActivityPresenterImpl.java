@@ -132,6 +132,18 @@ public class MainActivityPresenterImpl<V extends MainActivityMvpView> extends Ba
         );
     }
 
+    @Override
+    public void getAll() {
+        getCompositeDisposable().add(
+                getRepositoryManager().getServiceNetwork().getAllId()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                getMvpView()::onGetedAll,
+                                Throwable::printStackTrace
+                        )
+        );
+    }
 
 
 }

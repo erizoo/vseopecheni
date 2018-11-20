@@ -11,7 +11,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -20,12 +19,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,6 +35,7 @@ import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseAbout;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
+import ru.vseopecheni.app.data.models.ResponseId;
 import ru.vseopecheni.app.data.models.ResponseMenuForWeek;
 import ru.vseopecheni.app.data.models.ResponseProducts;
 import ru.vseopecheni.app.ui.base.BaseActivity;
@@ -61,6 +61,7 @@ public class MainActivity extends BaseActivity
     private Unbinder unbinder;
     private ProgressDialog progressDialog;
     private SharedPreferences sharedPreferences;
+    private List<ResponseId> responseIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,10 +142,10 @@ public class MainActivity extends BaseActivity
             DialogInterface.OnClickListener myClickListener = myClickListener = (dialog, which) -> {
                 switch (which) {
                     case Dialog.BUTTON_POSITIVE:
+                        saveAllId();
 //                        presenter.getProducts();
-//                        getFull();
-                        presenter.saveMenuForWeek();
-//                        hideLoading();
+                        getFull();
+//                        presenter.saveMenuForWeek();
 //                        presenter.saveRecipes();
 //                        sharedPreferences = this.getPreferences(MODE_PRIVATE);
 //                        SharedPreferences.Editor ed = sharedPreferences.edit();
@@ -157,123 +158,131 @@ public class MainActivity extends BaseActivity
                         break;
                 }
             };
-            boolean isSaved = false;
-            try {
-                isSaved = sharedPreferences.getBoolean("SAVED",false);
-            } catch (NullPointerException e){
-            }
-            if (!isSaved){
-                AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
-                adb.setTitle(R.string.title_dialog);
-                adb.setMessage(R.string.content_dialog);
-                adb.setIcon(android.R.drawable.ic_dialog_info);
-                adb.setPositiveButton(R.string.yes_dialog, myClickListener);
-                adb.setNegativeButton(R.string.no_dialog, myClickListener);
-                adb.setCancelable(false);
-                adb.create();
-                adb.show();
-            }
+            AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
+            adb.setTitle(R.string.title_dialog);
+            adb.setMessage(R.string.content_dialog);
+            adb.setIcon(android.R.drawable.ic_dialog_info);
+            adb.setPositiveButton(R.string.yes_dialog, myClickListener);
+            adb.setNegativeButton(R.string.no_dialog, myClickListener);
+            adb.setCancelable(false);
+            adb.create();
+            adb.show();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    private void saveAllId() {
+        this.responseIds.add(new ResponseId("197"));
+        this.responseIds.add(new ResponseId("166"));
+        this.responseIds.add(new ResponseId("9"));
+        this.responseIds.add(new ResponseId("8"));
+        this.responseIds.add(new ResponseId("10"));
+        this.responseIds.add(new ResponseId("11"));
+        this.responseIds.add(new ResponseId("2"));
+        this.responseIds.add(new ResponseId("3"));
+        this.responseIds.add(new ResponseId("4"));
+        this.responseIds.add(new ResponseId("5"));
+        this.responseIds.add(new ResponseId("6"));
+        this.responseIds.add(new ResponseId("210"));
+        this.responseIds.add(new ResponseId("204"));
+        this.responseIds.add(new ResponseId("212"));
+        this.responseIds.add(new ResponseId("213"));
+        this.responseIds.add(new ResponseId("16"));
+        this.responseIds.add(new ResponseId("231"));
+        this.responseIds.add(new ResponseId("233"));
+        this.responseIds.add(new ResponseId("235"));
+        this.responseIds.add(new ResponseId("236"));
+        this.responseIds.add(new ResponseId("237"));
+        this.responseIds.add(new ResponseId("239"));
+        this.responseIds.add(new ResponseId("240"));
+        this.responseIds.add(new ResponseId("241"));
+        this.responseIds.add(new ResponseId("242"));
+        this.responseIds.add(new ResponseId("243"));
+        this.responseIds.add(new ResponseId("244"));
+        this.responseIds.add(new ResponseId("245"));
+        this.responseIds.add(new ResponseId("248"));
+        this.responseIds.add(new ResponseId("249"));
+        this.responseIds.add(new ResponseId("250"));
+        this.responseIds.add(new ResponseId("251"));
+        this.responseIds.add(new ResponseId("252"));
+        this.responseIds.add(new ResponseId("253"));
+        this.responseIds.add(new ResponseId("256"));
+        this.responseIds.add(new ResponseId("257"));
+        this.responseIds.add(new ResponseId("258"));
+        this.responseIds.add(new ResponseId("265"));
+        this.responseIds.add(new ResponseId("266"));
+        this.responseIds.add(new ResponseId("273"));
+        this.responseIds.add(new ResponseId("278"));
+        this.responseIds.add(new ResponseId("280"));
+        this.responseIds.add(new ResponseId("281"));
+        this.responseIds.add(new ResponseId("282"));
+        this.responseIds.add(new ResponseId("283"));
+        this.responseIds.add(new ResponseId("284"));
+        this.responseIds.add(new ResponseId("286"));
+        this.responseIds.add(new ResponseId("295"));
+        this.responseIds.add(new ResponseId("296"));
+        this.responseIds.add(new ResponseId("297"));
+        this.responseIds.add(new ResponseId("298"));
+        this.responseIds.add(new ResponseId("299"));
+        this.responseIds.add(new ResponseId("300"));
+        this.responseIds.add(new ResponseId("301"));
+        this.responseIds.add(new ResponseId("302"));
+        this.responseIds.add(new ResponseId("303"));
+        this.responseIds.add(new ResponseId("304"));
+        this.responseIds.add(new ResponseId("305"));
+        this.responseIds.add(new ResponseId("306"));
+        this.responseIds.add(new ResponseId("307"));
+        this.responseIds.add(new ResponseId("308"));
+        this.responseIds.add(new ResponseId("95"));
+        this.responseIds.add(new ResponseId("310"));
+        this.responseIds.add(new ResponseId("311"));
+        this.responseIds.add(new ResponseId("312"));
+        this.responseIds.add(new ResponseId("313"));
+        this.responseIds.add(new ResponseId("314"));
+        this.responseIds.add(new ResponseId("315"));
+        this.responseIds.add(new ResponseId("316"));
+        this.responseIds.add(new ResponseId("317"));
+        this.responseIds.add(new ResponseId("318"));
+        this.responseIds.add(new ResponseId("319"));
+        this.responseIds.add(new ResponseId("320"));
+        this.responseIds.add(new ResponseId("321"));
+        this.responseIds.add(new ResponseId("322"));
+        this.responseIds.add(new ResponseId("323"));
+        this.responseIds.add(new ResponseId("324"));
+        this.responseIds.add(new ResponseId("325"));
+        this.responseIds.add(new ResponseId("326"));
+        this.responseIds.add(new ResponseId("327"));
+        this.responseIds.add(new ResponseId("267"));
+        this.responseIds.add(new ResponseId("268"));
+        this.responseIds.add(new ResponseId("269"));
+        this.responseIds.add(new ResponseId("270"));
+        this.responseIds.add(new ResponseId("271"));
+        this.responseIds.add(new ResponseId("272"));
+        this.responseIds.add(new ResponseId("294"));
+        this.responseIds.add(new ResponseId("246"));
+        this.responseIds.add(new ResponseId("247"));
+        this.responseIds.add(new ResponseId("256"));
+        this.responseIds.add(new ResponseId("6976"));
+        this.responseIds.add(new ResponseId("6912"));
+        this.responseIds.add(new ResponseId("34"));
+        this.responseIds.add(new ResponseId("287"));
+        this.responseIds.add(new ResponseId("6980"));
+        this.responseIds.add(new ResponseId("309"));
+        this.responseIds.add(new ResponseId("328"));
+    }
+
     private void getFull() {
         Runnable runnable = () -> {
-            presenter.getFull("1");
-            presenter.getFull("2");
-            presenter.getFull("3");
-            presenter.getFull("4");
-            presenter.getFull("5");
-            presenter.getFull("6");
-            presenter.getFull("210");
-            presenter.getFull("204");
-            presenter.getFull("212");
-            presenter.getFull("213");
-            presenter.getFull("16");
-            presenter.getFull("231");
-            presenter.getFull("233");
-            presenter.getFull("235");
-            presenter.getFull("236");
-            presenter.getFull("237");
-            presenter.getFull("238");
-            presenter.getFull("239");
-            presenter.getFull("240");
-            presenter.getFull("241");
-            presenter.getFull("242");
-            presenter.getFull("243");
-            presenter.getFull("244");
-            presenter.getFull("245");
-            presenter.getFull("248");
-            presenter.getFull("249");
-            presenter.getFull("250");
-            presenter.getFull("251");
-            presenter.getFull("252");
-            presenter.getFull("253");
-            presenter.getFull("256");
-            presenter.getFull("257");
-            presenter.getFull("258");
-            presenter.getFull("265");
-            presenter.getFull("266");
-            presenter.getFull("273");
-            presenter.getFull("278");
-            presenter.getFull("280");
-            presenter.getFull("281");
-            presenter.getFull("282");
-            presenter.getFull("283");
-            presenter.getFull("284");
-            presenter.getFull("286");
-            presenter.getFull("295");
-            presenter.getFull("296");
-            presenter.getFull("297");
-            presenter.getFull("298");
-            presenter.getFull("299");
-            presenter.getFull("300");
-            presenter.getFull("301");
-            presenter.getFull("302");
-            presenter.getFull("303");
-            presenter.getFull("304");
-            presenter.getFull("305");
-            presenter.getFull("306");
-            presenter.getFull("307");
-            presenter.getFull("308");
-            presenter.getFull("95");
-            presenter.getFull("310");
-            presenter.getFull("311");
-            presenter.getFull("312");
-            presenter.getFull("313");
-            presenter.getFull("314");
-            presenter.getFull("315");
-            presenter.getFull("316");
-            presenter.getFull("317");
-            presenter.getFull("318");
-            presenter.getFull("319");
-            presenter.getFull("320");
-            presenter.getFull("321");
-            presenter.getFull("322");
-            presenter.getFull("323");
-            presenter.getFull("324");
-            presenter.getFull("325");
-            presenter.getFull("326");
-            presenter.getFull("327");
-            presenter.getFull("267");
-            presenter.getFull("268");
-            presenter.getFull("269");
-            presenter.getFull("270");
-            presenter.getFull("271");
-            presenter.getFull("272");
-            presenter.getFull("294");
-            presenter.getFull("246");
-            presenter.getFull("247");
-            presenter.getFull("256");
-            presenter.getFull("6976");
-            presenter.getFull("6912");
-            presenter.getFull("34");
-            presenter.getFull("287");
-            presenter.getFull("6980");
-            presenter.getFull("309");
-            presenter.getFull("328");
+            try {
+                for (ResponseId items : responseIds) {
+                    Thread.sleep(2000);
+                    presenter.getFull(items.getId());
+                }
+            } catch (Exception e) {
+
+            }
         };
         Thread thread = new Thread(runnable);
         thread.start();
@@ -1421,8 +1430,19 @@ public class MainActivity extends BaseActivity
         }).start();
     }
 
+    @Override
+    public void onGetedAll(List<ResponseId> responseIds) {
+        this.responseIds.addAll(responseIds);
+    }
+
     private void snackbar() {
-        Toast.makeText(this, "Загрузка завершена",Toast.LENGTH_LONG).show();
+        AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
+        adb.setTitle(R.string.title_dialog);
+        adb.setMessage("Загрузка заввершена");
+        adb.setIcon(android.R.drawable.ic_dialog_info);
+        adb.setCancelable(true);
+        adb.create();
+        adb.show();
     }
 
     public void writeToFileFullRecipes(List<ResponseFullRecipes> responseFullRecipesList) {

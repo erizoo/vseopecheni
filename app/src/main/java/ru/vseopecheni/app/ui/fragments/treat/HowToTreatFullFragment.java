@@ -130,6 +130,7 @@ public class HowToTreatFullFragment extends BaseFragment implements HowToTreatFu
                     webView.loadUrl("https://app.vseopecheni.ru/about-liver/ursodezoksiholevaja-kislota-udhk/");
                 }
             } else {
+                progressBar.setVisibility(View.GONE);
                 v.findViewById(R.id.scrollView_about).setVisibility(View.VISIBLE);
                 withoutInternet(id);
             }

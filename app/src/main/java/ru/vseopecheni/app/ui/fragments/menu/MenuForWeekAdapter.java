@@ -59,6 +59,8 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public interface Callback {
 
         void showRecipe(String json);
+
+        void showRecipeWithoutInternet(String json, String type, String breakfast);
     }
 
     public class MenuForWeekViewHolder extends BaseViewHolder {
@@ -116,6 +118,11 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                             }
                         } catch (NullPointerException ignored) {
                         }
+                        if (!responseType.getBreakfast().getContent().getId().equals("")) {
+                            imageView.setOnClickListener(v -> {
+                                callback.showRecipe(new Gson().toJson(responseType.getBreakfast().getContent()));
+                            });
+                        }
                     } else {
                         Bitmap bitmap = new ImageSaver(context).
                                 setFileName("breakfast.jpg")
@@ -126,17 +133,18 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 .load(bitmap)
                                 .apply(new RequestOptions().fitCenter())
                                 .into(imageView);
+                        if (!responseType.getBreakfast().getContent().getId().equals("")) {
+                            imageView.setOnClickListener(v -> {
+                                callback.showRecipeWithoutInternet(new Gson().toJson(responseType.getBreakfast().getContent()), type, "breakfast.jpg");
+                            });
+                        }
                     }
                     if (responseType.getBreakfast().getContent().getTitle().equals("")) {
                         title.setText("Завтрак" + "\n" + responseType.getBreakfast().getTitle());
                     } else {
                         title.setText("Завтрак" + "\n" + responseType.getBreakfast().getContent().getTitle());
                     }
-                    if (!responseType.getBreakfast().getContent().getId().equals("")) {
-                        imageView.setOnClickListener(v -> {
-                            callback.showRecipe(new Gson().toJson(responseType.getBreakfast().getContent()));
-                        });
-                    }
+
                 }
                 if (position == 1) {
                     typeMenu.setText("Второй завтрак");
@@ -170,6 +178,11 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                         .into(imageView);
                             }
                         }
+                        if (!responseType.getTiffin().getContent().getId().equals("")) {
+                            imageView.setOnClickListener(v -> {
+                                callback.showRecipe(new Gson().toJson(responseType.getTiffin().getContent()));
+                            });
+                        }
                     } else {
                         Bitmap bitmap = new ImageSaver(context).
                                 setFileName("tiffin.jpg")
@@ -180,6 +193,11 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 .load(bitmap)
                                 .apply(new RequestOptions().fitCenter())
                                 .into(imageView);
+                        if (!responseType.getTiffin().getContent().getId().equals("")) {
+                            imageView.setOnClickListener(v -> {
+                                callback.showRecipeWithoutInternet(new Gson().toJson(responseType.getTiffin().getContent()), type, "tiffin.jpg");
+                            });
+                        }
                     }
 
                     if (responseType.getTiffin().getContent().getTitle().equals("")) {
@@ -187,11 +205,7 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     } else {
                         title.setText("Второй завтрак" + "\n" + responseType.getTiffin().getContent().getTitle());
                     }
-                    if (!responseType.getTiffin().getContent().getId().equals("")) {
-                        imageView.setOnClickListener(v -> {
-                            callback.showRecipe(new Gson().toJson(responseType.getTiffin().getContent()));
-                        });
-                    }
+
                 }
                 if (position == 2) {
                     typeMenu.setText("Обед");
@@ -225,6 +239,11 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                         .into(imageView);
                             }
                         }
+                        if (!responseType.getLunch().getContent().getId().equals("")) {
+                            imageView.setOnClickListener(v -> {
+                                callback.showRecipe(new Gson().toJson(responseType.getLunch().getContent()));
+                            });
+                        }
                     } else {
                         Bitmap bitmap = new ImageSaver(context).
                                 setFileName("lunch.jpg")
@@ -235,16 +254,16 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 .load(bitmap)
                                 .apply(new RequestOptions().fitCenter())
                                 .into(imageView);
+                        if (!responseType.getLunch().getContent().getId().equals("")) {
+                            imageView.setOnClickListener(v -> {
+                                callback.showRecipeWithoutInternet(new Gson().toJson(responseType.getLunch().getContent()), type, "lunch.jpg");
+                            });
+                        }
                     }
                     if (responseType.getLunch().getContent().getTitle().equals("")) {
                         title.setText("Обед" + "\n" + responseType.getLunch().getTitle());
                     } else {
                         title.setText("Обед" + "\n" + responseType.getLunch().getContent().getTitle());
-                    }
-                    if (!responseType.getLunch().getContent().getId().equals("")) {
-                        imageView.setOnClickListener(v -> {
-                            callback.showRecipe(new Gson().toJson(responseType.getLunch().getContent()));
-                        });
                     }
                 }
                 if (position == 3) {
@@ -279,6 +298,11 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                         .into(imageView);
                             }
                         }
+                        if (!responseType.getAfternoon().getContent().getId().equals("")) {
+                            imageView.setOnClickListener(v -> {
+                                callback.showRecipe(new Gson().toJson(responseType.getAfternoon().getContent()));
+                            });
+                        }
                     } else {
                         Bitmap bitmap = new ImageSaver(context).
                                 setFileName("afternoon.jpg")
@@ -289,16 +313,16 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 .load(bitmap)
                                 .apply(new RequestOptions().fitCenter())
                                 .into(imageView);
+                        if (!responseType.getAfternoon().getContent().getId().equals("")) {
+                            imageView.setOnClickListener(v -> {
+                                callback.showRecipeWithoutInternet(new Gson().toJson(responseType.getAfternoon().getContent()), type, "afternoon.jpg");
+                            });
+                        }
                     }
                     if (responseType.getAfternoon().getContent().getTitle().equals("")) {
                         title.setText("Полдник" + "\n" + responseType.getAfternoon().getTitle());
                     } else {
                         title.setText("Полдник" + "\n" + responseType.getAfternoon().getContent().getTitle());
-                    }
-                    if (!responseType.getAfternoon().getContent().getId().equals("")) {
-                        imageView.setOnClickListener(v -> {
-                            callback.showRecipe(new Gson().toJson(responseType.getAfternoon().getContent()));
-                        });
                     }
                 }
                 if (position == 4) {
@@ -333,6 +357,11 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                         .into(imageView);
                             }
                         }
+                        if (!responseType.getDinner().getContent().getId().equals("")) {
+                            imageView.setOnClickListener(v -> {
+                                callback.showRecipe(new Gson().toJson(responseType.getDinner().getContent()));
+                            });
+                        }
                     } else {
                         Bitmap bitmap = new ImageSaver(context).
                                 setFileName("dinner.jpg")
@@ -343,17 +372,18 @@ public class MenuForWeekAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 .load(bitmap)
                                 .apply(new RequestOptions().fitCenter())
                                 .into(imageView);
+                        if (!responseType.getDinner().getContent().getId().equals("")) {
+                            imageView.setOnClickListener(v -> {
+                                callback.showRecipeWithoutInternet(new Gson().toJson(responseType.getDinner().getContent()), type, "dinner.jpg");
+                            });
+                        }
                     }
                     if (responseType.getDinner().getContent().getTitle().equals("")) {
                         title.setText("Ужин" + "\n" + responseType.getDinner().getTitle());
                     } else {
                         title.setText("Ужин" + "\n" + responseType.getDinner().getContent().getTitle());
                     }
-                    if (!responseType.getDinner().getContent().getId().equals("")) {
-                        imageView.setOnClickListener(v -> {
-                            callback.showRecipe(new Gson().toJson(responseType.getDinner().getContent()));
-                        });
-                    }
+
                 }
             } catch (Exception e) {
                 Snackbar.make(imageView, "Ошибка получения данных, подключите интернет", Snackbar.LENGTH_LONG).show();

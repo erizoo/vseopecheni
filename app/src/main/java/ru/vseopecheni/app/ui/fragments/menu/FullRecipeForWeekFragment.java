@@ -1,10 +1,10 @@
 package ru.vseopecheni.app.ui.fragments.menu;
 
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -22,6 +24,8 @@ import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseFullRecipesForMenu;
 import ru.vseopecheni.app.data.models.ResponseMenuSostav;
 import ru.vseopecheni.app.ui.base.BaseFragment;
+import ru.vseopecheni.app.utils.Constant;
+import ru.vseopecheni.app.utils.ImageSaver;
 
 public class FullRecipeForWeekFragment extends BaseFragment {
 
@@ -36,6 +40,8 @@ public class FullRecipeForWeekFragment extends BaseFragment {
 
     private Unbinder unbinder;
     private String json;
+    private String type;
+    private String typeTwo;
 
 
     @Override
@@ -53,6 +59,8 @@ public class FullRecipeForWeekFragment extends BaseFragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             json = bundle.getString("json");
+            type = bundle.getString("type");
+            typeTwo = bundle.getString("typeTwo");
         }
         Gson gson = new Gson();
         ResponseFullRecipesForMenu responseFullRecipesForMenu = gson.fromJson(json, ResponseFullRecipesForMenu.class);
@@ -63,14 +71,27 @@ public class FullRecipeForWeekFragment extends BaseFragment {
             for (ResponseMenuSostav items : responseFullRecipesForMenu.getSostav()) {
                 stringBuilder.append(".").append(" ").append(items.getName()).append("-").append(items.getValue()).append("\n");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             stringBuilder.append("");
         }
-        Glide.with(this)
-                .asBitmap()
-                .load("https://app.vseopecheni.ru" + responseFullRecipesForMenu.getImage())
-                .apply(new RequestOptions().fitCenter())
-                .into(imageView);
+        if (Constant.isInternet(getContext())) {
+            Glide.with(this)
+                    .asBitmap()
+                    .load("https://app.vseopecheni.ru" + responseFullRecipesForMenu.getImage())
+                    .apply(new RequestOptions().fitCenter())
+                    .into(imageView);
+        } else {
+            Bitmap bitmap = new ImageSaver(getContext()).
+                    setFileName(typeTwo)
+                    .setDirectoryName(type)
+                    .load();
+            Glide.with(Objects.requireNonNull(getContext()))
+                    .asBitmap()
+                    .load(bitmap)
+                    .apply(new RequestOptions().fitCenter())
+                    .into(imageView);
+        }
+
         compositionRecipe.setText(stringBuilder);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             cookingMethodFull.setText(Html.fromHtml(responseFullRecipesForMenu.getContent(), Html.FROM_HTML_MODE_COMPACT));
