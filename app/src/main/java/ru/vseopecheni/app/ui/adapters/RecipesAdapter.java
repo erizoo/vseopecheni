@@ -23,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.vseopecheni.app.R;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
-import ru.vseopecheni.app.data.models.ResponseRecipes;
 import ru.vseopecheni.app.ui.MainActivity;
 import ru.vseopecheni.app.ui.base.BaseViewHolder;
 import ru.vseopecheni.app.ui.fragments.recipes.FullRecipeFragment;
@@ -34,6 +33,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public Context context;
     private List<ResponseFullRecipes> responseFullRecipes = new ArrayList<>();
+    private List<ResponseFullRecipes> filterList = new ArrayList<>();
 
     @NonNull
     @Override
@@ -55,6 +55,22 @@ public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void setItems(List<ResponseFullRecipes> responseFullRecipes) {
         this.responseFullRecipes.addAll(responseFullRecipes);
+        filterList.addAll(responseFullRecipes);
+        notifyDataSetChanged();
+    }
+
+    public void filter(String query) {
+        responseFullRecipes.clear();
+        if (query.isEmpty()) {
+            responseFullRecipes.addAll(filterList);
+        } else {
+            query = query.toLowerCase();
+            for (ResponseFullRecipes item : filterList) {
+                if (item.getTitle().toLowerCase().contains(query) || item.getTitle().toLowerCase().contains(query)) {
+                    responseFullRecipes.add(item);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -73,7 +89,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            if (!Constant.isInternet(context)){
+            if (!Constant.isInternet(context)) {
                 Bitmap bitmap = new ImageSaver(context).
                         setFileName(responseFullRecipes.get(position).getId() + ".jpg")
                         .setDirectoryName("recipes")

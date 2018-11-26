@@ -16,9 +16,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -30,9 +35,11 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
+import ru.vseopecheni.app.data.models.Products;
 import ru.vseopecheni.app.data.models.ResponseAbout;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.data.models.ResponseId;
@@ -53,7 +60,10 @@ import ru.vseopecheni.app.utils.Constant;
 import ru.vseopecheni.app.utils.ImageSaver;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ViewPagerMovement, MainActivityMvpView {
+        implements NavigationView.OnNavigationItemSelectedListener, ViewPagerMovement, MainActivityMvpView{
+
+    @BindView(R.id.default_rv)
+    TextView textView;
 
     @Inject
     MainActivityPresenter<MainActivityMvpView> presenter;
@@ -62,6 +72,10 @@ public class MainActivity extends BaseActivity
     private ProgressDialog progressDialog;
     private SharedPreferences sharedPreferences;
     private List<ResponseId> responseIds = new ArrayList<>();
+    private List<String> noList = new ArrayList<>();
+    private List<String> yesList = new ArrayList<>();
+    private SearchView searchView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +86,10 @@ public class MainActivity extends BaseActivity
         presenter.onAttach(this);
         unbinder = ButterKnife.bind(this);
 
-        sharedPreferences = getPreferences(MODE_PRIVATE);
-        String savedText = sharedPreferences.getString("SAVE", "");
-        if (!Objects.equals(savedText, "YES")) {
-            if (Constant.isInternet(this)) {
-//                progressDialog = Constant.showLoadingDialog(this);
-//                presenter.saveAll();
-            } else {
-//                Snackbar.make(findViewById(R.id.recipes_image), "Подключите интернет для загрузки данных", Snackbar.LENGTH_LONG).show();
-            }
-        }
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        presenter.getProducts();
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -94,6 +102,37 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
         moveToNewFragment(new MainFragment());
 
+        searchView = findViewById(R.id.search_view);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                StringBuilder sb = new StringBuilder();
+                for (String item : yesList) {
+                    if (item.toLowerCase().contains(query.toLowerCase()) || item.toLowerCase().equals(query.toLowerCase())) {
+                        sb.append(item).append(" ").append("МОЖНО").append("\n");
+                    }
+                }
+                for (String items : noList) {
+                    if (items.toLowerCase().contains(query.toLowerCase()) || items.toLowerCase().equals(query.toLowerCase())) {
+                        sb.append(items).append(" ").append("НЕЛЬЗЯ").append("\n");
+                    }
+                }
+                textView.setVisibility(View.VISIBLE);
+                textView.setText(sb);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
+        searchView.setOnCloseListener(() -> {
+            textView.setVisibility(View.GONE);
+            textView.setText("");
+            return false;
+        });
     }
 
     @Override
@@ -104,6 +143,7 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Constant.saveToSharedPreferenceBoolean("JSON_RECIPES_FULL_IS_CHECK", false, this);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -112,30 +152,39 @@ public class MainActivity extends BaseActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         int id = item.getItemId();
         if (id == R.id.begin) {
+            searchView.setVisibility(View.VISIBLE);
             moveToNewFragment(new MainFragment());
         }
         if (id == R.id.table_five) {
+            searchView.setVisibility(View.VISIBLE);
             moveToNewFragment(new TableFiveFragment());
         }
         if (id == R.id.recipient) {
+            searchView.setVisibility(View.GONE);
             moveToNewFragment(new RecipeFragment());
         }
         if (id == R.id.menu_week) {
+            searchView.setVisibility(View.VISIBLE);
             moveToNewFragment(new MenuWeekFragment());
         }
         if (id == R.id.hepatoprotectors) {
+            searchView.setVisibility(View.VISIBLE);
             moveToNewFragment(new HepatoprotectorsFragment());
         }
         if (id == R.id.about_liver) {
+            searchView.setVisibility(View.VISIBLE);
             moveToNewFragment(new AboutLiverFragment());
         }
         if (id == R.id.how_to_treat) {
+            searchView.setVisibility(View.VISIBLE);
             moveToNewFragment(new HowToTreatFragment());
         }
         if (id == R.id.liver_disease) {
+            searchView.setVisibility(View.VISIBLE);
             moveToNewFragment(new LiverDiseaseFragment());
         }
         if (id == R.id.alarm_clock) {
+            searchView.setVisibility(View.VISIBLE);
             moveToNewFragment(new AlarmFragment());
         }
         if (id == R.id.save_info) {
@@ -143,14 +192,10 @@ public class MainActivity extends BaseActivity
                 switch (which) {
                     case Dialog.BUTTON_POSITIVE:
                         saveAllId();
-//                        presenter.getProducts();
+                        presenter.getProducts();
                         getFull();
-//                        presenter.saveMenuForWeek();
-//                        presenter.saveRecipes();
-//                        sharedPreferences = this.getPreferences(MODE_PRIVATE);
-//                        SharedPreferences.Editor ed = sharedPreferences.edit();
-//                        ed.putBoolean("SAVED", true);
-//                        ed.apply();
+                        presenter.saveMenuForWeek();
+                        presenter.saveRecipes();
                         break;
                     case Dialog.BUTTON_NEGATIVE:
                         break;
@@ -335,6 +380,17 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onProductsUpdated(List<ResponseProducts> responseProducts) {
+        for (ResponseProducts items : responseProducts) {
+            String[] strNo = Html.fromHtml(items.getNo()).toString().split("\n\n");
+            for (int i = 0; i < strNo.length - 1; i++) {
+                noList.add(strNo[i]);
+            }
+            String[] strYes = Html.fromHtml(items.getYes()).toString().split("\n\n");
+            for (int i = 0; i < strYes.length - 1; i++) {
+                yesList.add(strYes[i]);
+            }
+        }
+        System.out.println();
         FileOutputStream outputStream;
         try {
             outputStream = this.openFileOutput("jsonProducts", MODE_PRIVATE);
@@ -1468,4 +1524,5 @@ public class MainActivity extends BaseActivity
             e.printStackTrace();
         }
     }
+
 }

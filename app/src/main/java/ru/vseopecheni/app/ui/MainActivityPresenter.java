@@ -22,4 +22,5 @@ public interface MainActivityPresenter  <V extends MainActivityMvpView> extends 
     void saveRecipes();
 
     void getAll();
+
 }

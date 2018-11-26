@@ -44,6 +44,8 @@ public interface Constant {
         return null;
     }
 
+
+
     static boolean isInternet(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) Objects.requireNonNull(context).getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
@@ -58,6 +60,13 @@ public interface Constant {
         SharedPreferences sharedPreferences = activity.getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = sharedPreferences.edit();
         ed.putString(id, content);
+        ed.apply();
+    }
+
+    static void saveToSharedPreferenceBoolean(String id, boolean check, Activity activity) {
+        SharedPreferences sharedPreferences = activity.getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sharedPreferences.edit();
+        ed.putBoolean(id, check);
         ed.apply();
     }
 
@@ -76,6 +85,11 @@ public interface Constant {
     static int getFromSharedPreferenceAlarm(String id, Activity activity) {
         SharedPreferences sharedPreferences = activity.getPreferences(MODE_PRIVATE);
         return sharedPreferences.getInt(id, 106);
+    }
+
+    static boolean getFromSharedPreferenceAlarmBoolean(String id, Activity activity) {
+        SharedPreferences sharedPreferences = activity.getPreferences(MODE_PRIVATE);
+        return sharedPreferences.getBoolean(id, false);
     }
 
 }

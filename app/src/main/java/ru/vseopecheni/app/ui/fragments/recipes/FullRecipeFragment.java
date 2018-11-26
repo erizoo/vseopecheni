@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -32,11 +31,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
-import ru.vseopecheni.app.data.models.ResponseAbout;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.ui.base.BaseActivity;
 import ru.vseopecheni.app.ui.base.BaseFragment;
-import ru.vseopecheni.app.ui.fragments.MainFragment;
 import ru.vseopecheni.app.ui.model.RecipeCompositionModel;
 import ru.vseopecheni.app.utils.Constant;
 
@@ -74,7 +71,7 @@ public class FullRecipeFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, v);
         ((BaseActivity) Objects.requireNonNull(getActivity())).getScreenComponent().inject(this);
         Bundle bundle = this.getArguments();
-        if (!Constant.isInternet(getContext())){
+        if (!Constant.isInternet(getContext())) {
             if (bundle != null) {
                 id = bundle.getString("id");
                 FileInputStream stream = null;
@@ -151,18 +148,19 @@ public class FullRecipeFragment extends BaseFragment {
         Objects.requireNonNull(getView()).setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener((v, keyCode, event) -> {
-            if( keyCode == KeyEvent.KEYCODE_BACK ) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
                 sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
                 SharedPreferences.Editor ed = sharedPreferences.edit();
                 ed.putString("id", id);
                 ed.apply();
                 RecipeFragment recipeFragment = new RecipeFragment();
                 Bundle bundle = new Bundle();
-                if (Constant.isInternet(getContext())){
+                if (Constant.isInternet(getContext())) {
                     bundle.putString("id", responseFullRecipes.getId());
+                    Constant.saveToSharedPreference("ID_BACK_RECIPES", responseFullRecipes.getId(), getActivity());
                 }
                 recipeFragment.setArguments(bundle);
-                ((BaseActivity)getActivity()).moveToNewFragment(recipeFragment);
+                ((BaseActivity) getActivity()).moveToNewFragment(recipeFragment);
                 return true;
             }
             return false;
@@ -181,7 +179,7 @@ public class FullRecipeFragment extends BaseFragment {
             for (RecipeCompositionModel items : recipeCompositionModels) {
                 sb.append(".").append(" ").append(items.getName()).append(" ").append(items.getValue()).append(System.getProperty("line.separator"));
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             sb.append("-");
         }
         compositionRecipe.setText(sb.toString());

@@ -1,19 +1,15 @@
 package ru.vseopecheni.app.ui.fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -56,6 +52,7 @@ public class MainFragment extends BaseFragment implements MainMvpView {
     private ImageView tableFive;
     private Unbinder unbinder;
     private SharedPreferences sharedPreferences;
+    private android.support.v7.widget.SearchView searchView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,57 +64,66 @@ public class MainFragment extends BaseFragment implements MainMvpView {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.main_fragment, container, false);
         unbinder = ButterKnife.bind(this, v);
+        searchView = Objects.requireNonNull(getActivity()).findViewById(R.id.search_view);
+        searchView.setVisibility(View.VISIBLE);
         return v;
     }
 
     @OnClick(R.id.table_five_image)
     public void getTable() {
+        searchView.setVisibility(View.VISIBLE);
         TableFiveFragment tableFiveFragment = new TableFiveFragment();
         ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(tableFiveFragment);
     }
 
     @OnClick(R.id.recipes_image)
     public void getRecipes() {
+        searchView.setVisibility(View.GONE);
         RecipeFragment recipeFragment = new RecipeFragment();
         ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(recipeFragment);
     }
 
     @OnClick(R.id.hepatoprotectors)
     public void getHepatoprotectors() {
+        searchView.setVisibility(View.VISIBLE);
         HepatoprotectorsFragment hepatoprotectorsFragment = new HepatoprotectorsFragment();
         ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(hepatoprotectorsFragment);
     }
 
     @OnClick(R.id.menu_week)
     public void getMenuForWeek() {
+        searchView.setVisibility(View.VISIBLE);
         MenuWeekFragment menuWeekFragment = new MenuWeekFragment();
         ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(menuWeekFragment);
     }
 
     @OnClick(R.id.bad_liver)
     public void getLiverDisease() {
+        searchView.setVisibility(View.VISIBLE);
         LiverDiseaseFragment liverDiseaseFragment = new LiverDiseaseFragment();
         ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(liverDiseaseFragment);
     }
 
     @OnClick(R.id.about_liver)
     public void getAboutLiver() {
+        searchView.setVisibility(View.VISIBLE);
         AboutLiverFragment aboutLiverFragment = new AboutLiverFragment();
         ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(aboutLiverFragment);
     }
 
     @OnClick(R.id.how)
     public void getHowToTrate() {
+        searchView.setVisibility(View.VISIBLE);
         HowToTreatFragment howToTreatFragment = new HowToTreatFragment();
         ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(howToTreatFragment);
     }
 
     @OnClick(R.id.alarm)
     public void getAlarm() {
+        searchView.setVisibility(View.VISIBLE);
         AlarmFragment alarmFragment = new AlarmFragment();
         ((MainActivity) Objects.requireNonNull(getActivity())).moveToNewFragment(alarmFragment);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -206,4 +212,5 @@ public class MainFragment extends BaseFragment implements MainMvpView {
             getActivity().runOnUiThread(this::hideLoading);
         }).start();
     }
+
 }
