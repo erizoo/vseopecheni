@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,20 +16,38 @@
         android:text="@string/food_intake_button"
         android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/food_intake_rv"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/layout_rl"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/food_intake_button"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="10dp" />
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/food_intake_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:background="#FFFFFF"
+            app:srcCompat="@drawable/ic_error" />
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/medication_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/food_intake_rv"
+        android:layout_below="@+id/layout_rl"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="150dp"
         android:layout_marginTop="13dp"
@@ -40,11 +59,11 @@
         android:id="@+id/medication_button_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
         android:layout_below="@+id/medication_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="67dp" />
+        android:layout_marginBottom="67dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
 </RelativeLayout>

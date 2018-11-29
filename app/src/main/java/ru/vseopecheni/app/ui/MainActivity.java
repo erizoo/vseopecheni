@@ -23,6 +23,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,7 +40,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.vseopecheni.app.R;
-import ru.vseopecheni.app.data.models.Products;
 import ru.vseopecheni.app.data.models.ResponseAbout;
 import ru.vseopecheni.app.data.models.ResponseFullRecipes;
 import ru.vseopecheni.app.data.models.ResponseId;
@@ -60,7 +60,7 @@ import ru.vseopecheni.app.utils.Constant;
 import ru.vseopecheni.app.utils.ImageSaver;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ViewPagerMovement, MainActivityMvpView{
+        implements NavigationView.OnNavigationItemSelectedListener, ViewPagerMovement, MainActivityMvpView {
 
     @BindView(R.id.default_rv)
     TextView textView;
@@ -103,6 +103,22 @@ public class MainActivity extends BaseActivity
         moveToNewFragment(new MainFragment());
 
         searchView = findViewById(R.id.search_view);
+        searchView.onActionViewExpanded();
+
+        searchView.setOnCloseListener(() -> {
+            textView.setVisibility(View.GONE);
+            textView.setText("");
+            return false;
+        });
+
+        ImageView closeButton = this.searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        closeButton.setOnClickListener(v -> {
+            searchView.setQuery("", false);
+            searchView.clearFocus();
+            textView.setVisibility(View.GONE);
+            textView.setText("");
+        });
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -125,6 +141,19 @@ public class MainActivity extends BaseActivity
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                StringBuilder sb = new StringBuilder();
+                for (String item : yesList) {
+                    if (item.toLowerCase().contains(newText.toLowerCase()) || item.toLowerCase().equals(newText.toLowerCase())) {
+                        sb.append(item).append(" ").append("МОЖНО").append("\n");
+                    }
+                }
+                for (String items : noList) {
+                    if (items.toLowerCase().contains(newText.toLowerCase()) || items.toLowerCase().equals(newText.toLowerCase())) {
+                        sb.append(items).append(" ").append("НЕЛЬЗЯ").append("\n");
+                    }
+                }
+                textView.setVisibility(View.VISIBLE);
+                textView.setText(sb);
                 return true;
             }
         });

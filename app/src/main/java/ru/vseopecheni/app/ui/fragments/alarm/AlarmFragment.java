@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,8 @@ public class AlarmFragment extends BaseFragment implements AlarmFoodAdapter.Call
     TextView foodIntakeText;
     @BindView(R.id.medication_button_rv)
     RecyclerView recyclerView;
+    @BindView(R.id.layout_rl)
+    RelativeLayout relativeLayout;
 
     private Unbinder unbinder;
     private Button saveButton;
@@ -244,6 +247,17 @@ public class AlarmFragment extends BaseFragment implements AlarmFoodAdapter.Call
         });
     }
 
+    @OnClick(R.id.imageButton)
+    public void cancelAlarmFood(){
+        NotificationAlarm.cancelReminder(getContext(), 101);
+        NotificationAlarm.cancelReminder(getContext(), 102);
+        NotificationAlarm.cancelReminder(getContext(), 103);
+        NotificationAlarm.cancelReminder(getContext(), 104);
+        NotificationAlarm.cancelReminder(getContext(), 105);
+        relativeLayout.setVisibility(View.GONE);
+        foodIntakeText.setText("");
+    }
+
     private void startAlarm(Calendar time, Calendar time2, Calendar time3, Calendar time4, Calendar time5) {
         NotificationAlarm.scheduleNotification(getContext(), time,
                 "Время кушать!)", "1", 101);
@@ -260,6 +274,7 @@ public class AlarmFragment extends BaseFragment implements AlarmFoodAdapter.Call
                 time3.get(Calendar.HOUR_OF_DAY) + ":" + time3.get(Calendar.MINUTE) + "," +
                 time4.get(Calendar.HOUR_OF_DAY) + ":" + time4.get(Calendar.MINUTE) + "," +
                 time5.get(Calendar.HOUR_OF_DAY) + ":" + time5.get(Calendar.MINUTE);
+        relativeLayout.setVisibility(View.VISIBLE);
         foodIntakeText.setText(sb);
         Constant.saveToSharedPreference("FOOD_ALARM_TIME", sb, Objects.requireNonNull(getActivity()));
     }
