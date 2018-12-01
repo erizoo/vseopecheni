@@ -120,22 +120,24 @@ public class MainActivity extends BaseActivity
         });
 
 
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 StringBuilder sb = new StringBuilder();
                 for (String item : yesList) {
                     if (item.toLowerCase().contains(query.toLowerCase()) || item.toLowerCase().equals(query.toLowerCase())) {
-                        sb.append(item).append(" ").append("МОЖНО").append("\n");
+                        sb.append(item).append(" ").append("<font color='#00c11d'>МОЖНО</font>").append("\n");
                     }
                 }
                 for (String items : noList) {
                     if (items.toLowerCase().contains(query.toLowerCase()) || items.toLowerCase().equals(query.toLowerCase())) {
-                        sb.append(items).append(" ").append("НЕЛЬЗЯ").append("\n");
+                        sb.append(items).append(" ").append("<font color='#EE0000'>НЕЛЬЗЯ</font>").append("\n");
                     }
                 }
                 textView.setVisibility(View.VISIBLE);
-                textView.setText(sb);
+                textView.setText(Html.fromHtml(sb.toString()));
                 return true;
             }
 
@@ -144,16 +146,16 @@ public class MainActivity extends BaseActivity
                 StringBuilder sb = new StringBuilder();
                 for (String item : yesList) {
                     if (item.toLowerCase().contains(newText.toLowerCase()) || item.toLowerCase().equals(newText.toLowerCase())) {
-                        sb.append(item).append(" ").append("МОЖНО").append("\n");
+                        sb.append(item).append(" ").append("<font color='#00c11d'>МОЖНО</font>").append("\n");
                     }
                 }
                 for (String items : noList) {
                     if (items.toLowerCase().contains(newText.toLowerCase()) || items.toLowerCase().equals(newText.toLowerCase())) {
-                        sb.append(items).append(" ").append("НЕЛЬЗЯ").append("\n");
+                        sb.append(items).append(" ").append("<font color='#EE0000'>НЕЛЬЗЯ</font>").append("\n");
                     }
                 }
                 textView.setVisibility(View.VISIBLE);
-                textView.setText(sb);
+                textView.setText(Html.fromHtml(sb.toString()));
                 return true;
             }
         });
@@ -163,6 +165,7 @@ public class MainActivity extends BaseActivity
             return false;
         });
     }
+
 
     @Override
     protected int getContentView() {

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,8 +83,12 @@ public class AlarmFragment extends BaseFragment implements AlarmFoodAdapter.Call
 
         alarmFoodAdapter.setItems(db.getAllAlarms());
 
-        foodIntakeText.setText(Constant.getFromSharedPreference("FOOD_ALARM_TIME",
-                Objects.requireNonNull(getActivity())));
+        String text = Constant.getFromSharedPreference("FOOD_ALARM_TIME",
+                Objects.requireNonNull(getActivity()));
+        if (!text.equals("")) {
+            foodIntakeText.setText(text);
+            relativeLayout.setVisibility(View.VISIBLE);
+        }
         return v;
     }
 
@@ -108,6 +114,24 @@ public class AlarmFragment extends BaseFragment implements AlarmFoodAdapter.Call
         alarmPopup.showAtLocation(v.findViewById(R.id.food_intake_button), Gravity.CENTER, 0, 0);
         EditText hour = popupView.findViewById(R.id.hours);
         EditText minute = popupView.findViewById(R.id.minutes);
+        hour.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 2) {
+                    minute.requestFocus();
+                }
+            }
+        });
         saveButton = popupView.findViewById(R.id.save_button);
         closeButton = popupView.findViewById(R.id.close_button);
         saveButton.setOnClickListener(v1 -> {
@@ -138,6 +162,7 @@ public class AlarmFragment extends BaseFragment implements AlarmFoodAdapter.Call
         alarmPopup.showAtLocation(v.findViewById(R.id.food_intake_button), Gravity.CENTER, 0, 0);
         EditText name = popupView.findViewById(R.id.medicine_name);
         firstTimeHour = popupView.findViewById(R.id.hoursFirstTime);
+
         firstTimeHour.setFilters(new InputFilter[]{new InputFilterMinMax("0", "23")});
         secondTimeHour = popupView.findViewById(R.id.hoursSecondTime);
         secondTimeHour.setFilters(new InputFilter[]{new InputFilterMinMax("0", "23")});
@@ -149,6 +174,60 @@ public class AlarmFragment extends BaseFragment implements AlarmFoodAdapter.Call
         secondTimeMinutes.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
         thirdTimeMinutes = popupView.findViewById(R.id.minutesThirdTime);
         thirdTimeMinutes.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
+        firstTimeHour.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 2) {
+                    firstTimeMinutes.requestFocus();
+                }
+            }
+        });
+        secondTimeHour.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 2) {
+                    secondTimeMinutes.requestFocus();
+                }
+            }
+        });
+        thirdTimeHour.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 2) {
+                    thirdTimeMinutes.requestFocus();
+                }
+            }
+        });
         popupView.findViewById(R.id.save_button).setOnClickListener(v1 -> {
             String firstTime = null;
             String secondTime = null;
@@ -230,7 +309,7 @@ public class AlarmFragment extends BaseFragment implements AlarmFoodAdapter.Call
                                 alarmModel.setThirdTimeId(idAlarm);
                                 db.updateAlarm(alarmModel);
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             alarmPopup.dismiss();
                         }
 
@@ -248,7 +327,7 @@ public class AlarmFragment extends BaseFragment implements AlarmFoodAdapter.Call
     }
 
     @OnClick(R.id.imageButton)
-    public void cancelAlarmFood(){
+    public void cancelAlarmFood() {
         NotificationAlarm.cancelReminder(getContext(), 101);
         NotificationAlarm.cancelReminder(getContext(), 102);
         NotificationAlarm.cancelReminder(getContext(), 103);
@@ -294,13 +373,13 @@ public class AlarmFragment extends BaseFragment implements AlarmFoodAdapter.Call
 
     @Override
     public void deleteItemFromAlarm(AlarmModel alarmModels) {
-        if (alarmModels.getFirstTimeId() != 0){
+        if (alarmModels.getFirstTimeId() != 0) {
             NotificationAlarm.cancelReminder(getContext(), alarmModels.getFirstTimeId());
         }
-        if (alarmModels.getSecondTimeId() != 0){
+        if (alarmModels.getSecondTimeId() != 0) {
             NotificationAlarm.cancelReminder(getContext(), alarmModels.getSecondTimeId());
         }
-        if (alarmModels.getThirdTimeId() != 0){
+        if (alarmModels.getThirdTimeId() != 0) {
             NotificationAlarm.cancelReminder(getContext(), alarmModels.getThirdTimeId());
         }
         db.deleteAlarm(alarmModels);

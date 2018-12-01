@@ -28,17 +28,6 @@ public class App extends Application {
                 .build();
         applicationComponent.inject(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Все о печени";
-            String description = "Все о печени";
-            NotificationChannel channel = new NotificationChannel("Все о печени", name, NotificationManager.IMPORTANCE_LOW );
-            channel.setDescription(description);
-
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
     }
 
     public ApplicationComponent getApplicationComponent() {
